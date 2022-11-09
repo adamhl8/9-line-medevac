@@ -53,6 +53,10 @@ const elements = [
   },
 ]
 
+// Color text based on content: Possible Enemy is red, No enemy is green, Precendence is colored based on content, 
+// status is colored based on content. 
+// maybe color the entire row based on a conditon. 
+
 function ResponderView() {
   const rows = elements.map((element, index) => (
     <tr key={index}>
