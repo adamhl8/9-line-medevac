@@ -3,17 +3,13 @@ import { useState } from "react"
 import MainButton from "./MainButton"
 import ResponderView from "./ResponderView"
 
-function MainPage() {
+function View() {
   const [view, setView] = useState("default")
 
-  // eslint-disable-next-line unicorn/prefer-switch
-  if (view === "requester") {
-    return <h1>:)</h1>
-  } else if (view === "responder") {
-    return <ResponderView />
-  } else if (view === "dispatcher") {
-    return <h1>:(</h1>
-  } else {
+  if (view === "requester") return <h1>:)</h1>
+  else if (view === "responder") return <ResponderView />
+  else if (view === "dispatcher") return <h1>:(</h1>
+  else {
     return (
       <Group position="center" spacing="lg">
         <MainButton text="Requester" color="red" setView={setView} />
@@ -24,4 +20,4 @@ function MainPage() {
   }
 }
 
-export default MainPage
+export default View
