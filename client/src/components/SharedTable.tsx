@@ -1,21 +1,73 @@
 import { ActionIcon, Button, Divider, Modal, Pagination, SimpleGrid, Stack, Table, Text, Title } from "@mantine/core"
 import { IconListDetails } from "@tabler/icons"
 import { useState } from "react"
+import { TRequestById, TRequestData } from "./View"
 
+interface ResponderViewProps {
+  requestData:TRequestData
+  headers:String[]
+}
 
-
-function SharedTable() {
+function SharedTable(props:ResponderViewProps) {
 
     const [opened, setOpened] = useState(false)
-    const [details, setDetails] = useState<typeof elements[0]>()
+    const [details, setDetails] = useState<TRequestById>()
     const [activePage, setPage] = useState(1)
-    const [currentRequests, setCurrentRequest] = useState(pages[0])
+    const [currentRequests, setCurrentRequests] = useState<TRequestData>()
 
-    if (!currentRequests) return <></>
+    const pages: TRequestData[] | undefined = []
 
     const handleSetPage = (page: number) => {
-        setPage(page)
-        setCurrentRequest(pages[page - 1])
+      setPage(page)
+      //if (!pages) return
+      setCurrentRequests(pages[page - 1])
+    }
+    const chunkSize = 10;
+    for (let i = 0; i < props.requestData.length; i += chunkSize) {
+      const chunk = props.requestData.slice(i, i + chunkSize);
+      pages.push(chunk)
+     
+    } 
+
+    const rows = props.requestData.map((element, index) => {
+      const precedence = "fix me"
+      return (
+      
+      <tr key={index}>
+        <td>{element.status}</td>
+        <td>{element.location}</td>
+        <td>{element.callSign}</td>
+        <td>{precedence}</td>
+        <td>{element.specialEquipment}</td>
+        <td>{element.security}</td>
+        <td>{element.marking}</td>
+        <td>
+          <ActionIcon
+            variant="outline"
+            onClick={() => {
+              setDetails(element)
+              setOpened(true)
+            }}
+          >
+            <IconListDetails size={18} />
+          </ActionIcon>
+        </td>
+      </tr>
+    )})
+
+    console.log(rows)
+  
+    const getDetails = (details: TRequestById) => {
+      const detailsArray = []
+      for (const [key, value] of Object.entries(details)) {
+        detailsArray.push(
+          <>
+            <Text ta="right">{key}</Text>
+            <Text ta="left">{value}</Text>
+          </>,
+        )
+      }
+      return detailsArray
     }
 
     return (
@@ -44,13 +96,13 @@ function SharedTable() {
       </Modal>
 
       <Stack>
-        <Title order={1}>MEDEVAC {role}</Title>
+        <Title order={1}>MEDEVAC </Title>
         <Title order={5}>SE Texas</Title>
 
         <Table maw="75vw" striped highlightOnHover captionSide="bottom" fontSize="md">
           <thead>
             <tr>
-              {headers.map((header) =>  <th>{header}</th>)}
+              {props.headers.map((header) =>  <th>{header}</th>)}
             </tr>
           </thead>
           <tbody>{rows}</tbody>
