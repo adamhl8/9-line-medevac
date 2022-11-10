@@ -1,5 +1,5 @@
-import { AppShell, Header, MantineProvider } from "@mantine/core"
-import MainPage from "./components/MainPage"
+import { AppShell, Center, Header, MantineProvider } from "@mantine/core"
+import View from "./components/View"
 const App = () => {
   return (
     <MantineProvider theme={{ colorScheme: "dark" }} withGlobalStyles withNormalizeCSS>
@@ -14,7 +14,9 @@ const App = () => {
           main: { backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0] },
         })}
       >
-        <MainPage />
+        <Center>
+          <View />
+        </Center>
       </AppShell>
     </MantineProvider>
   )
