@@ -7,7 +7,7 @@ import Requestor from "./Requestor/Requestor"
 function View() {
   const [view, setView] = useState("default")
 
-  if (view === "requester") return <Requestor />
+  if (view === "requester") return <Requestor setView={setView}/>
   else if (view === "responder") return <ResponderView />
   else if (view === "dispatcher") return <h1>:(</h1>
   else {
