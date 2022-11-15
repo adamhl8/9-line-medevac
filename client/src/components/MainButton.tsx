@@ -7,7 +7,7 @@ interface MainButtonProps {
 
 function MainButton({ text, color, setView }: MainButtonProps) {
   return (
-    <Button color={color} radius="md" size="lg" onClick={() => setView(text.toLowerCase())}>
+    <Button mt={"40vh"} color={color} variant="light" radius="xl" size="lg" onClick={() => setView(text.toLowerCase())}>
       {text}
     </Button>
   )
