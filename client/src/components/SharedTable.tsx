@@ -6,6 +6,7 @@ import { TRequestById, TRequestData } from "./View"
 interface ResponderViewProps {
   requestData:TRequestData
   headers:String[]
+  view:string
 }
 
 function SharedTable(props:ResponderViewProps) {
@@ -27,7 +28,15 @@ function SharedTable(props:ResponderViewProps) {
       const chunk = props.requestData.slice(i, i + chunkSize);
       pages.push(chunk)
      
-    } 
+    }
+    
+    async function handleComplete(role: string) {
+      // if dispatcher: this will patch to assign a responder to record
+
+      // if responder: this will patch to update status to either complete or role 2
+
+    }
+    
 
     const rows = props.requestData.map((element, index) => {
       const precedence = "fix me"
@@ -83,22 +92,40 @@ function SharedTable(props:ResponderViewProps) {
         onClose={() => setOpened(false)}
         title={"Details"}
       >
-        <Stack justify="flex-start">
-          <SimpleGrid cols={2}>{details && getDetails(details)}</SimpleGrid>
-          <Divider mt="md" mb="md" />
-          <Button radius="md" onClick={() => console.log("Completed")}>
-            Complete
-          </Button>
-          <Button radius="md" onClick={() => console.log("Role 2")} color={"green"}>
-            Role 2
-          </Button>
-        </Stack>
+        
+          
+          {props.view === "responder" ? 
+          // this is the responder modal content
+          <Stack justify="flex-start">
+            <SimpleGrid cols={2}>{details && getDetails(details)}</SimpleGrid>
+            <Divider mt="md" mb="md" />
+            <Button radius="md" onClick={() => handleComplete("responder")}>
+              Complete
+            </Button>
+            <Button radius="md" onClick={() => console.log("Role 2")} color={"green"}>
+              Role 2
+            </Button>
+          </Stack>
+          
+          // This is the dipatcher modal content
+          :
+          <Stack justify="flex-start">
+            <SimpleGrid cols={2}>{details && getDetails(details)}</SimpleGrid>
+            <Divider mt="md" mb="md" />
+            <Button radius="md" onClick={() => handleComplete("dispatcher")}>
+              Complete
+            </Button>
+            <Button radius="md" onClick={() => console.log("Role 2")} color={"green"}>
+              Role 2
+            </Button>
+          </Stack>
+          }
+          
+          
+        
       </Modal>
 
       <Stack>
-        <Title order={1}>MEDEVAC </Title>
-        <Title order={5}>SE Texas</Title>
-
         <Table maw="75vw" striped highlightOnHover captionSide="bottom" fontSize="md">
           <thead>
             <tr>

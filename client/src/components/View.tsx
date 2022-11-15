@@ -5,6 +5,7 @@ import MainButton from "./MainButton"
 import Requestor from "./Requestor/Requestor"
 import ResponderView from "./ResponderView"
 import ky from 'ky'
+import DispatcherView from "./DispatcherView"
 
 const RequestById = z.object({
   status:z.string().min(1),
@@ -45,9 +46,9 @@ function View() {
     getData()
   }, [])
 
-  if (view === "requester") return <Requestor setView={setView} />
-  else if (view === "responder") return <ResponderView requestData={requestData} />
-  else if (view === "dispatcher") return <h1>:(</h1>
+  if (view === "requester") return <Requestor setView={setView} />  
+  else if (view === "responder") return <ResponderView view={view} requestData={requestData} />
+  else if (view === "dispatcher") return <DispatcherView requestData={requestData} />
   else {
     return (
       
