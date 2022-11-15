@@ -1,14 +1,14 @@
 import { Group } from "@mantine/core"
-import { z } from 'zod'
-import { useState, useEffect } from "react"
+import ky from "ky"
+import { useEffect, useState } from "react"
+import { z } from "zod"
+import DispatcherView from "./DispatcherView"
 import MainButton from "./MainButton"
 import Requestor from "./Requestor/Requestor"
 import ResponderView from "./ResponderView"
-import ky from 'ky'
-import DispatcherView from "./DispatcherView"
 
 const RequestById = z.object({
-  status:z.string().min(1),
+  status: z.string().min(1),
   // location:z.string(),
   // callSign:z.string(),
   // frequency:z.number(),
@@ -51,7 +51,6 @@ function View() {
   else if (view === "dispatcher") return <DispatcherView view={view} requestData={requestData} />
   else {
     return (
-      
       <Group position="center" spacing="lg">
         <MainButton text="Requester" color="red" setView={setView} />
         <MainButton text="Responder" color="green" setView={setView} />
