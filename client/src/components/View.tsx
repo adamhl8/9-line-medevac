@@ -1,15 +1,54 @@
 import { Group } from "@mantine/core"
-import { useState } from "react"
+import ky from "ky"
+import { useEffect, useState } from "react"
+import { z } from "zod"
+import DispatcherView from "./DispatcherView"
 import MainButton from "./MainButton"
 import Requestor from "./Requestor/Requestor"
 import ResponderView from "./ResponderView"
 
+const RequestById = z.object({
+  status: z.string().min(1),
+  // location:z.string(),
+  // callSign:z.string(),
+  // frequency:z.number(),
+  // byAmbulatory:z.number(),
+  // byLitter:z.number(),
+  // specialEquipment:z.string(),
+  // byUrgent:z.number(),
+  // byPriority:z.number(),
+  // byRoutine:z.number(),
+  // security:z.string(),
+  // marking:z.string(),
+  // usMil:z.number(),
+  // usCiv:z.number(),
+  // nonUSMil:z.number(),
+  // nonUSCiv:z.number(),
+  // nbc:z.string(),
+  // responderID:z.number(),
+  // dispatcherID:z.number()
+})
+export type TRequestById = z.infer<typeof RequestById>
+
+const RequestData = RequestById.array()
+export type TRequestData = z.infer<typeof RequestData>
+
 function View() {
   const [view, setView] = useState("default")
+  const [requestData, setRequestData] = useState<TRequestData>([])
 
-  if (view === "requester") return <Requestor setView={setView} />
-  else if (view === "responder") return <ResponderView />
-  else if (view === "dispatcher") return <h1>:(</h1>
+  async function getData() {
+    const responseData = await ky.get("http://localhost:8080/items").json()
+    setRequestData(RequestData.parse(responseData))
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  if (view === "requester") return <Requestor setView={setView} />  
+  else if (view === "responder") return <ResponderView view={view} requestData={requestData} />
+  else if (view === "dispatcher") return <DispatcherView view={view} requestData={requestData} />
   else {
     return (
       <Group position="center" spacing="lg">

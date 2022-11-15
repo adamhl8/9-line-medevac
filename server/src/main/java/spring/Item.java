@@ -16,6 +16,7 @@ public class Item {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
+  private String status;
   private String location;
   private String callSign;
   private float frequency;
@@ -38,7 +39,14 @@ public class Item {
   public String getLocation() {
     return location;
   }
+  
+  public String getStatus() {
+    return status;
+  }
 
+  public void setStatus(String status) {
+    this.status = status;
+  }
   public void setLocation(String location) {
     this.location = location;
   }

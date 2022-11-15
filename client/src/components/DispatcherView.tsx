@@ -1,6 +1,5 @@
 import { Stack, Title } from "@mantine/core"
-import CompleteButton from "./CompleteButton"
-import RoleTwoButton from "./RoleTwoButton"
+import AssignButton from "./AssignButton"
 import SharedTable from "./SharedTable"
 import { TRequestData } from "./View"
 
@@ -13,15 +12,15 @@ interface ViewProps {
   view: string
 }
 
-function ResponderView(props: ViewProps) {
+function DispatcherView(props: ViewProps) {
   return (
     <>
       <Stack>
-        <Title order={1}>MEDEVAC Assignment</Title>
+        <Title order={1}>MEDEVAC Dispatch</Title>
         <Title order={5}>SE Texas</Title>
         <SharedTable
           view={props.view}
-          buttons={[<CompleteButton />, <RoleTwoButton />]}
+          buttons={[<AssignButton />]}
           requestData={props.requestData}
           headers={["status", "location", "callSign", "precedence", "specialEquipment", "security", "marking", "details"]}
         />
@@ -29,4 +28,4 @@ function ResponderView(props: ViewProps) {
     </>
   )
 }
-export default ResponderView
+export default DispatcherView
