@@ -30,25 +30,32 @@ const RequestById = z.object({
 })
 export type TRequestById = z.infer<typeof RequestById>
 
-const RequestData = RequestById.array()
+export const RequestData = RequestById.array()
 export type TRequestData = z.infer<typeof RequestData>
 
 function View() {
   const [view, setView] = useState("default")
-  const [requestData, setRequestData] = useState<TRequestData>([])
+  const [pages, setPages] = useState<TRequestData[]>([[]])
 
   async function getData() {
     const responseData = await ky.get("http://localhost:8080/items").json()
-    setRequestData(RequestData.parse(responseData))
+    const data = RequestData.parse(responseData)
+    const chunkedData = []
+    const chunkSize = 10
+    for (let i = 0; i < data.length; i += chunkSize) {
+      const chunk = data.slice(i, i + chunkSize)
+      chunkedData.push(chunk)
+    }
+    setPages(chunkedData)
   }
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [])
 
   if (view === "requester") return <Requestor setView={setView} />
-  else if (view === "responder") return <ResponderView view={view} requestData={requestData} />
-  else if (view === "dispatcher") return <DispatcherView view={view} requestData={requestData} />
+  else if (view === "responder") return <ResponderView view={view} pages={pages} setPages={setPages} />
+  else if (view === "dispatcher") return <DispatcherView view={view} pages={pages} setPages={setPages} />
   else {
     return (
       <Group position="center" spacing="lg">

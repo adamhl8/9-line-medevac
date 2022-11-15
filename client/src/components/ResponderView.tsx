@@ -9,8 +9,9 @@ import { TRequestData } from "./View"
 // maybe color the entire row based on a conditon.
 
 interface ViewProps {
-  requestData: TRequestData
+  pages: TRequestData[]
   view: string
+  setPages: React.Dispatch<React.SetStateAction<TRequestData[]>>
 }
 
 function ResponderView(props: ViewProps) {
@@ -21,8 +22,9 @@ function ResponderView(props: ViewProps) {
         <Title order={5}>SE Texas</Title>
         <SharedTable
           view={props.view}
-          buttons={[<CompleteButton />, <RoleTwoButton />]}
-          requestData={props.requestData}
+          buttons={[<CompleteButton key="complete-button" />, <RoleTwoButton key="roleTwo-button" />]}
+          pages={props.pages}
+          setPages={props.setPages}
           headers={["status", "location", "callSign", "precedence", "specialEquipment", "security", "marking", "details"]}
         />
       </Stack>

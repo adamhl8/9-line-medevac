@@ -2,7 +2,6 @@ import { Divider, Modal, SimpleGrid, Stack } from "@mantine/core"
 import { TRequestById, TRequestData } from "./View"
 
 interface ViewProps {
-  requestData: TRequestData
   view: string
   opened: boolean
   setOpened: (value: React.SetStateAction<boolean>) => void
