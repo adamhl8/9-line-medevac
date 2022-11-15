@@ -25,5 +25,7 @@ module.exports = {
     "unicorn/filename-case": "off",
     "unicorn/prevent-abbreviations": "off",
     "unicorn/prefer-switch": "off",
+    "unicorn/no-null": "off",
+
   },
 }

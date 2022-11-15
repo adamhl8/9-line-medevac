@@ -1,4 +1,4 @@
-import {AppShell, Center, Header, MantineProvider, Stack, Box} from "@mantine/core"
+import { Box, MantineProvider, Stack } from "@mantine/core"
 import View from "./components/View"
 const App = () => {
   return (
@@ -19,24 +19,21 @@ const App = () => {
       {/*  </Center>*/}
       {/*</AppShell>*/}
 
-        <Stack spacing={0}>
-            <Box
-                w="100vw"
-                h={60}
-                sx={(theme) => ({
-                    backgroundColor: '#3b473d' ,
-                    textAlign: 'center',
-                    padding: theme.spacing.md,
-                    border: ""
-                })}
-
-            >
-                <b>9-Line</b>
-            </Box>
-            <View/>
-
-
-        </Stack>
+      <Stack spacing={0}>
+        <Box
+          w="100vw"
+          h={60}
+          sx={(theme) => ({
+            backgroundColor: "#3b473d",
+            textAlign: "center",
+            padding: theme.spacing.md,
+            border: "",
+          })}
+        >
+          <b>9-Line</b>
+        </Box>
+        <View />
+      </Stack>
     </MantineProvider>
   )
 }
