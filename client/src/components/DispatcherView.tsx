@@ -1,6 +1,9 @@
 import { ActionIcon, Button, Divider, Modal, Pagination, SimpleGrid, Stack, Table, Text, Title } from "@mantine/core"
 import { IconListDetails } from "@tabler/icons"
 import { useState } from "react"
+import AssignButton from "./AssignButton"
+import CompleteButton from "./CompleteButton"
+import RoleTwoButton from "./RoleTwoButton"
 import SharedTable from "./SharedTable"
 import { TRequestById, TRequestData } from "./View"
 
@@ -9,18 +12,19 @@ import { TRequestById, TRequestData } from "./View"
 // status is colored based on content.
 // maybe color the entire row based on a conditon.
 
-interface ResponderViewProps {
+interface ViewProps {
   requestData:TRequestData
+  view:string
 }
 
-function DispatcherView(props:ResponderViewProps) {
+function DispatcherView(props:ViewProps) {
   
   return (
     <>
       <Stack>
         <Title order={1}>MEDEVAC Dispatch</Title>
         <Title order={5}>SE Texas</Title>
-        <SharedTable requestData={props.requestData} headers={[
+        <SharedTable view={props.view} buttons={[<AssignButton/>]} requestData={props.requestData} headers={[
           "status",
           "location",
           "callSign",
