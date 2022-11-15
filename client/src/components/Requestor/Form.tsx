@@ -2,10 +2,8 @@ import { Box, Button, Checkbox, Group, Input, MultiSelect, NumberInput, Stack, T
 import { useForm } from "@mantine/form"
 import React from "react"
 
-
 const locationValidatorTwo = (value: string) => (value.length < 2 ? "Cannot be Less Than Two Characters" : null)
 const locationValidatorThree = (value: string) => (value.length < 3 ? "Cannot be Less Than Three Characters" : null)
-
 
 interface FormProps {
   setSubmitted: React.Dispatch<React.SetStateAction<boolean>>
@@ -37,10 +35,6 @@ const Form = (props: FormProps) => {
     { value: "Biological", label: "Biological" },
     { value: "Chemical", label: "Chemical" },
   ]
-  //
-  // const locationValidatorTwo = (value: string) => (value.length < 2 ? "Cannot be Less Than Two Characters" : null)
-  // const locationValidatorThree = (value: string) => (value.length < 3 ? "Cannot be Less Than Three Characters" : null)
-
   const form = useForm({
     initialValues: {
       location1: "",
@@ -72,12 +66,10 @@ const Form = (props: FormProps) => {
   return (
     <Box w={800}>
       <form onSubmit={form.onSubmit(console.log)}>
-        {/*<form  onSubmit={form.onSubmit((value) => console.log(value))}>*/}
         <Stack
           spacing="lg"
           sx={(theme) => ({ backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0], height: 300 })}
         >
-          {/*<Title order={2} align={'left'}>Location</Title>*/}
           <Group>
             <Input.Wrapper id="Location" label="Location" size="xl">
               <Group>
@@ -93,23 +85,10 @@ const Form = (props: FormProps) => {
           </Input.Wrapper>
           <Group>
             <Input.Wrapper id="Call Frequency / Call Sign / Suffix" label="Number of Patients" size="xl">
-              <NumberInput
-                mt="sm"
-                // label="Patient Number"
-                placeholder="Patient Number"
-                min={0}
-                max={10}
-                {...form.getInputProps("PatientNumber")}
-              />
+              <NumberInput mt="sm" placeholder="Patient Number" min={0} max={10} {...form.getInputProps("PatientNumber")} />
             </Input.Wrapper>
             <Input.Wrapper id="Call Frequency / Call Sign / Suffix" label="Precedence" size="xl">
-              <MultiSelect
-                // error="Pick at least one item"
-                mt="sm"
-                data={Precedence}
-                // Precedence
-                {...form.getInputProps("Precedence")}
-              />
+              <MultiSelect mt="sm" data={Precedence} {...form.getInputProps("Precedence")} />
             </Input.Wrapper>
           </Group>
           <Input.Wrapper id="Special Equipment" label="Special Equipment" size="xl">
@@ -123,19 +102,11 @@ const Form = (props: FormProps) => {
 
           <Group>
             <Input.Wrapper id="Litter" label="Litter Patient Number" size="xl">
-              <NumberInput
-                mt="sm"
-                // label="Patient Number"
-                placeholder="Litter Patient Number"
-                min={0}
-                max={10}
-                {...form.getInputProps("LitterPatientNumber")}
-              />
+              <NumberInput mt="sm" placeholder="Litter Patient Number" min={0} max={10} {...form.getInputProps("LitterPatientNumber")} />
             </Input.Wrapper>
             <Input.Wrapper id="Ambulatory" label="Ambulatory Patient Number" size="xl">
               <NumberInput
                 mt="sm"
-                // label="Patient Number"
                 placeholder="Ambulatory Patient Number"
                 min={0}
                 max={10}
@@ -191,4 +162,4 @@ const Form = (props: FormProps) => {
     </Box>
   )
 }
-export default Form;
+export default Form
