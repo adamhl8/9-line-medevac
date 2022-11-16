@@ -4,8 +4,9 @@ import ky from "ky"
 import React from "react"
 import { TRequestData } from "../View"
 
-const locationValidatorTwo = (value: string) => (value.length < 2 ? "Cannot be Less Than Two Characters" : null)
-const locationValidatorThree = (value: string) => (value.length < 3 ? "Cannot be Less Than Three Characters" : null)
+const locationValidatorTwo = (value: string) => (value.length !== 2 ? "Needs to be Two Characters" : null)
+const locationValidatorFive = (value: string) => (value.length < 2 || value.length > 5 ? "Needs to be between Two and Five Characters" : null)
+const locationValidatorThree = (value: string) => (value.length !== 3 ? "Needs to be Three Characters" : null)
 
 interface FormProps {
   setSubmitted: React.Dispatch<React.SetStateAction<boolean>>
@@ -52,8 +53,8 @@ const Form = (props: FormProps) => {
     validate: {
       location1: locationValidatorThree,
       location2: locationValidatorTwo,
-      location3: locationValidatorTwo,
-      location4: locationValidatorTwo,
+      location3: locationValidatorFive,
+      location4: locationValidatorFive,
       CallFrequency: (value) => (value.length === 0 ? "Cannot be Empty" : null),
       CallSign: (value) => (value.length === 0 ? "Cannot be Empty" : null),
       UrgentNumber: (value) => (value === 0 ? "Must be more than 0" : null),
@@ -65,7 +66,7 @@ const Form = (props: FormProps) => {
   async function handleSubmit(): Promise<void> {
     const requestBody = {
       status: "pending",
-      location: form.values.location1 + form.values.location2 + form.values.location3 + form.values.location4,
+      location: form.values.location1 + " " + form.values.location2 + " " + form.values.location3 + " " + form.values.location4,
       callSign: form.values.CallSign,
       frequency: form.values.CallFrequency,
       byAmbulatory: form.values.AmbulatoryPatientNumber,

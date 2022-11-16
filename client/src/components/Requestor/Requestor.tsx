@@ -33,7 +33,7 @@ const Requestor = (props: settingView) => {
                   setSubmitted(false)
                 }}
               >
-                NEW FORM
+                NEW REQUEST
               </Button>
               <Button
                 variant="light"
