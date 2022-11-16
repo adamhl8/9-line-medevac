@@ -13,24 +13,24 @@ interface FormProps {
 }
 
 const Form = (props: FormProps) => {
-  const Precedence = [
-    { value: "Urgent", label: "Urgent" },
-    { value: "Urgent Surgical", label: "Urgent Surgical" },
-    { value: "Priority", label: "Priority" },
-    { value: "Routine", label: "Routine" },
-  ]
+  // const Precedence = [
+  //   { value: "Urgent", label: "Urgent" },
+  //   { value: "Urgent Surgical", label: "Urgent Surgical" },
+  //   { value: "Priority", label: "Priority" },
+  //   { value: "Routine", label: "Routine" },
+  // ]
   const SecurityAtPickupSite = [
     { value: "NoEnemyTroops", label: "No Enemy Troops" },
     { value: "PossibleEnemy", label: "Possible Enemy" },
     { value: "EnemyInAreaCaution", label: "Enemy In Area: Proceed with Caution" },
     { value: "EnemyInAreaEscort", label: "Enemy In Area: Armed Escort Required" },
   ]
-  const PatientNationalityandStatus = [
-    { value: "USMilitary", label: "US Military" },
-    { value: "USCivilian", label: "US Civilian" },
-    { value: "Non-USMilitary", label: "Non-US Military" },
-    { value: "Non-USCivilian", label: "Non-US Civilian" },
-  ]
+  // const PatientNationalityandStatus = [
+  //   { value: "USMilitary", label: "US Military" },
+  //   { value: "USCivilian", label: "US Civilian" },
+  //   { value: "Non-USMilitary", label: "Non-US Military" },
+  //   { value: "Non-USCivilian", label: "Non-US Civilian" },
+  // ]
   const NBCContamination = [
     // Something possibly wrong here
     { value: "Nuclear", label: "Nuclear" },
@@ -47,14 +47,18 @@ const Form = (props: FormProps) => {
       location4: "",
       CallFrequency: "",
       CallSign: "",
-      PatientNumber: 0,
-      Precedence: "",
+      UrgentNumber: 0,
+      PriorityNumber: 0,
+      RoutineNumber: 0,
       SpecialEquipment: "",
       LitterPatientNumber: 0,
       AmbulatoryPatientNumber: 0,
       MethodOfMarkingPickupSite: "",
       SecurityAtPickupSite: "",
-      PatientNationalityAndStatus: "",
+      USMilitary: 0,
+      USCivilian: 0,
+      NonUSMilitary: 0,
+      NonUSCivilian: 0,
       NBCContamination: "",
     },
     validate: {
@@ -64,8 +68,9 @@ const Form = (props: FormProps) => {
       location4: locationValidatorTwo,
       CallFrequency: (value) => (value.length === 0 ? "Cannot be Empty" : null),
       CallSign: (value) => (value.length === 0 ? "Cannot be Empty" : null),
-      PatientNumber: (value) => (value === 0 ? "Must be more than 0" : null),
-      Precedence: (value) => (value.length === 0 ? "Cannot be Empty" : null),
+      UrgentNumber: (value) => (value === 0 ? "Must be more than 0" : null),
+      PriorityNumber: (value) => (value === 0 ? "Must be more than 0" : null),
+      RoutineNumber: (value) => (value === 0 ? "Must be more than 0" : null),
     },
   })
 
@@ -78,15 +83,15 @@ const Form = (props: FormProps) => {
       byAmbulatory: form.values.AmbulatoryPatientNumber,
       byLitter: form.values.LitterPatientNumber,
       specialEquipment: form.values.SpecialEquipment[0],
-      byUrgent: form.values.Precedence === "Urgent" ? form.values.PatientNumber : 0,
-      byPriority: form.values.Precedence === "Priority" ? form.values.PatientNumber : 0,
-      byRoutine: form.values.Precedence === "Routine" ? form.values.PatientNumber : 0,
+      byUrgent: form.values.UrgentNumber,
+      byPriority: form.values.PriorityNumber,
+      byRoutine: form.values.RoutineNumber,
       security: form.values.SecurityAtPickupSite[0],
       marking: form.values.MethodOfMarkingPickupSite[0],
-      usMil: form.values.PatientNationalityAndStatus === "US Military" ? form.values.PatientNumber : 0,
-      usCiv: form.values.PatientNationalityAndStatus === "US Civilian" ? form.values.PatientNumber : 0,
-      nonUSMil: form.values.PatientNationalityAndStatus === "Non-US Military" ? form.values.PatientNumber : 0,
-      nonUSCiv: form.values.PatientNationalityAndStatus === "Non-US Civilian" ? form.values.PatientNumber : 0,
+      usMil: form.values.USMilitary,
+      usCiv: form.values.USCivilian,
+      nonUSMil: form.values.NonUSMilitary,
+      nonUSCiv: form.values.NonUSCivilian,
       nbc: form.values.NBCContamination[0], // this does not actually populate data
     }
     
@@ -100,11 +105,10 @@ const Form = (props: FormProps) => {
   }
 
   return (
-    <Box w={800} >
+    <Box w={900} >
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack
           spacing="lg"
-          sx={(theme) => ({ backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0], height: 300 })}
         >
           <Group>
             <Input.Wrapper id="Location" label="Location" size="xl">
@@ -123,11 +127,14 @@ const Form = (props: FormProps) => {
             </Group>
           </Input.Wrapper>
           <Group>
-            <Input.Wrapper id="Number of Patients" label="Number of Patients" size="xl">
-              <NumberInput mt="sm" placeholder="Patient Number" min={0} max={10} {...form.getInputProps("PatientNumber")} />
+            <Input.Wrapper id="Urgent Patients" label="Urgent Patients" size="lg">
+              <NumberInput mt="sm" min={0} max={10} {...form.getInputProps("UrgentNumber")} />
             </Input.Wrapper>
-            <Input.Wrapper id="Precedence" label="Precedence" size="xl">
-              <MultiSelect mt="sm" data={Precedence} {...form.getInputProps("Precedence")} />
+            <Input.Wrapper id="Priority Patients" label="Priority Patients" size="lg">
+              <NumberInput mt="sm" min={0} max={10} {...form.getInputProps("PriorityNumber")} />
+            </Input.Wrapper>
+            <Input.Wrapper id="Routine Patients" label="Routine Patients" size="lg">
+              <NumberInput mt="sm" min={0} max={10} {...form.getInputProps("RoutineNumber")} />
             </Input.Wrapper>
           </Group>
           <Input.Wrapper id="Special Equipment" label="Special Equipment" size="xl">
@@ -168,13 +175,20 @@ const Form = (props: FormProps) => {
               {...form.getInputProps("SecurityAtPickupSite")}
             />
           </Input.Wrapper>
-          <Input.Wrapper id="Nationality" label="Patient Nationality and Status" size="xl">
-            <MultiSelect
-              data={PatientNationalityandStatus}
-              placeholder="Patient Nationality"
-              {...form.getInputProps("PatientNationalityAndStatus")}
-            />
-          </Input.Wrapper>
+          <Group>
+            <Input.Wrapper id="US Military" label="US Military" size="lg">
+              <NumberInput mt="sm" min={0} max={10} {...form.getInputProps("USMilitary")} />
+            </Input.Wrapper>
+            <Input.Wrapper id="US Civilian" label="US Civilian" size="lg">
+              <NumberInput mt="sm" min={0} max={10} {...form.getInputProps("USCivilian")} />
+            </Input.Wrapper>
+            <Input.Wrapper id="Non-US Military" label="Non-US Military" size="lg">
+              <NumberInput mt="sm" min={0} max={10} {...form.getInputProps("NonUSMilitary")} />
+            </Input.Wrapper>
+            <Input.Wrapper id="Non-US Civilian" label="Non-US Civilian" size="lg">
+              <NumberInput mt="sm" min={0} max={10} {...form.getInputProps("NonUSCivilian")} />
+            </Input.Wrapper>
+          </Group>
           {/* This seems to be broken */}
           <Input.Wrapper id="NBC" label="NBC Contamination" size="xl">
             <MultiSelect  data={NBCContamination} placeholder="NBC Contamination" {...form.getInputProps("NBCContamination")} />
