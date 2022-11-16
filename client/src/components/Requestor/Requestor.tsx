@@ -30,7 +30,7 @@ const Requestor = (props: settingView) => {
                 variant="light"
                 color="gray"
                 onClick={() => {
-                  props.setView("requester")
+                  setSubmitted(false)
                 }}
               >
                 NEW FORM

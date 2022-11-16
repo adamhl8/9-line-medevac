@@ -89,10 +89,13 @@ const Form = (props: FormProps) => {
       nonUSCiv: form.values.PatientNationalityAndStatus === "Non-US Civilian" ? form.values.PatientNumber : 0,
       nbc: form.values.NBCContamination, // this does not actually populate data
     }
-    console.log(requestBody)
-    props.setSubmitted(true)
+    
     const response: TRequestData = await ky.post("http://localhost:8080/items", { json: requestBody }).json()
+
     console.log(response)
+    props.setSubmitted(true)
+    form.reset()
+    
   }
 
   return (
