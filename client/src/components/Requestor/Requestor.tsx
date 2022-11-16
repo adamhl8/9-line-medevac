@@ -56,7 +56,7 @@ const Requestor = (props: settingView) => {
             </Button.Group>
           </Grid.Col>
           <Grid.Col span={4}>
-            <b>{submitted ? "9-LINE HAS BEEN SUBMITTED" : "9-LINE HAS NOT BEEN SUBMITTED" } </b>
+            <b>{submitted ? "9-LINE HAS BEEN SUBMITTED" : "9-LINE HAS NOT BEEN SUBMITTED"} </b>
           </Grid.Col>
           <Grid.Col span={4}></Grid.Col>
         </Grid>
@@ -65,7 +65,7 @@ const Requestor = (props: settingView) => {
         <Form setSubmitted={setSubmitted} submitted={submitted} />
       </Stack>
     </>
-  ) 
+  )
 }
 
 export default Requestor

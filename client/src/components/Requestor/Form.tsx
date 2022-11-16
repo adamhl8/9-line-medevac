@@ -82,22 +82,18 @@ const Form = (props: FormProps) => {
       nonUSCiv: form.values.NonUSCivilian,
       nbc: form.values.NBCContamination[0], // this does not actually populate data
     }
-    
-   
+
     const response: TRequestData = await ky.post("http://localhost:8080/items", { json: requestBody }).json()
 
     console.log(response)
     props.setSubmitted(true)
     form.reset()
-    
   }
 
   return (
-    <Box w={900} >
+    <Box w={900}>
       <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Stack
-          spacing="lg"
-        >
+        <Stack spacing="lg">
           <Group>
             <Input.Wrapper id="Location" label="Location" size="xl">
               <Group>
@@ -179,19 +175,10 @@ const Form = (props: FormProps) => {
           </Group>
           {/* This seems to be broken */}
           <Input.Wrapper id="NBC" label="NBC Contamination" size="xl">
-            <MultiSelect  data={NBCContamination} placeholder="NBC Contamination" {...form.getInputProps("NBCContamination")} />
+            <MultiSelect data={NBCContamination} placeholder="NBC Contamination" {...form.getInputProps("NBCContamination")} />
           </Input.Wrapper>
           <Group>
-            <Button
-              style={{marginBottom: 100}}
-              type="submit"
-              variant="light"
-              color="red"
-              radius="xl"
-              size="md"
-              uppercase
-              
-            >
+            <Button style={{ marginBottom: 100 }} type="submit" variant="light" color="red" radius="xl" size="md" uppercase>
               Submit
             </Button>
           </Group>
