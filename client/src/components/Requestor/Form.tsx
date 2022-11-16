@@ -99,7 +99,7 @@ const Form = (props: FormProps) => {
   }
 
   return (
-    <Box w={800}>
+    <Box w={800} >
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack
           spacing="lg"
@@ -176,10 +176,11 @@ const Form = (props: FormProps) => {
           </Input.Wrapper>
           {/* This seems to be broken */}
           <Input.Wrapper id="NBC" label="NBC Contamination" size="xl">
-            <MultiSelect data={NCBCContamination} placeholder="NBC Contamination" {...form.getInputProps("NCBCContamination")} />
+            <MultiSelect  data={NCBCContamination} placeholder="NBC Contamination" {...form.getInputProps("NCBCContamination")} />
           </Input.Wrapper>
           <Group>
             <Button
+              style={{marginBottom: 100}}
               type="submit"
               variant="light"
               color="red"
