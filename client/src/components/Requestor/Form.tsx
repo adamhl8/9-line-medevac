@@ -85,8 +85,8 @@ const Form = (props: FormProps) => {
       nonUSCiv: form.values.PatientNationalityAndStatus === "Non-US Civilian" ? form.values.PatientNumber : 0,
       nbc: form.values.NBC,
     }
-
-    console.log(requestBody)
+    // post request here
+        console.log(requestBody)
   }
 
   return (

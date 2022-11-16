@@ -1,9 +1,12 @@
 package spring;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,32 +46,12 @@ public class ItemController {
   public Item updateItem(@PathVariable Integer id, @RequestBody Map<String, String> body) throws Exception {
     Item item = itemRepo.findById(id).orElseThrow();
 
-    body.forEach((key, value) -> {
-      switch (key.toString()) {
-        case "status": item.setStatus(value); break;
-        case "location": item.setLocation(value); break;
-        case "callSign": item.setCallSign(value); break;
-        case "frequency": item.setFrequency(Integer.parseInt(value)); break;
-        case "byAmbulatory": item.setByAmbulatory(Integer.parseInt(value)); break;
-        case "byLitter": item.setByLitter(Integer.parseInt(value)); break;
-        case "specialEquipment": item.setSpecialEquipment(value); break;
-        case "byUrgent": item.setByUrgent(Integer.parseInt(value)); break;
-        case "byPriority": item.setByPriority(Integer.parseInt(value)); break;
-        case "byRoutine": item.setByRoutine(Integer.parseInt(value)); break;
-        case "security": item.setSecurity(value); break;
-        case "marking": item.setMarking(value); break;
-        case "usMil": item.setUsMil(Integer.parseInt(value)); break;
-        case "usCiv": item.setUsCiv(Integer.parseInt(value)); break;
-        case "nonUSMil": item.setNonUSMil(Integer.parseInt(value)); break;
-        case "nonUSCiv": item.setNonUSCiv(Integer.parseInt(value)); break;
-        case "nbc": item.setNbc(value); break;
-        case "responderID": item.setResponderID(Integer.parseInt(value)); break; 
-        case "dispatcherID": item.setDispatcherID(Integer.parseInt(value)); break;
-      
-        default:  break;
-         
-      }
-    });
+    BeanWrapper accessor = PropertyAccessorFactory.forBeanPropertyAccess(item);
+    Field[] itemFields= item.getClass().getDeclaredFields();
+    for (Field field : itemFields) {
+      String fieldName = field.getName();
+      if (body.containsKey(fieldName)) accessor.setPropertyValue(fieldName, body.get(fieldName));
+    }
 
     return itemRepo.save(item);
   }
