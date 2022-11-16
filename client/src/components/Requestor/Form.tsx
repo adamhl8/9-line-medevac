@@ -1,6 +1,8 @@
 import { Box, Button, Checkbox, Group, Input, MultiSelect, NumberInput, Stack, TextInput } from "@mantine/core"
 import { useForm } from "@mantine/form"
+import ky from "ky"
 import React from "react"
+import { TRequestData } from "../View"
 
 const locationValidatorTwo = (value: string) => (value.length < 2 ? "Cannot be Less Than Two Characters" : null)
 const locationValidatorThree = (value: string) => (value.length < 3 ? "Cannot be Less Than Three Characters" : null)
@@ -30,10 +32,12 @@ const Form = (props: FormProps) => {
     { value: "Non-USCivilian", label: "Non-US Civilian" },
   ]
   const NCBCContamination = [
+    // Something possibly wrong here
     { value: "Nuclear", label: "Nuclear" },
     { value: "Biological", label: "Biological" },
     { value: "Chemical", label: "Chemical" },
   ]
+
   const form = useForm({
     initialValues: {
       status: "",
@@ -51,7 +55,7 @@ const Form = (props: FormProps) => {
       MethodOfMarkingPickupSite: "",
       SecurityAtPickupSite: "",
       PatientNationalityAndStatus: "",
-      NBC: "",
+      NBCContamination: "",
     },
     validate: {
       location1: locationValidatorThree,
@@ -65,7 +69,7 @@ const Form = (props: FormProps) => {
     },
   })
 
-  function handleSubmit() {
+  async function handleSubmit(): Promise<void> {
     const requestBody = {
       status: "pending",
       location: form.values.location1 + form.values.location2 + form.values.location3 + form.values.location4,
@@ -77,16 +81,18 @@ const Form = (props: FormProps) => {
       byUrgent: form.values.Precedence === "Urgent" ? form.values.PatientNumber : 0,
       byPriority: form.values.Precedence === "Priority" ? form.values.PatientNumber : 0,
       byRoutine: form.values.Precedence === "Routine" ? form.values.PatientNumber : 0,
-      security: form.values.SecurityAtPickupSite,
-      marking: form.values.MethodOfMarkingPickupSite,
+      security: form.values.SecurityAtPickupSite[0],
+      marking: form.values.MethodOfMarkingPickupSite[0],
       usMil: form.values.PatientNationalityAndStatus === "US Military" ? form.values.PatientNumber : 0,
       usCiv: form.values.PatientNationalityAndStatus === "US Civilian" ? form.values.PatientNumber : 0,
       nonUSMil: form.values.PatientNationalityAndStatus === "Non-US Military" ? form.values.PatientNumber : 0,
       nonUSCiv: form.values.PatientNationalityAndStatus === "Non-US Civilian" ? form.values.PatientNumber : 0,
-      nbc: form.values.NBC,
+      nbc: form.values.NBCContamination, // this does not actually populate data
     }
-    // post request here
-        console.log(requestBody)
+    console.log(requestBody)
+
+    const response: TRequestData = await ky.post("http://localhost:8080/items", { json: requestBody }).json()
+    console.log(response)
   }
 
   return (
@@ -128,7 +134,6 @@ const Form = (props: FormProps) => {
               <Checkbox value="Ventilator" label="Ventilator" />
             </Checkbox.Group>
           </Input.Wrapper>
-
           <Group>
             <Input.Wrapper id="Litter" label="Litter Patient Number" size="xl">
               <NumberInput mt="sm" placeholder="Litter Patient Number" min={0} max={10} {...form.getInputProps("LitterPatientNumber")} />
@@ -143,7 +148,6 @@ const Form = (props: FormProps) => {
               />
             </Input.Wrapper>
           </Group>
-
           <Input.Wrapper id="Marking" label="Method of Marking Pick-Up Site" size="xl">
             <Checkbox.Group orientation="vertical" spacing="xs" {...form.getInputProps("MethodOfMarkingPickupSite")}>
               <Checkbox value="None" label="None" />
@@ -153,7 +157,6 @@ const Form = (props: FormProps) => {
               <Checkbox value="Other" label="Other" />
             </Checkbox.Group>
           </Input.Wrapper>
-
           <Input.Wrapper id="Security" label="Security at Pick-Up Site" size="xl">
             <MultiSelect
               data={SecurityAtPickupSite}
@@ -167,7 +170,8 @@ const Form = (props: FormProps) => {
               placeholder="Patient Nationality"
               {...form.getInputProps("PatientNationalityAndStatus")}
             />
-          </Input.Wrapper>
+          </Input.Wrapper>{" "}
+          {/* This seems to be broken */}
           <Input.Wrapper id="NBC" label="NBC Contamination" size="xl">
             <MultiSelect data={NCBCContamination} placeholder="NBC Contamination" {...form.getInputProps("NCBCContamination")} />
           </Input.Wrapper>
