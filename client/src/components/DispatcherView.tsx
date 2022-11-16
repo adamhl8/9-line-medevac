@@ -7,25 +7,24 @@ import { TRequestData } from "./View"
 // status is colored based on content.
 // maybe color the entire row based on a conditon.
 
-interface ViewProps {
-  requestData: TRequestData
-  view: string
+interface DispatcherViewProps {
+  pages: TRequestData[]
 }
 
-function DispatcherView(props: ViewProps) {
+function DispatcherView({ pages }: DispatcherViewProps) {
   return (
     <Center>
       <Stack>
         <Title order={1}>MEDEVAC Dispatch</Title>
         <Title order={5}>SE Texas</Title>
         <SharedTable
-          view={props.view}
-          buttons={[<AssignButton />]}
-          requestData={props.requestData}
+          pages={pages}
           headers={["status", "location", "callSign", "precedence", "specialEquipment", "security", "marking", "details"]}
+          buttons={[<AssignButton key="assign-button" />]}
         />
       </Stack>
     </Center>
   )
 }
+
 export default DispatcherView

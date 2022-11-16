@@ -8,25 +8,24 @@ import { TRequestData } from "./View"
 // status is colored based on content.
 // maybe color the entire row based on a conditon.
 
-interface ViewProps {
-  requestData: TRequestData
-  view: string
+interface ResponderViewProps {
+  pages: TRequestData[]
 }
 
-function ResponderView(props: ViewProps) {
+function ResponderView({ pages }: ResponderViewProps) {
   return (
     <Center>
       <Stack>
         <Title order={1}>MEDEVAC Assignment</Title>
         <Title order={5}>SE Texas</Title>
         <SharedTable
-          view={props.view}
-          buttons={[<CompleteButton />, <RoleTwoButton />]}
-          requestData={props.requestData}
+          pages={pages}
           headers={["status", "location", "callSign", "precedence", "specialEquipment", "security", "marking", "details"]}
+          buttons={[<CompleteButton key="complete-button" />, <RoleTwoButton key="roleTwo-button" />]}
         />
       </Stack>
     </Center>
   )
 }
+
 export default ResponderView

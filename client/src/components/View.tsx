@@ -1,13 +1,14 @@
-import { Group } from "@mantine/core"
+import { Group, Loader } from "@mantine/core"
 import ky from "ky"
 import { useEffect, useState } from "react"
 import { z } from "zod"
+import { getPages } from "../util.js"
 import DispatcherView from "./DispatcherView"
 import MainButton from "./MainButton"
 import Requestor from "./Requestor/Requestor"
 import ResponderView from "./ResponderView"
 
-const RequestById = z.object({
+export const RequestById = z.object({
   status: z.string().min(1),
   // location:z.string(),
   // callSign:z.string(),
@@ -30,25 +31,28 @@ const RequestById = z.object({
 })
 export type TRequestById = z.infer<typeof RequestById>
 
-const RequestData = RequestById.array()
+export const RequestData = RequestById.array()
 export type TRequestData = z.infer<typeof RequestData>
 
 function View() {
   const [view, setView] = useState("default")
-  const [requestData, setRequestData] = useState<TRequestData>([])
+  const [pages, setPages] = useState<TRequestData[]>()
 
   async function getData() {
     const responseData = await ky.get("http://localhost:8080/items").json()
-    setRequestData(RequestData.parse(responseData))
+    const data = RequestData.parse(responseData)
+    setPages(getPages(data))
   }
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [])
 
+  if (!pages) return <Loader size="xl" />
+
   if (view === "requester") return <Requestor setView={setView} />
-  else if (view === "responder") return <ResponderView view={view} requestData={requestData} />
-  else if (view === "dispatcher") return <DispatcherView view={view} requestData={requestData} />
+  else if (view === "responder") return <ResponderView pages={pages} />
+  else if (view === "dispatcher") return <DispatcherView pages={pages} />
   else {
     return (
       <Group position="center" spacing="lg">

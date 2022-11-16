@@ -1,13 +1,11 @@
-import { Divider, Modal, SimpleGrid, Stack } from "@mantine/core"
-import { TRequestById, TRequestData } from "./View"
+import { Divider, Modal, SimpleGrid, Stack, Text } from "@mantine/core"
+import React, { Fragment } from "react"
+import { TRequestById } from "./View"
 
-interface ViewProps {
-  requestData: TRequestData
-  view: string
+interface SharedModalProps {
   opened: boolean
   setOpened: (value: React.SetStateAction<boolean>) => void
-  getDetails: (details: TRequestById) => JSX.Element[]
-  details: TRequestById
+  request: TRequestById
   buttons: JSX.Element[]
 }
 
@@ -16,7 +14,20 @@ async function handleComplete(role: string) {
   // if responder: this will patch to update status to either complete or role 2
 }
 
-function SharedModal(props: ViewProps) {
+function SharedModal({ opened, setOpened, request, buttons }: SharedModalProps) {
+  const buildRequestDetails = (details: TRequestById) => {
+    const requestDetails = []
+    for (const [key, value] of Object.entries(details)) {
+      requestDetails.push(
+        <Fragment key={key}>
+          <Text ta="right">{key}</Text>
+          <Text ta="left">{value}</Text>
+        </Fragment>,
+      )
+    }
+    return requestDetails
+  }
+
   return (
     <Modal
       styles={(theme) => ({ modal: { border: `thin solid ${theme.colors.dark[4]}` } })}
@@ -25,17 +36,14 @@ function SharedModal(props: ViewProps) {
       overlayOpacity={0.55}
       overlayBlur={3}
       shadow="md"
-      opened={props.opened}
-      onClose={() => props.setOpened(false)}
+      opened={opened}
+      onClose={() => setOpened(false)}
       title={"Details"}
     >
       <Stack justify="flex-start">
-        <SimpleGrid cols={2}>{props.details && props.getDetails(props.details)}</SimpleGrid>
+        <SimpleGrid cols={2}>{buildRequestDetails(request)}</SimpleGrid>
         <Divider mt="md" mb="md" />
-
-        {props.buttons.map((button) => {
-          return button
-        })}
+        {buttons}
       </Stack>
     </Modal>
   )
