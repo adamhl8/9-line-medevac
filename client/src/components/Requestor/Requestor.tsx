@@ -9,7 +9,7 @@ interface settingView {
 const Requestor = (props: settingView) => {
   const [submitted, setSubmitted] = useState(false)
 
-  return submitted ? (
+  return (
     <>
       <Box
         w="100vw"
@@ -17,7 +17,7 @@ const Requestor = (props: settingView) => {
         mb={25}
         // opacity = {.85}
         sx={(theme) => ({
-          backgroundColor: "#488047",
+          backgroundColor: submitted ? "#488047" : "#854040",
           textAlign: "center",
           padding: theme.spacing.md,
           border: "",
@@ -30,7 +30,7 @@ const Requestor = (props: settingView) => {
                 variant="light"
                 color="gray"
                 onClick={() => {
-                  props.setView("requester")
+                  setSubmitted(false)
                 }}
               >
                 NEW FORM
@@ -56,7 +56,7 @@ const Requestor = (props: settingView) => {
             </Button.Group>
           </Grid.Col>
           <Grid.Col span={4}>
-            <b>9-LINE HAS BEEN SUBMITTED</b>
+            <b>{submitted ? "9-LINE HAS BEEN SUBMITTED" : "9-LINE HAS NOT BEEN SUBMITTED" } </b>
           </Grid.Col>
           <Grid.Col span={4}></Grid.Col>
         </Grid>
@@ -65,73 +65,7 @@ const Requestor = (props: settingView) => {
         <Form setSubmitted={setSubmitted} submitted={submitted} />
       </Stack>
     </>
-  ) : (
-    <>
-      <Box
-        w="100vw"
-        h={50}
-        mb={25}
-        // opacity = {.85}
-        sx={(theme) => ({
-          backgroundColor: "#854040",
-          textAlign: "center",
-          padding: theme.spacing.md,
-          border: "",
-        })}
-      >
-        <Grid justify="center" align="center">
-          <Grid.Col span={4}>
-            <Button.Group>
-              <Button
-                variant="light"
-                color="gray"
-                size="xs"
-                radius="xl"
-                uppercase
-                onClick={() => {
-                  props.setView("requester")
-                }}
-              >
-                NEW FORM
-              </Button>
-              <Button
-                variant="light"
-                color="gray"
-                size="xs"
-                radius="xl"
-                uppercase
-                onClick={() => {
-                  props.setView("responder")
-                }}
-              >
-                RESPONDER
-              </Button>
-              <Button
-                variant="light"
-                color="gray"
-                size="xs"
-                radius="xl"
-                uppercase
-                onClick={() => {
-                  props.setView("dispatcher")
-                }}
-              >
-                {" "}
-                DISPATCER
-              </Button>
-            </Button.Group>
-          </Grid.Col>
-          <Grid.Col span={4}>
-            <b>9-LINE HAS NOT BEEN SUBMITTED</b>
-          </Grid.Col>
-          <Grid.Col span={4}></Grid.Col>
-        </Grid>
-      </Box>
-      <Stack align="center">
-        <Form setSubmitted={setSubmitted} submitted={submitted} />
-      </Stack>
-    </>
-  )
+  ) 
 }
 
 export default Requestor
