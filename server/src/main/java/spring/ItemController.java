@@ -47,7 +47,7 @@ public class ItemController {
     Item item = itemRepo.findById(id).orElseThrow();
 
     BeanWrapper accessor = PropertyAccessorFactory.forBeanPropertyAccess(item);
-    Field[] itemFields= item.getClass().getDeclaredFields();
+    Field[] itemFields = item.getClass().getDeclaredFields();
     for (Field field : itemFields) {
       String fieldName = field.getName();
       if (body.containsKey(fieldName)) accessor.setPropertyValue(fieldName, body.get(fieldName));

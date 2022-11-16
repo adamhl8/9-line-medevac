@@ -11,24 +11,24 @@ import ResponderView from "./ResponderView"
 export const RequestById = z.object({
   id: z.number(),
   status: z.string().min(1),
-  // location:z.string(),
-  // callSign:z.string(),
-  // frequency:z.number(),
-  // byAmbulatory:z.number(),
-  // byLitter:z.number(),
-  // specialEquipment:z.string(),
-  // byUrgent:z.number(),
-  // byPriority:z.number(),
-  // byRoutine:z.number(),
-  // security:z.string(),
-  // marking:z.string(),
-  // usMil:z.number(),
-  // usCiv:z.number(),
-  // nonUSMil:z.number(),
-  // nonUSCiv:z.number(),
-  // nbc:z.string(),
-  // responderID:z.number(),
-  // dispatcherID:z.number()
+  location:z.string().default("Austin"),
+  callSign:z.string().default("Nik"),
+  frequency:z.number().default(0),
+  byAmbulatory:z.number().default(0),
+  byLitter:z.number().default(0),
+  specialEquipment:z.string().default("jungle PENETRATOR"),
+  byUrgent:z.number().default(0),
+  byPriority:z.number().default(0),
+  byRoutine:z.number().default(0),
+  security:z.string().default("No Enemy in the Area"),
+  marking:z.string().default("None"),
+  usMil:z.number().default(0),
+  usCiv:z.number().default(0),
+  nonUSMil:z.number().default(0),
+  nonUSCiv:z.number().default(0),
+  nbc:z.string().default("None"),
+  responderID:z.number().default(0),
+  dispatcherID:z.number().default(0)
 })
 
 export type TRequestById = z.infer<typeof RequestById>
@@ -54,7 +54,7 @@ function View() {
 
   if (view === "requester") return <Requestor setView={setView} />
   else if (view === "responder") return <ResponderView pages={pages} />
-  else if (view === "dispatcher") return <DispatcherView pages={pages} />
+  else if (view === "dispatcher") return <DispatcherView pages={pages} setView={setView}/>
   else {
     return (
       <Group position="center" spacing="lg">

@@ -2,6 +2,7 @@ import { Center, Stack, Title } from "@mantine/core"
 import AssignButton from "./AssignButton"
 import SharedTable from "./SharedTable"
 import { TRequestData } from "./View"
+import {useState} from 'react'
 
 // Color text based on content: Possible Enemy is red, No enemy is green, Precendence is colored based on content,
 // status is colored based on content.
@@ -9,10 +10,17 @@ import { TRequestData } from "./View"
 
 interface DispatcherViewProps {
   pages: TRequestData[]
+  setView:React.Dispatch<React.SetStateAction<string>>
 }
 
-function DispatcherView({ pages }: DispatcherViewProps) {
+const responders = [1234, 4321, 6643]
+
+function DispatcherView({ pages, setView }: DispatcherViewProps) {
+  const [responderID, setResponderID] = useState<string>("")
+  const [currentMedevac, setCurrentMedevac] = useState<number>(0)
+
   return (
+    <>
     <Center>
       <Stack>
         <Title order={1}>MEDEVAC Dispatch</Title>
@@ -20,10 +28,18 @@ function DispatcherView({ pages }: DispatcherViewProps) {
         <SharedTable
           pages={pages}
           headers={["status", "location", "callSign", "precedence", "specialEquipment", "security", "marking", "details"]}
-          buttons={[<AssignButton key="assign-button" />]}
+          responders={responders}
+          responderID={responderID}
+          setResponderID={setResponderID}
+          setCurrentMedevac={setCurrentMedevac}
+          buttons={[<AssignButton key="assign-button" responderID={responderID} currentMedevac={currentMedevac} />]}
         />
       </Stack>
-    </Center>
+    </Center>        
+          <button onClick={() => setView("Home")}>
+          Home Page
+        </button>
+        </>
   )
 }
 

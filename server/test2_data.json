@@ -1,0 +1,19 @@
+{
+    "status" : "test",
+    "location": "Portland",
+  "callSign": "Big Ray 7",
+   "frequency": 8800.00,
+    "byAmbulatory":3,
+    "byLitter": 3,
+    "specialEquipment": "Litter",
+    "byUrgent":4,
+    "byPriority":2,
+    "byRoutine": 0,
+     "security": "No Enemy in area",
+     "marking" : "Purple Smoke",
+     "usMil": 6,
+     "usCiv":0,
+  "nonUSMil": 0,
+  "nonUSCiv": 0,
+  "nbc": "mustard gas"
+}
