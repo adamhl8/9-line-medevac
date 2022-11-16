@@ -46,7 +46,7 @@ function View() {
     getData()
   }, [])
 
-  if (view === "requester") return <Requestor setView={setView} />  
+  if (view === "requester") return <Requestor setView={setView} />
   else if (view === "responder") return <ResponderView view={view} requestData={requestData} />
   else if (view === "dispatcher") return <DispatcherView view={view} requestData={requestData} />
   else {

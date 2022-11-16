@@ -26,9 +26,8 @@ const Form = (props: FormProps) => {
   const PatientNationalityandStatus = [
     { value: "USMilitary", label: "US Military" },
     { value: "USCivilian", label: "US Civilian" },
-    { value: "Non-US Military", label: "Non-US Military" },
-    { value: "Non-USCivilian", label: "Non-USCivilian" },
-    { value: "EPW", label: "EPW" },
+    { value: "Non-USMilitary", label: "Non-US Military" },
+    { value: "Non-USCivilian", label: "Non-US Civilian" },
   ]
   const NCBCContamination = [
     { value: "Nuclear", label: "Nuclear" },
@@ -37,11 +36,13 @@ const Form = (props: FormProps) => {
   ]
   const form = useForm({
     initialValues: {
+      status: "",
       location1: "",
       location2: "",
       location3: "",
       location4: "",
-      CallFrequencyCallSignSuffix: "",
+      CallFrequency: "",
+      CallSign: "",
       PatientNumber: 0,
       Precedence: "",
       SpecialEquipment: "",
@@ -57,15 +58,40 @@ const Form = (props: FormProps) => {
       location2: locationValidatorTwo,
       location3: locationValidatorTwo,
       location4: locationValidatorTwo,
-      CallFrequencyCallSignSuffix: (value) => (value.length === 0 ? "Cannot be Empty" : null),
+      CallFrequency: (value) => (value.length === 0 ? "Cannot be Empty" : null),
+      CallSign: (value) => (value.length === 0 ? "Cannot be Empty" : null),
       PatientNumber: (value) => (value === 0 ? "Must be more than 0" : null),
       Precedence: (value) => (value.length === 0 ? "Cannot be Empty" : null),
     },
   })
 
+  function handleSubmit() {
+    const requestBody = {
+      status: "pending",
+      location: form.values.location1 + form.values.location2 + form.values.location3 + form.values.location4,
+      callSign: form.values.CallSign,
+      frequency: form.values.CallFrequency,
+      byAmbulatory: form.values.AmbulatoryPatientNumber,
+      byLitter: form.values.LitterPatientNumber,
+      specialEquipment: form.values.SpecialEquipment[0],
+      byUrgent: form.values.Precedence === "Urgent" ? form.values.PatientNumber : 0,
+      byPriority: form.values.Precedence === "Priority" ? form.values.PatientNumber : 0,
+      byRoutine: form.values.Precedence === "Routine" ? form.values.PatientNumber : 0,
+      security: form.values.SecurityAtPickupSite,
+      marking: form.values.MethodOfMarkingPickupSite,
+      usMil: form.values.PatientNationalityAndStatus === "US Military" ? form.values.PatientNumber : 0,
+      usCiv: form.values.PatientNationalityAndStatus === "US Civilian" ? form.values.PatientNumber : 0,
+      nonUSMil: form.values.PatientNationalityAndStatus === "Non-US Military" ? form.values.PatientNumber : 0,
+      nonUSCiv: form.values.PatientNationalityAndStatus === "Non-US Civilian" ? form.values.PatientNumber : 0,
+      nbc: form.values.NBC,
+    }
+
+    console.log(requestBody)
+  }
+
   return (
     <Box w={800}>
-      <form onSubmit={form.onSubmit(console.log)}>
+      <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack
           spacing="lg"
           sx={(theme) => ({ backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0], height: 300 })}
@@ -73,26 +99,29 @@ const Form = (props: FormProps) => {
           <Group>
             <Input.Wrapper id="Location" label="Location" size="xl">
               <Group>
-                <TextInput id="Location1" {...form.getInputProps("location1")} />
-                <TextInput id="Location2" {...form.getInputProps("location2")} />
-                <TextInput id="Location3" {...form.getInputProps("location3")} />
-                <TextInput id="Location4" {...form.getInputProps("location4")} />
+                <TextInput id="Location1" placeholder="Grid Zone" {...form.getInputProps("location1")} />
+                <TextInput id="Location2" placeholder="Square ID" {...form.getInputProps("location2")} />
+                <TextInput id="Location3" placeholder="E/W: 00000" {...form.getInputProps("location3")} />
+                <TextInput id="Location4" placeholder="N/S: 00000" {...form.getInputProps("location4")} />
               </Group>
             </Input.Wrapper>
           </Group>
-          <Input.Wrapper id="Call Frequency / Call Sign / Suffix" label="Call Frequency / Call Sign / Suffix" size="xl">
-            <TextInput id="Call Frequency / Call Sign / Suffix" {...form.getInputProps("CallFrequencyCallSignSuffix")} />
+          <Input.Wrapper id="Call Frequency" label="Call Frequency / Call Sign" size="xl">
+            <Group>
+              <TextInput id="Call Frequency" placeholder="Call Frequency" {...form.getInputProps("CallFrequency")} />
+              <TextInput id="Call Sign" placeholder="Call Sign" {...form.getInputProps("CallSign")} />
+            </Group>
           </Input.Wrapper>
           <Group>
-            <Input.Wrapper id="Call Frequency / Call Sign / Suffix" label="Number of Patients" size="xl">
+            <Input.Wrapper id="Number of Patients" label="Number of Patients" size="xl">
               <NumberInput mt="sm" placeholder="Patient Number" min={0} max={10} {...form.getInputProps("PatientNumber")} />
             </Input.Wrapper>
-            <Input.Wrapper id="Call Frequency / Call Sign / Suffix" label="Precedence" size="xl">
+            <Input.Wrapper id="Precedence" label="Precedence" size="xl">
               <MultiSelect mt="sm" data={Precedence} {...form.getInputProps("Precedence")} />
             </Input.Wrapper>
           </Group>
           <Input.Wrapper id="Special Equipment" label="Special Equipment" size="xl">
-            <Checkbox.Group orientation="vertical" spacing="xs" defaultValue={["None"]} {...form.getInputProps("SpecialEquipment")}>
+            <Checkbox.Group orientation="vertical" onChan spacing="xs" defaultValue={["None"]} {...form.getInputProps("SpecialEquipment")}>
               <Checkbox value="None" label="None" />
               <Checkbox value="Hoist" label="Hoist" />
               <Checkbox value="Extraction Equipment" label="Extraction Equipment" />

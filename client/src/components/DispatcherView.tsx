@@ -1,4 +1,4 @@
-import { Stack, Title } from "@mantine/core"
+import { Center, Stack, Title } from "@mantine/core"
 import AssignButton from "./AssignButton"
 import SharedTable from "./SharedTable"
 import { TRequestData } from "./View"
@@ -14,7 +14,7 @@ interface ViewProps {
 
 function DispatcherView(props: ViewProps) {
   return (
-    <>
+    <Center>
       <Stack>
         <Title order={1}>MEDEVAC Dispatch</Title>
         <Title order={5}>SE Texas</Title>
@@ -25,7 +25,7 @@ function DispatcherView(props: ViewProps) {
           headers={["status", "location", "callSign", "precedence", "specialEquipment", "security", "marking", "details"]}
         />
       </Stack>
-    </>
+    </Center>
   )
 }
 export default DispatcherView
