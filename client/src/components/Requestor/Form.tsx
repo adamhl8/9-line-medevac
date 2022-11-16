@@ -13,24 +13,12 @@ interface FormProps {
 }
 
 const Form = (props: FormProps) => {
-  // const Precedence = [
-  //   { value: "Urgent", label: "Urgent" },
-  //   { value: "Urgent Surgical", label: "Urgent Surgical" },
-  //   { value: "Priority", label: "Priority" },
-  //   { value: "Routine", label: "Routine" },
-  // ]
   const SecurityAtPickupSite = [
     { value: "NoEnemyTroops", label: "No Enemy Troops" },
     { value: "PossibleEnemy", label: "Possible Enemy" },
     { value: "EnemyInAreaCaution", label: "Enemy In Area: Proceed with Caution" },
     { value: "EnemyInAreaEscort", label: "Enemy In Area: Armed Escort Required" },
   ]
-  // const PatientNationalityandStatus = [
-  //   { value: "USMilitary", label: "US Military" },
-  //   { value: "USCivilian", label: "US Civilian" },
-  //   { value: "Non-USMilitary", label: "Non-US Military" },
-  //   { value: "Non-USCivilian", label: "Non-US Civilian" },
-  // ]
   const NBCContamination = [
     // Something possibly wrong here
     { value: "Nuclear", label: "Nuclear" },
