@@ -31,7 +31,7 @@ const Form = (props: FormProps) => {
     { value: "Non-USMilitary", label: "Non-US Military" },
     { value: "Non-USCivilian", label: "Non-US Civilian" },
   ]
-  const NCBCContamination = [
+  const NBCContamination = [
     // Something possibly wrong here
     { value: "Nuclear", label: "Nuclear" },
     { value: "Biological", label: "Biological" },
@@ -87,9 +87,10 @@ const Form = (props: FormProps) => {
       usCiv: form.values.PatientNationalityAndStatus === "US Civilian" ? form.values.PatientNumber : 0,
       nonUSMil: form.values.PatientNationalityAndStatus === "Non-US Military" ? form.values.PatientNumber : 0,
       nonUSCiv: form.values.PatientNationalityAndStatus === "Non-US Civilian" ? form.values.PatientNumber : 0,
-      nbc: form.values.NBCContamination, // this does not actually populate data
+      nbc: form.values.NBCContamination[0], // this does not actually populate data
     }
     
+   
     const response: TRequestData = await ky.post("http://localhost:8080/items", { json: requestBody }).json()
 
     console.log(response)
@@ -176,7 +177,7 @@ const Form = (props: FormProps) => {
           </Input.Wrapper>
           {/* This seems to be broken */}
           <Input.Wrapper id="NBC" label="NBC Contamination" size="xl">
-            <MultiSelect  data={NCBCContamination} placeholder="NBC Contamination" {...form.getInputProps("NCBCContamination")} />
+            <MultiSelect  data={NBCContamination} placeholder="NBC Contamination" {...form.getInputProps("NBCContamination")} />
           </Input.Wrapper>
           <Group>
             <Button
