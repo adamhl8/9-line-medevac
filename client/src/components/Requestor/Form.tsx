@@ -130,7 +130,7 @@ const Form = (props: FormProps) => {
             </Input.Wrapper>
           </Group>
           <Input.Wrapper id="Special Equipment" label="Special Equipment" size="xl">
-            <Checkbox.Group orientation="vertical" spacing="xs" defaultValue={["None"]} {...form.getInputProps("SpecialEquipment")}>
+            <Checkbox.Group orientation="vertical" onChan spacing="xs" defaultValue={["None"]} {...form.getInputProps("SpecialEquipment")}>
               <Checkbox value="None" label="None" />
               <Checkbox value="Hoist" label="Hoist" />
               <Checkbox value="Extraction Equipment" label="Extraction Equipment" />
