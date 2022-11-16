@@ -31,7 +31,8 @@ const Form = (props: FormProps) => {
     { value: "Non-USMilitary", label: "Non-US Military" },
     { value: "Non-USCivilian", label: "Non-US Civilian" },
   ]
-  const NCBCContamination = [ // Something possibly wrong here
+  const NCBCContamination = [
+    // Something possibly wrong here
     { value: "Nuclear", label: "Nuclear" },
     { value: "Biological", label: "Biological" },
     { value: "Chemical", label: "Chemical" },
@@ -88,11 +89,10 @@ const Form = (props: FormProps) => {
       nonUSCiv: form.values.PatientNationalityAndStatus === "Non-US Civilian" ? form.values.PatientNumber : 0,
       nbc: form.values.NBCContamination, // this does not actually populate data
     }
-      console.log(requestBody)
+    console.log(requestBody)
 
-    
-      const response: TRequestData = await ky.post("http://localhost:8080/items", { json: requestBody } ).json()
-      console.log(response)
+    const response: TRequestData = await ky.post("http://localhost:8080/items", { json: requestBody }).json()
+    console.log(response)
   }
 
   return (
@@ -134,7 +134,6 @@ const Form = (props: FormProps) => {
               <Checkbox value="Ventilator" label="Ventilator" />
             </Checkbox.Group>
           </Input.Wrapper>
-
           <Group>
             <Input.Wrapper id="Litter" label="Litter Patient Number" size="xl">
               <NumberInput mt="sm" placeholder="Litter Patient Number" min={0} max={10} {...form.getInputProps("LitterPatientNumber")} />
@@ -149,7 +148,6 @@ const Form = (props: FormProps) => {
               />
             </Input.Wrapper>
           </Group>
-
           <Input.Wrapper id="Marking" label="Method of Marking Pick-Up Site" size="xl">
             <Checkbox.Group orientation="vertical" spacing="xs" {...form.getInputProps("MethodOfMarkingPickupSite")}>
               <Checkbox value="None" label="None" />
@@ -159,7 +157,6 @@ const Form = (props: FormProps) => {
               <Checkbox value="Other" label="Other" />
             </Checkbox.Group>
           </Input.Wrapper>
-
           <Input.Wrapper id="Security" label="Security at Pick-Up Site" size="xl">
             <MultiSelect
               data={SecurityAtPickupSite}
@@ -173,7 +170,8 @@ const Form = (props: FormProps) => {
               placeholder="Patient Nationality"
               {...form.getInputProps("PatientNationalityAndStatus")}
             />
-          </Input.Wrapper> {/* This seems to be broken */}
+          </Input.Wrapper>{" "}
+          {/* This seems to be broken */}
           <Input.Wrapper id="NBC" label="NBC Contamination" size="xl">
             <MultiSelect data={NCBCContamination} placeholder="NBC Contamination" {...form.getInputProps("NCBCContamination")} />
           </Input.Wrapper>
