@@ -90,7 +90,7 @@ const Form = (props: FormProps) => {
       nbc: form.values.NBCContamination, // this does not actually populate data
     }
     console.log(requestBody)
-
+    props.setSubmitted(true)
     const response: TRequestData = await ky.post("http://localhost:8080/items", { json: requestBody }).json()
     console.log(response)
   }
@@ -183,9 +183,7 @@ const Form = (props: FormProps) => {
               radius="xl"
               size="md"
               uppercase
-              onClick={() => {
-                props.setSubmitted(true)
-              }}
+              
             >
               Submit
             </Button>
