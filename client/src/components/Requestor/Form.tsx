@@ -170,7 +170,7 @@ const Form = (props: FormProps) => {
               placeholder="Patient Nationality"
               {...form.getInputProps("PatientNationalityAndStatus")}
             />
-          </Input.Wrapper>{" "}
+          </Input.Wrapper>
           {/* This seems to be broken */}
           <Input.Wrapper id="NBC" label="NBC Contamination" size="xl">
             <MultiSelect data={NCBCContamination} placeholder="NBC Contamination" {...form.getInputProps("NCBCContamination")} />
