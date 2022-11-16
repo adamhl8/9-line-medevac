@@ -1,4 +1,4 @@
-import { Stack, Title } from "@mantine/core"
+import { Center, Stack, Title } from "@mantine/core"
 import CompleteButton from "./CompleteButton"
 import RoleTwoButton from "./RoleTwoButton"
 import SharedTable from "./SharedTable"
@@ -15,7 +15,7 @@ interface ViewProps {
 
 function ResponderView(props: ViewProps) {
   return (
-    <>
+    <Center>
       <Stack>
         <Title order={1}>MEDEVAC Assignment</Title>
         <Title order={5}>SE Texas</Title>
@@ -26,7 +26,7 @@ function ResponderView(props: ViewProps) {
           headers={["status", "location", "callSign", "precedence", "specialEquipment", "security", "marking", "details"]}
         />
       </Stack>
-    </>
+    </Center>
   )
 }
 export default ResponderView
