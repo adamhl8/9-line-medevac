@@ -1,0 +1,19 @@
+{
+    "status" : "test",
+    "location": "Miami",
+  "callSign": "Slaughterhouse 6",
+   "frequency": 6700.00,
+    "byAmbulatory":4,
+    "byLitter": 2,
+    "specialEquipment": "Hoist",
+    "byUrgent":2,
+    "byPriority":2,
+    "byRoutine": 2,
+     "security": "Enemy in the Area",
+     "marking" : "VS17",
+     "usMil": 6,
+     "usCiv":0,
+  "nonUSMil": 0,
+  "nonUSCiv": 0,
+  "nbc": "nuclear warfare"
+}

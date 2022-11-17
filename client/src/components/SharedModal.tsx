@@ -1,12 +1,16 @@
 import { Divider, Modal, SimpleGrid, Stack, Text } from "@mantine/core"
-import React, { cloneElement, Fragment, useState } from "react"
+import { cloneElement, Fragment, useState, useEffect } from "react"
+import { DispatcherRadioGroup } from "./DispatcherRadioGroup"
 import { TRequestById } from "./View"
 
 interface SharedModalProps {
+  view: string
   opened: boolean
   setOpened: (value: React.SetStateAction<boolean>) => void
   request: TRequestById
   buttons: JSX.Element[]
+  responderID: string
+  setResponderID: React.Dispatch<React.SetStateAction<string>>
 }
 
 async function handleComplete(role: string) {
@@ -14,7 +18,7 @@ async function handleComplete(role: string) {
   // if responder: this will patch to update status to either complete or role 2
 }
 
-function SharedModal({ opened, setOpened, request, buttons }: SharedModalProps) {
+function SharedModal({ opened, setOpened, request, buttons, responderID, setResponderID, view }: SharedModalProps) {
   const [currentRequest, setCurrentRequest] = useState(request)
 
   const buildRequestDetails = (details: TRequestById) => {
@@ -45,8 +49,10 @@ function SharedModal({ opened, setOpened, request, buttons }: SharedModalProps) 
       <Stack justify="flex-start">
         <SimpleGrid cols={2}>{buildRequestDetails(request)}</SimpleGrid>
         <Divider mt="md" mb="md" />
+        <DispatcherRadioGroup view={view} responderID={responderID} setResponderID={setResponderID} />
         {buttons.map((button) => {
           if (button.key === "complete-button") return cloneElement(button, { request, setCurrentRequest })
+          if (button.key === "assign-button") return cloneElement(button, { request })
           return button
         })}
       </Stack>

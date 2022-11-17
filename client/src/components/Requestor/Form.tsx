@@ -16,7 +16,7 @@ import {
 import { useForm } from "@mantine/form"
 import ky from "ky"
 import React, { Fragment } from "react"
-import { TRequestData } from "../View"
+import { RequestById, TRequestData } from "../View"
 import { TRequestBody } from "./Requestor"
 
 const locationValidatorTwo = (value: string) => (value.length !== 2 ? "Needs to be Two Characters" : null)
@@ -104,11 +104,13 @@ const Form = (props: FormProps) => {
       nbc: form.values.NBCContamination[0], // this does not actually populate data
     }
 
-    const response: TRequestData = await ky.post("http://localhost:8080/items", { json: requestBody }).json()
+    const validatedRequest = RequestById.parse(requestBody) 
+
+    const response: TRequestData = await ky.post("http://localhost:8080/items", { json: validatedRequest }).json()
 
     console.log(response)
     props.setSubmitted(true)
-    props.setRequest(requestBody)
+    props.setRequest(validatedRequest)
     form.reset()
   }
 
