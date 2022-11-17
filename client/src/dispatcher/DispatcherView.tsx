@@ -1,8 +1,8 @@
 import { Center, Stack, Title } from "@mantine/core"
 import { useState } from "react"
-import AssignButton from "./AssignButton"
-import SharedTable from "./SharedTable"
-import { TRequestData } from "./View"
+import SharedTable from "../components/SharedTable"
+import { TRequestData } from "../View"
+import AssignButton from "./AssignButton.js"
 
 // Color text based on content: Possible Enemy is red, No enemy is green, Precendence is colored based on content,
 // status is colored based on content.

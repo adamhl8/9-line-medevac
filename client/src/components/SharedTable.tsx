@@ -1,8 +1,8 @@
 import { Pagination, Stack, Table } from "@mantine/core"
 import React, { useState } from "react"
+import { RequestById, RequestData, TRequestById, TRequestData } from "../View"
 import { MedevacRow } from "./MedevacRow"
 import SharedModal from "./SharedModal"
-import { RequestById, RequestData, TRequestById, TRequestData } from "./View"
 
 interface SharedTableProps {
   view: string
@@ -31,13 +31,9 @@ function SharedTable({
   const [pageNumber, setPageNumber] = useState(1)
   const [page, setPage] = useState<TRequestData>(page1)
   const [request, setRequest] = useState<TRequestById>(RequestById.parse(page1[0]))
-  // const [opened, setOpened] = useState(false)
 
   const rows = page.map((request, i) => {
-    const precedence = "fix me"
-    return (
-      <MedevacRow key={request.id} request={request} setRequest={setRequest} setOpened={setOpened} setCurrentMedevac={setCurrentMedevac} />
-    )
+    return <MedevacRow key={i} request={request} setRequest={setRequest} setOpened={setOpened} setCurrentMedevac={setCurrentMedevac} />
   })
 
   const handleSetPage = (pageNumber: number) => {

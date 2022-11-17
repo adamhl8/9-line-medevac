@@ -1,6 +1,6 @@
 import { ActionIcon } from "@mantine/core"
 import { IconListDetails } from "@tabler/icons"
-import { TRequestById } from "./View"
+import { TRequestById } from "../View"
 
 interface MedevacRowProps {
   request: TRequestById

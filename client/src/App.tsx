@@ -1,5 +1,5 @@
 import { Box, MantineProvider, Stack } from "@mantine/core"
-import View from "./components/View"
+import View from "./View"
 
 export const URL = "http://localhost:8080"
 

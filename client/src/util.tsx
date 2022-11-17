@@ -1,4 +1,4 @@
-import { TRequestData } from "./components/View.js"
+import { TRequestData } from "./View.js"
 
 const getPages = (data: TRequestData, chunkSize = 10) => {
   const chunkedData = []

@@ -2,11 +2,11 @@ import { Group, Loader } from "@mantine/core"
 import ky from "ky"
 import { useEffect, useState } from "react"
 import { z } from "zod"
-import { getPages } from "../util.js"
-import DispatcherView from "./DispatcherView"
-import MainButton from "./MainButton"
-import Requestor from "./Requestor/Requestor"
-import ResponderView from "./ResponderView"
+import MainButton from "./components/MainButton.js"
+import DispatcherView from "./dispatcher/DispatcherView.js"
+import Requestor from "./requestor/Requestor.js"
+import ResponderView from "./responder/ResponderView.js"
+import { getPages } from "./util.js"
 
 export const RequestById = z.object({
   id: z.number(),
@@ -56,7 +56,7 @@ function View() {
   if (!pages) return <Loader size="xl" />
 
   if (view === "requester") return <Requestor setView={setView} />
-  else if (view === "responder") return <ResponderView pages={pages} />
+  else if (view === "responder") return <ResponderView pages={pages} view={view} />
   else if (view === "dispatcher")
     return (
       <DispatcherView pages={pages} view={view} setView={setView} responderArray={responderArray} setResponderArray={setResponderArray} />

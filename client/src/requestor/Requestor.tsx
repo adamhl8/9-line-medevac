@@ -8,7 +8,7 @@ export const RequestBody = z.object({
   status: z.string(),
   location: z.string(),
   callSign: z.string(),
-  frequency: z.string(),
+  frequency: z.number(),
   byAmbulatory: z.number(),
   byLitter: z.number(),
   specialEquipment: z.string(),

@@ -15,7 +15,7 @@ import {
 } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import ky from "ky"
-import React, { Fragment } from "react"
+import { Fragment } from "react"
 import { RequestById, TRequestData } from "../View"
 import { TRequestBody } from "./Requestor"
 
@@ -28,9 +28,9 @@ interface FormProps {
   setSubmitted: React.Dispatch<React.SetStateAction<boolean>>
   submitted: boolean
   opened: boolean
-  request: TRequestBody
+  request: TRequestBody | undefined
   setOpened: React.Dispatch<React.SetStateAction<boolean>>
-  setRequest: React.Dispatch<React.SetStateAction<TRequestBody>>
+  setRequest: React.Dispatch<React.SetStateAction<TRequestBody | undefined>>
 }
 
 const Form = (props: FormProps) => {
@@ -47,6 +47,8 @@ const Form = (props: FormProps) => {
     { value: "Chemical", label: "Chemical" },
   ]
 
+  const mustBeMoreThan0 = "Must be more than 0"
+
   const form = useForm({
     initialValues: {
       status: "",
@@ -54,7 +56,7 @@ const Form = (props: FormProps) => {
       location2: "",
       location3: "",
       location4: "",
-      CallFrequency: "",
+      CallFrequency: 0,
       CallSign: "",
       UrgentNumber: 0,
       PriorityNumber: 0,
@@ -75,11 +77,11 @@ const Form = (props: FormProps) => {
       location2: locationValidatorTwo,
       location3: locationValidatorFive,
       location4: locationValidatorFive,
-      CallFrequency: (value) => (value.length === 0 ? "Cannot be Empty" : null),
+      CallFrequency: (value) => (value === 0 ? "Cannot be Empty" : null),
       CallSign: (value) => (value.length === 0 ? "Cannot be Empty" : null),
-      UrgentNumber: (value) => (value === 0 ? "Must be more than 0" : null),
-      PriorityNumber: (value) => (value === 0 ? "Must be more than 0" : null),
-      RoutineNumber: (value) => (value === 0 ? "Must be more than 0" : null),
+      UrgentNumber: (value) => (value === 0 ? mustBeMoreThan0 : null),
+      PriorityNumber: (value) => (value === 0 ? mustBeMoreThan0 : null),
+      RoutineNumber: (value) => (value === 0 ? mustBeMoreThan0 : null),
     },
   })
 
@@ -88,7 +90,7 @@ const Form = (props: FormProps) => {
       status: "pending",
       location: form.values.location1 + " " + form.values.location2 + " " + form.values.location3 + " " + form.values.location4,
       callSign: form.values.CallSign,
-      frequency: form.values.CallFrequency,
+      frequency: Number(form.values.CallFrequency),
       byAmbulatory: form.values.AmbulatoryPatientNumber,
       byLitter: form.values.LitterPatientNumber,
       specialEquipment: form.values.SpecialEquipment[0],
@@ -104,7 +106,7 @@ const Form = (props: FormProps) => {
       nbc: form.values.NBCContamination[0], // this does not actually populate data
     }
 
-    const validatedRequest = RequestById.parse(requestBody) 
+    const validatedRequest = RequestById.parse(requestBody)
 
     const response: TRequestData = await ky.post("http://localhost:8080/items", { json: validatedRequest }).json()
 
@@ -145,7 +147,7 @@ const Form = (props: FormProps) => {
           <Divider mt="md" mb="md" />
         </Stack>
       </Modal>
-      <form onSubmit={form.onSubmit(handleSubmit)}>
+      <form onSubmit={form.onSubmit(() => void handleSubmit())}>
         <Stack spacing="lg">
           <Group>
             <Input.Wrapper id="Location" label="Location" size="xl">
@@ -175,7 +177,7 @@ const Form = (props: FormProps) => {
             </Input.Wrapper>
           </Group>
           <Input.Wrapper id="Special Equipment" label="Special Equipment" size="xl">
-            <Checkbox.Group orientation="vertical" onChan spacing="xs" defaultValue={["None"]} {...form.getInputProps("SpecialEquipment")}>
+            <Checkbox.Group orientation="vertical" spacing="xs" defaultValue={["None"]} {...form.getInputProps("SpecialEquipment")}>
               <Checkbox value="None" label="None" />
               <Checkbox value="Hoist" label="Hoist" />
               <Checkbox value="Extraction Equipment" label="Extraction Equipment" />

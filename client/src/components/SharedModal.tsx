@@ -1,7 +1,7 @@
 import { Divider, Modal, SimpleGrid, Stack, Text } from "@mantine/core"
-import { cloneElement, Fragment, useState, useEffect } from "react"
-import { DispatcherRadioGroup } from "./DispatcherRadioGroup"
-import { TRequestById } from "./View"
+import { cloneElement, Fragment, useState } from "react"
+import { DispatcherRadioGroup } from "../dispatcher/DispatcherRadioGroup.js"
+import { TRequestById } from "../View"
 
 interface SharedModalProps {
   view: string
@@ -11,11 +11,6 @@ interface SharedModalProps {
   buttons: JSX.Element[]
   responderID: string
   setResponderID: React.Dispatch<React.SetStateAction<string>>
-}
-
-async function handleComplete(role: string) {
-  // if dispatcher: this will patch to assign a responder to record
-  // if responder: this will patch to update status to either complete or role 2
 }
 
 function SharedModal({ opened, setOpened, request, buttons, responderID, setResponderID, view }: SharedModalProps) {
