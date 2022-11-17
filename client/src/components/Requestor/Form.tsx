@@ -1,16 +1,36 @@
-import { Box, Button, Checkbox, Group, Input, MultiSelect, NumberInput, Stack, TextInput } from "@mantine/core"
+import {
+  Box,
+  Button,
+  Checkbox,
+  Divider,
+  Group,
+  Input,
+  Modal,
+  MultiSelect,
+  NumberInput,
+  SimpleGrid,
+  Stack,
+  Text,
+  TextInput,
+} from "@mantine/core"
 import { useForm } from "@mantine/form"
 import ky from "ky"
-import React from "react"
+import React, { Fragment } from "react"
 import { TRequestData } from "../View"
+import { TRequestBody } from "./Requestor"
 
 const locationValidatorTwo = (value: string) => (value.length !== 2 ? "Needs to be Two Characters" : null)
-const locationValidatorFive = (value: string) => (value.length < 2 || value.length > 5 ? "Needs to be between Two and Five Characters" : null)
+const locationValidatorFive = (value: string) =>
+  value.length < 2 || value.length > 5 ? "Needs to be between Two and Five Characters" : null
 const locationValidatorThree = (value: string) => (value.length !== 3 ? "Needs to be Three Characters" : null)
 
 interface FormProps {
   setSubmitted: React.Dispatch<React.SetStateAction<boolean>>
   submitted: boolean
+  opened: boolean
+  request: TRequestBody
+  setOpened: React.Dispatch<React.SetStateAction<boolean>>
+  setRequest: React.Dispatch<React.SetStateAction<TRequestBody>>
 }
 
 const Form = (props: FormProps) => {
@@ -88,11 +108,41 @@ const Form = (props: FormProps) => {
 
     console.log(response)
     props.setSubmitted(true)
+    props.setRequest(requestBody)
     form.reset()
+  }
+
+  const buildRequestDetails = (details: TRequestBody) => {
+    const requestDetails = []
+    for (const [key, value] of Object.entries(details)) {
+      requestDetails.push(
+        <Fragment key={key}>
+          <Text ta="right">{key}</Text>
+          <Text ta="left">{value}</Text>
+        </Fragment>,
+      )
+    }
+    return requestDetails
   }
 
   return (
     <Box w={900}>
+      <Modal
+        styles={(theme) => ({ modal: { border: `thin solid ${theme.colors.dark[4]}` } })}
+        radius="md"
+        centered
+        overlayOpacity={0.55}
+        overlayBlur={3}
+        shadow="md"
+        opened={props.opened}
+        onClose={() => props.setOpened(false)}
+        title={"Details"}
+      >
+        <Stack justify="flex-start">
+          <SimpleGrid cols={2}>{!props.request ? <></> : buildRequestDetails(props.request)}</SimpleGrid>
+          <Divider mt="md" mb="md" />
+        </Stack>
+      </Modal>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack spacing="lg">
           <Group>
