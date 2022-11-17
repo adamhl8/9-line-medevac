@@ -1,5 +1,8 @@
 import { Box, MantineProvider, Stack } from "@mantine/core"
 import View from "./components/View"
+
+export const URL = "http://localhost:8080"
+
 const App = () => {
   return (
     <MantineProvider theme={{ colorScheme: "dark" }} withGlobalStyles withNormalizeCSS>
