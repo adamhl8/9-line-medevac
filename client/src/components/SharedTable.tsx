@@ -1,31 +1,33 @@
 import { ActionIcon, Pagination, Stack, Table } from "@mantine/core"
 import { IconListDetails } from "@tabler/icons"
-import { useState } from "react"
+import React, { useState } from "react"
 import SharedModal from "./SharedModal"
 import { RequestById, RequestData, TRequestById, TRequestData } from "./View"
 import {MedevacRow} from './MedevacRow'
 
 interface SharedTableProps {
+  view: string
   pages: TRequestData[]
   headers: string[]
   buttons: JSX.Element[]
-  responders: Number[]
   responderID:string
+  opened:boolean
+  setOpened: React.Dispatch<React.SetStateAction<boolean>>
   setResponderID:React.Dispatch<React.SetStateAction<string >>
   setCurrentMedevac: React.Dispatch<React.SetStateAction<number>>
 }
 
-function SharedTable({ pages, headers, buttons, responderID, responders, setCurrentMedevac, setResponderID }: SharedTableProps) {
+function SharedTable({ pages, headers, buttons, responderID,  setCurrentMedevac, setResponderID, view, opened, setOpened }: SharedTableProps) {
   const page1 = RequestData.parse(pages[0])
   const [pageNumber, setPageNumber] = useState(1)
   const [page, setPage] = useState<TRequestData>(page1)
   const [request, setRequest] = useState<TRequestById>(RequestById.parse(page1[0]))
-  const [opened, setOpened] = useState(false)
+  // const [opened, setOpened] = useState(false)
 
   const rows = page.map((request, i) => {
     const precedence = "fix me"
     return (
-      <MedevacRow key={i} request={request} setRequest={setRequest} setOpened={setOpened} setCurrentMedevac={setCurrentMedevac} /> 
+      <MedevacRow key={request.id} request={request} setRequest={setRequest} setOpened={setOpened} setCurrentMedevac={setCurrentMedevac} /> 
     )
   })
 
@@ -38,8 +40,7 @@ function SharedTable({ pages, headers, buttons, responderID, responders, setCurr
     <>
       <SharedModal
       request={request} opened={opened} setOpened={setOpened} buttons={buttons}
-        responders={responders}
-        responderID={responderID}
+        responderID={responderID} view={view}
         setResponderID={setResponderID}
       />
 

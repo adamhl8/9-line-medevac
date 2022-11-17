@@ -39,22 +39,25 @@ export type TRequestData = z.infer<typeof RequestData>
 function View() {
   const [view, setView] = useState("default")
   const [pages, setPages] = useState<TRequestData[]>()
+  const [responderArray, setResponderArray] = useState<number>(0)
 
   async function getData() {
     const responseData = await ky.get("http://localhost:8080/items").json()
     const data = RequestData.parse(responseData)
+    console.log(data)
     setPages(getPages(data))
   }
 
   useEffect(() => {
     void getData()
-  }, [])
+    console.log(responderArray)
+  }, [responderArray])
 
   if (!pages) return <Loader size="xl" />
 
   if (view === "requester") return <Requestor setView={setView} />
   else if (view === "responder") return <ResponderView pages={pages} />
-  else if (view === "dispatcher") return <DispatcherView pages={pages} setView={setView}/>
+  else if (view === "dispatcher") return <DispatcherView pages={pages} view={view} setView={setView} responderArray={responderArray} setResponderArray={setResponderArray} />
   else {
     return (
       <Group position="center" spacing="lg">

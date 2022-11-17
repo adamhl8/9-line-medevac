@@ -11,14 +11,15 @@ import {useState} from 'react'
 interface DispatcherViewProps {
   pages: TRequestData[]
   setView:React.Dispatch<React.SetStateAction<string>>
+  view:string
+  setResponderArray: React.Dispatch<React.SetStateAction<number>>
+  responderArray: number
 }
 
-const responders = [1234, 4321, 6643]
-
-function DispatcherView({ pages, setView }: DispatcherViewProps) {
+function DispatcherView({ pages, setView, view, responderArray, setResponderArray}: DispatcherViewProps) {
   const [responderID, setResponderID] = useState<string>("")
   const [currentMedevac, setCurrentMedevac] = useState<number>(0)
-
+  const [opened, setOpened] = useState(false)
   return (
     <>
     <Center>
@@ -28,11 +29,13 @@ function DispatcherView({ pages, setView }: DispatcherViewProps) {
         <SharedTable
           pages={pages}
           headers={["status", "location", "callSign", "precedence", "specialEquipment", "security", "marking", "details"]}
-          responders={responders}
           responderID={responderID}
+          view={view}
+          opened={opened}
+          setOpened={setOpened}
           setResponderID={setResponderID}
           setCurrentMedevac={setCurrentMedevac}
-          buttons={[<AssignButton key="assign-button" responderID={responderID} currentMedevac={currentMedevac} />]}
+          buttons={[<AssignButton key="assign-button" responderID={responderID} currentMedevac={currentMedevac} setOpened={setOpened} responderArray={responderArray} setResponderArray={setResponderArray}/>]}
         />
       </Stack>
     </Center>        
