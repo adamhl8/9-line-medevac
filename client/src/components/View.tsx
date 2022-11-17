@@ -9,6 +9,7 @@ import Requestor from "./Requestor/Requestor"
 import ResponderView from "./ResponderView"
 
 export const RequestById = z.object({
+  id: z.number(),
   status: z.string().min(1),
   // location:z.string(),
   // callSign:z.string(),
@@ -29,6 +30,7 @@ export const RequestById = z.object({
   // responderID:z.number(),
   // dispatcherID:z.number()
 })
+
 export type TRequestById = z.infer<typeof RequestById>
 
 export const RequestData = RequestById.array()

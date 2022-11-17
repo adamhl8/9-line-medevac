@@ -1,5 +1,5 @@
 import { Divider, Modal, SimpleGrid, Stack, Text } from "@mantine/core"
-import React, { Fragment } from "react"
+import React, { cloneElement, Fragment, useState } from "react"
 import { TRequestById } from "./View"
 
 interface SharedModalProps {
@@ -15,6 +15,8 @@ async function handleComplete(role: string) {
 }
 
 function SharedModal({ opened, setOpened, request, buttons }: SharedModalProps) {
+  const [currentRequest, setCurrentRequest] = useState(request)
+
   const buildRequestDetails = (details: TRequestById) => {
     const requestDetails = []
     for (const [key, value] of Object.entries(details)) {
@@ -43,7 +45,10 @@ function SharedModal({ opened, setOpened, request, buttons }: SharedModalProps) 
       <Stack justify="flex-start">
         <SimpleGrid cols={2}>{buildRequestDetails(request)}</SimpleGrid>
         <Divider mt="md" mb="md" />
-        {buttons}
+        {buttons.map((button) => {
+          if (button.key === "complete-button") return cloneElement(button, { request, setCurrentRequest })
+          return button
+        })}
       </Stack>
     </Modal>
   )
