@@ -64,11 +64,11 @@ const Requestor = (props: settingView) => {
                 NEW REQUEST
               </Button>
               <Button
-                  variant="light"
-                  color="gray"
-                  onClick={() => {
-                    props.setView("default")
-                  }}
+                variant="light"
+                color="gray"
+                onClick={() => {
+                  props.setView("default")
+                }}
               >
                 HOME
               </Button>

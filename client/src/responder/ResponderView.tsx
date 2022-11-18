@@ -21,49 +21,49 @@ function ResponderView({ pages, view, setView }: ResponderViewProps) {
   const [opened, setOpened] = useState(false)
 
   return (
-    <>
-      <Box
-        w="100vw"
-        h={50}
-        mb={25}
-        // opacity = {.85}
-        sx={(theme) => ({
-          backgroundColor: "#488047", //: "#854040",
-          textAlign: "center",
-          padding: theme.spacing.md,
-          border: "",
-        })}
-      >
-        <Grid justify="center">
-          <Grid.Col span="auto">
-            <Button.Group>
-              <Button
-                variant="light"
-                color="gray"
-                onClick={() => {
-                  setView("default")
-                }}
-              >
-                <b>HOME</b>
-              </Button>
-              <Button
-                variant="light"
-                color="gray"
-                onClick={() => {
-                  setView("dispatcher")
-                }}
-              >
-                DISPATCHER
-              </Button>
-            </Button.Group>
-          </Grid.Col>
-          <Grid.Col span="auto"></Grid.Col>
-          <Grid.Col span={2} offset={2}>
-            <Group></Group>
-          </Grid.Col>
-        </Grid>
-      </Box>
-      <Center>
+    <Center>
+      <Stack>
+        <Box
+          w="100vw"
+          h={50}
+          mb={25}
+          // opacity = {.85}
+          sx={(theme) => ({
+            backgroundColor: "#488047", //: "#854040",
+            textAlign: "center",
+            padding: theme.spacing.md,
+            border: "",
+          })}
+        >
+          <Grid justify="center">
+            <Grid.Col span="auto">
+              <Button.Group>
+                <Button
+                  variant="light"
+                  color="gray"
+                  onClick={() => {
+                    setView("default")
+                  }}
+                >
+                  <b>HOME</b>
+                </Button>
+                <Button
+                  variant="light"
+                  color="gray"
+                  onClick={() => {
+                    setView("dispatcher")
+                  }}
+                >
+                  DISPATCHER
+                </Button>
+              </Button.Group>
+            </Grid.Col>
+            <Grid.Col span="auto"></Grid.Col>
+            <Grid.Col span={2} offset={2}>
+              <Group></Group>
+            </Grid.Col>
+          </Grid>
+        </Box>
         <Stack>
           <Title order={1}>MEDEVAC Assignment</Title>
           <Title order={5}>SE Texas</Title>
@@ -79,8 +79,8 @@ function ResponderView({ pages, view, setView }: ResponderViewProps) {
             setCurrentMedevac={setCurrentMedevac}
           />
         </Stack>
-      </Center>
-    </>
+      </Stack>
+    </Center>
   )
 }
 

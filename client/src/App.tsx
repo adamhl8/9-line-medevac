@@ -17,7 +17,6 @@ const App = () => {
             border: "",
           })}
         >
-            
           <b>9-Line</b>
         </Box>
         <View />
