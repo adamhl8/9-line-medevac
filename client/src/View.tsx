@@ -53,7 +53,7 @@ function View() {
     console.log(responderArray)
   }, [responderArray])
 
-  if (!pages) return <Loader size="xl" />
+  // if (!pages) return <Loader size="xl" />
 
   if (view === "requester") return <Requestor setView={setView} />
   else if (view === "responder") return <ResponderView pages={pages} view={view} />

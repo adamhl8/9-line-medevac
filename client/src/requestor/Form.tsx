@@ -16,8 +16,8 @@ import {
 import { useForm } from "@mantine/form"
 import ky from "ky"
 import { Fragment } from "react"
-import { RequestById, TRequestData } from "../View"
-import { TRequestBody } from "./Requestor"
+import { TRequestData } from "../View"
+import { RequestBody, TRequestBody } from "./Requestor"
 
 const locationValidatorTwo = (value: string) => (value.length !== 2 ? "Needs to be Two Characters" : null)
 const locationValidatorFive = (value: string) =>
@@ -79,9 +79,13 @@ const Form = (props: FormProps) => {
       location4: locationValidatorFive,
       CallFrequency: (value) => (value === 0 ? "Cannot be Empty" : null),
       CallSign: (value) => (value.length === 0 ? "Cannot be Empty" : null),
-      UrgentNumber: (value) => (value === 0 ? mustBeMoreThan0 : null),
-      PriorityNumber: (value) => (value === 0 ? mustBeMoreThan0 : null),
-      RoutineNumber: (value) => (value === 0 ? mustBeMoreThan0 : null),
+      UrgentNumber: (value) => (value < 0 ? mustBeMoreThan0 : null),
+      PriorityNumber: (value) => (value < 0 ? mustBeMoreThan0 : null),
+      RoutineNumber: (value) => (value < 0 ? mustBeMoreThan0 : null),
+      SpecialEquipment: (value) => (!value ? "Must Select One Option" : null),
+      LitterPatientNumber: (value) => (value < 0 ? mustBeMoreThan0 : null),
+      AmbulatoryPatientNumber: (value) => (value < 0 ? mustBeMoreThan0 : null),
+
     },
   })
 
@@ -103,16 +107,14 @@ const Form = (props: FormProps) => {
       usCiv: form.values.USCivilian,
       nonUSMil: form.values.NonUSMilitary,
       nonUSCiv: form.values.NonUSCivilian,
-      nbc: form.values.NBCContamination[0], // this does not actually populate data
+      nbc: form.values.NBCContamination[0], 
     }
 
-    const validatedRequest = RequestById.parse(requestBody)
-
-    const response: TRequestData = await ky.post("http://localhost:8080/items", { json: validatedRequest }).json()
+    const response: TRequestData = await ky.post("http://localhost:8080/items", { json: requestBody }).json()
 
     console.log(response)
     props.setSubmitted(true)
-    props.setRequest(validatedRequest)
+    props.setRequest(requestBody)
     form.reset()
   }
 
@@ -130,7 +132,7 @@ const Form = (props: FormProps) => {
   }
 
   return (
-    <Box w={900}>
+    <Box w={1000}>
       <Modal
         styles={(theme) => ({ modal: { border: `thin solid ${theme.colors.dark[4]}` } })}
         radius="md"
