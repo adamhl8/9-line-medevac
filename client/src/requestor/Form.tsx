@@ -19,10 +19,11 @@ import { Fragment } from "react"
 import { TRequestData } from "../View"
 import { RequestBody, TRequestBody } from "./Requestor"
 
-const locationValidatorTwo = (value: string) => (value.length !== 2 ? "Needs to be Two Characters" : null)
-const locationValidatorFive = (value: string) =>
-  value.length < 2 || value.length > 5 ? "Needs to be between Two and Five Characters" : null
-const locationValidatorThree = (value: string) => (value.length !== 3 ? "Needs to be Three Characters" : null)
+const locationValidatorTwo = (value: string) => (!/^[A-Za-z]{2}$/.test(value) ? "Example: GK" : null)
+const locationValidatorFive = (value: string) => ( !/^\d{2,5}$/.test(value) ? "Example: 12345" : null)
+const locationValidatorThree = (value: string) => ( !/^\d{2}[A-Za-z]$/.test(value) ? "Example: 11D" : null)
+const CallFrequencyValidator = (value: number) => ( !/^\d{1,3}\.\d{1,6}$/.test(Number.parseFloat(value.toString()).toString()) ? "Must Include Decimal" : null)
+const mustBeMoreThan0 = "Must be more than 0"
 
 interface FormProps {
   setSubmitted: React.Dispatch<React.SetStateAction<boolean>>
@@ -47,7 +48,7 @@ const Form = (props: FormProps) => {
     { value: "Chemical", label: "Chemical" },
   ]
 
-  const mustBeMoreThan0 = "Must be more than 0"
+  
 
   const form = useForm({
     initialValues: {
@@ -72,12 +73,16 @@ const Form = (props: FormProps) => {
       NonUSCivilian: 0,
       NBCContamination: "",
     },
+    
+    validateInputOnChange: true,
+    validateInputOnBlur: true,
+
     validate: {
       location1: locationValidatorThree,
       location2: locationValidatorTwo,
       location3: locationValidatorFive,
       location4: locationValidatorFive,
-      CallFrequency: (value) => (value === 0 ? "Cannot be Empty" : null),
+      CallFrequency: CallFrequencyValidator,
       CallSign: (value) => (value.length === 0 ? "Cannot be Empty" : null),
       UrgentNumber: (value) => (value < 0 ? mustBeMoreThan0 : null),
       PriorityNumber: (value) => (value < 0 ? mustBeMoreThan0 : null),
@@ -86,13 +91,14 @@ const Form = (props: FormProps) => {
       LitterPatientNumber: (value) => (value < 0 ? mustBeMoreThan0 : null),
       AmbulatoryPatientNumber: (value) => (value < 0 ? mustBeMoreThan0 : null),
 
-    },
+    }
+    
   })
 
   async function handleSubmit(): Promise<void> {
     const requestBody = {
       status: "pending",
-      location: form.values.location1 + " " + form.values.location2 + " " + form.values.location3 + " " + form.values.location4,
+      location: form.values.location1.toUpperCase() + " " + form.values.location2.toUpperCase() + " " + form.values.location3 + " " + form.values.location4,
       callSign: form.values.CallSign,
       frequency: Number(form.values.CallFrequency),
       byAmbulatory: form.values.AmbulatoryPatientNumber,
