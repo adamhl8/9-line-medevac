@@ -1,15 +1,16 @@
 import { Group, Loader } from "@mantine/core"
 import ky from "ky"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { z } from "zod"
 import MainButton from "./components/MainButton.js"
 import DispatcherView from "./dispatcher/DispatcherView.js"
 import Requestor from "./requestor/Requestor.js"
 import ResponderView from "./responder/ResponderView.js"
+import store from "./store.js"
 import { getPages } from "./util.js"
 
 export const RequestById = z.object({
-  id: z.number(),
+  id: z.number().nullish(),
   status: z.string().min(1),
   location: z.string().default("Austin"),
   callSign: z.string().default("Nik"),
@@ -37,9 +38,8 @@ export const RequestData = RequestById.array()
 export type TRequestData = z.infer<typeof RequestData>
 
 function View() {
-  const [view, setView] = useState("default")
-  const [pages, setPages] = useState<TRequestData[]>()
-  const [responderArray, setResponderArray] = useState<number>(0)
+  const [pages, setPages] = store((state) => [state.pages, state.setPages])
+  const view = store((state) => state.view)
 
   async function getData() {
     const responseData = await ky.get("http://localhost:8080/items").json()
@@ -50,23 +50,19 @@ function View() {
 
   useEffect(() => {
     void getData()
-    console.log(responderArray)
-  }, [responderArray])
+  }, [])
 
   if (!pages) return <Loader size="xl" />
 
-  if (view === "requester") return <Requestor setView={setView} />
-  else if (view === "responder") return <ResponderView pages={pages} view={view} setView={setView} />
-  else if (view === "dispatcher")
-    return (
-      <DispatcherView pages={pages} view={view} setView={setView} responderArray={responderArray} setResponderArray={setResponderArray} />
-    )
+  if (view === "requester") return <Requestor />
+  else if (view === "responder") return <ResponderView />
+  else if (view === "dispatcher") return <DispatcherView />
   else {
     return (
       <Group position="center" spacing="lg">
-        <MainButton text="Requester" color="red" setView={setView} />
-        <MainButton text="Responder" color="green" setView={setView} />
-        <MainButton text="Dispatcher" color="blue" setView={setView} />
+        <MainButton text="Requester" color="red" />
+        <MainButton text="Responder" color="green" />
+        <MainButton text="Dispatcher" color="blue" />
       </Group>
     )
   }

@@ -1,7 +1,6 @@
 import { Box, Button, Center, Grid, Group, Stack, Title } from "@mantine/core"
-import { useState } from "react"
 import SharedTable from "../components/SharedTable"
-import { TRequestData } from "../View"
+import store from "../store.js"
 import CompleteButton from "./CompleteButton"
 import RoleTwoButton from "./RoleTwoButton.js"
 
@@ -9,16 +8,14 @@ import RoleTwoButton from "./RoleTwoButton.js"
 // status is colored based on content.
 // maybe color the entire row based on a conditon.
 
-interface ResponderViewProps {
-  pages: TRequestData[]
-  view: string
-  setView: React.Dispatch<React.SetStateAction<string>>
-}
+function ResponderView() {
+  const setView = store((state) => state.setView)
 
-function ResponderView({ pages, view, setView }: ResponderViewProps) {
-  const [responderID, setResponderID] = useState<string>("")
-  const [currentMedevac, setCurrentMedevac] = useState<number>(0)
-  const [opened, setOpened] = useState(false)
+  const setModalButtons = store((state) => state.setModalButtons)
+  setModalButtons([<CompleteButton key="complete-button" />, <RoleTwoButton key="roleTwo-button" />])
+
+  const setTableHeaders = store((state) => state.setTableHeaders)
+  setTableHeaders(["status", "location", "callSign", "precedence", "specialEquipment", "security", "marking", "details"])
 
   return (
     <Center>
@@ -67,17 +64,7 @@ function ResponderView({ pages, view, setView }: ResponderViewProps) {
         <Stack>
           <Title order={1}>MEDEVAC Assignment</Title>
           <Title order={5}>SE Texas</Title>
-          <SharedTable
-            pages={pages}
-            headers={["status", "location", "callSign", "precedence", "specialEquipment", "security", "marking", "details"]}
-            buttons={[<CompleteButton key="complete-button" />, <RoleTwoButton key="roleTwo-button" />]}
-            responderID={responderID}
-            view={view}
-            opened={opened}
-            setOpened={setOpened}
-            setResponderID={setResponderID}
-            setCurrentMedevac={setCurrentMedevac}
-          />
+          <SharedTable />
         </Stack>
       </Stack>
     </Center>
