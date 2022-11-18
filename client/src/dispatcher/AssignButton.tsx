@@ -19,7 +19,7 @@ function AssignButton(props: AssignButtonProps) {
     await ky.patch(`http://localhost:8080/items/${props.currentMedevac}`, { json: { responderID: props.responderID } })
     props.setResponderArray((prev) => prev + 1)
     props.request.responderID = Number(props.responderID)
-    props.setOpened(false)
+    // props.setOpened(false)
   }
 
   return <Button onClick={() => void handleClick()}>Assign</Button>

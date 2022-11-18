@@ -54,7 +54,7 @@ function ResponderView({ pages, view, setView }: ResponderViewProps) {
                     setView("dispatcher")
                   }}
               >
-                RESPONDER
+                DISPATCHER
               </Button>
             </Button.Group>
           </Grid.Col>
