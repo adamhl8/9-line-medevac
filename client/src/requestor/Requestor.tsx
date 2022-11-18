@@ -64,6 +64,15 @@ const Requestor = (props: settingView) => {
                 NEW REQUEST
               </Button>
               <Button
+                  variant="light"
+                  color="gray"
+                  onClick={() => {
+                    props.setView("default")
+                  }}
+              >
+                HOME
+              </Button>
+              <Button
                 variant="light"
                 color="gray"
                 onClick={() => {
