@@ -21,7 +21,7 @@ function SharedModal({ opened, setOpened, request, buttons, responderID, setResp
     for (const [key, value] of Object.entries(details)) {
       requestDetails.push(
         <Fragment key={key}>
-          <Text ta="right">{key}</Text>
+          <Text ta="right">{key.replace(/([a-z](?=[A-Z]))/g, '$1 ').toUpperCase()}</Text>
           <Text ta="left">{value}</Text>
         </Fragment>,
       )
