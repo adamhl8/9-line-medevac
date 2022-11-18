@@ -110,11 +110,13 @@ const Form = (props: FormProps) => {
       nbc: form.values.NBCContamination[0], 
     }
 
-    const response: TRequestData = await ky.post("http://localhost:8080/items", { json: requestBody }).json()
+    const validatedRequest = RequestBody.parse(requestBody)
+
+    const response: TRequestData = await ky.post("http://localhost:8080/items", { json: validatedRequest }).json()
 
     console.log(response)
     props.setSubmitted(true)
-    props.setRequest(requestBody)
+    props.setRequest(validatedRequest)
     form.reset()
   }
 
