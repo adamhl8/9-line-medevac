@@ -56,7 +56,7 @@ function View() {
   if (!pages) return <Loader size="xl" />
 
   if (view === "requester") return <Requestor setView={setView} />
-  else if (view === "responder") return <ResponderView pages={pages} view={view} />
+  else if (view === "responder") return <ResponderView pages={pages} view={view} setView={setView} />
   else if (view === "dispatcher")
     return (
       <DispatcherView pages={pages} view={view} setView={setView} responderArray={responderArray} setResponderArray={setResponderArray} />
