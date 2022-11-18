@@ -15,13 +15,15 @@ export const RequestBody = z.object({
   byUrgent: z.number(),
   byPriority: z.number(),
   byRoutine: z.number(),
-  security: z.string(),
-  marking: z.string(),
-  usMil: z.number(),
-  usCiv: z.number(),
-  nonUSMil: z.number(),
-  nonUSCiv: z.number(),
-  nbc: z.string(),
+  security: z.string().nullish(),
+  marking: z.string().nullish(),
+  usMil: z.number().nullish(),
+  usCiv: z.number().nullish(),
+  nonUSMil: z.number().nullish(),
+  nonUSCiv: z.number().nullish(),
+  nbc: z.string().nullish(),
+  responderID: z.number().nullish(),
+  dispatcherID: z.number().nullish(),
 })
 
 export type TRequestBody = z.infer<typeof RequestBody>
