@@ -22,6 +22,8 @@ export const RequestBody = z.object({
   nonUSMil: z.number().nullish(),
   nonUSCiv: z.number().nullish(),
   nbc: z.string().nullish(),
+  responderID: z.number().nullish(),
+  dispatcherID: z.number().nullish(),
 })
 
 export type TRequestBody = z.infer<typeof RequestBody>
