@@ -1,4 +1,5 @@
 import { Box, Button, Center, Grid, Group, Stack, Title } from "@mantine/core"
+import { useEffect } from "react"
 import SharedTable from "../components/SharedTable"
 import store from "../store.js"
 import AssignButton from "./AssignButton.js"
@@ -11,10 +12,12 @@ function DispatcherView() {
   const setView = store((state) => state.setView)
 
   const setModalButtons = store((state) => state.setModalButtons)
-  setModalButtons([<AssignButton key="assign-button" />])
-
   const setTableHeaders = store((state) => state.setTableHeaders)
-  setTableHeaders(["status", "location", "callSign", "precedence", "specialEquipment", "security", "marking", "details"])
+
+  useEffect(() => {
+    setModalButtons([<AssignButton key="assign-button" />])
+    setTableHeaders(["status", "location", "callSign", "precedence", "specialEquipment", "security", "marking", "details"])
+  }, [])
 
   return (
     <>

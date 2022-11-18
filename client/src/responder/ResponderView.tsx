@@ -1,4 +1,5 @@
 import { Box, Button, Center, Grid, Group, Stack, Title } from "@mantine/core"
+import { useEffect } from "react"
 import SharedTable from "../components/SharedTable"
 import store from "../store.js"
 import CompleteButton from "./CompleteButton"
@@ -10,12 +11,13 @@ import RoleTwoButton from "./RoleTwoButton.js"
 
 function ResponderView() {
   const setView = store((state) => state.setView)
-
   const setModalButtons = store((state) => state.setModalButtons)
-  setModalButtons([<CompleteButton key="complete-button" />, <RoleTwoButton key="roleTwo-button" />])
-
   const setTableHeaders = store((state) => state.setTableHeaders)
-  setTableHeaders(["status", "location", "callSign", "precedence", "specialEquipment", "security", "marking", "details"])
+
+  useEffect(() => {
+    setModalButtons([<CompleteButton key="complete-button" />, <RoleTwoButton key="roleTwo-button" />])
+    setTableHeaders(["status", "location", "callSign", "precedence", "specialEquipment", "security", "marking", "details"])
+  }, [])
 
   return (
     <Center>

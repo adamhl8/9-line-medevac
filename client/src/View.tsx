@@ -10,7 +10,7 @@ import store from "./store.js"
 import { getPages } from "./util.js"
 
 export const RequestById = z.object({
-  id: z.number().nullish(),
+  id: z.number().default(0),
   status: z.string().min(1),
   location: z.string().default("Austin"),
   callSign: z.string().default("Nik"),

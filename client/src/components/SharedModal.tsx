@@ -6,9 +6,10 @@ import { TRequestById } from "../View"
 
 function SharedModal() {
   const [request, setRequest] = store((state) => [state.request, state.setRequest])
-  if (!request) return <></>
   const [opened, setOpened] = store((state) => [state.opened, state.setOpened])
   const modalButtons = store((state) => state.modalButtons)
+
+  if (!request) return <></>
 
   const buildRequestDetails = (details: TRequestById) => {
     const requestDetails = []

@@ -89,6 +89,7 @@ const Form = () => {
 
   async function handleSubmit(): Promise<void> {
     const requestBody = {
+      id: null,
       status: "pending",
       location:
         form.values.location1.toUpperCase() +
@@ -119,9 +120,13 @@ const Form = () => {
 
     const response: TRequestData = await ky.post("http://localhost:8080/items", { json: validatedRequest }).json()
 
-    console.log(response)
+    const validatedResponse = RequestById.parse(response)
+    const newRequestBody = {
+      id: validatedResponse.id,
+      ...requestBody,
+    }
     setRequestSubmitted(true)
-    setRequest(validatedRequest)
+    setRequest(RequestById.parse(newRequestBody))
     form.reset()
   }
 
