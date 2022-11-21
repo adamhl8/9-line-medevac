@@ -3,23 +3,19 @@ import { IconCheck } from "@tabler/icons"
 import ky from "ky"
 import { useState } from "react"
 import { URL } from "../App.js"
-import { TRequestById } from "../View.js"
+import store from "../store.js"
 
-interface CompleteButtonProps {
-  request?: TRequestById
-  setCurrentRequest?: React.Dispatch<React.SetStateAction<TRequestById>>
-}
-
-function CompleteButton({ request, setCurrentRequest }: CompleteButtonProps) {
+function CompleteButton() {
+  const [request, setRequest] = store((state) => [state.request, state.setRequest])
   const [isComplete, setIsComplete] = useState(false)
 
   const handleClick = async () => {
-    if (!request || !setCurrentRequest) return
+    if (!request || !request.id) return
 
     await ky.patch(`${URL}/items/${request.id}`, { json: { status: "complete" } })
     setIsComplete(!isComplete)
     request.status = "complete"
-    setCurrentRequest(request)
+    setRequest(request)
   }
 
   return (

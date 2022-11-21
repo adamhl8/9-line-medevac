@@ -1,20 +1,15 @@
 import { Divider, Modal, SimpleGrid, Stack, Text } from "@mantine/core"
-import { cloneElement, Fragment, useState } from "react"
+import { cloneElement, Fragment } from "react"
 import { DispatcherRadioGroup } from "../dispatcher/DispatcherRadioGroup.js"
-import { TRequestById } from "../View"
+import { TRequestById } from "../schema.js"
+import store from "../store.js"
 
-interface SharedModalProps {
-  view: string
-  opened: boolean
-  setOpened: (value: React.SetStateAction<boolean>) => void
-  request: TRequestById
-  buttons: JSX.Element[]
-  responderID: string
-  setResponderID: React.Dispatch<React.SetStateAction<string>>
-}
+function SharedModal() {
+  const [request, setRequest] = store((state) => [state.request, state.setRequest])
+  const [opened, setOpened] = store((state) => [state.opened, state.setOpened])
+  const modalButtons = store((state) => state.modalButtons)
 
-function SharedModal({ opened, setOpened, request, buttons, responderID, setResponderID, view }: SharedModalProps) {
-  const [currentRequest, setCurrentRequest] = useState(request)
+  if (!request) return <></>
 
   const buildRequestDetails = (details: TRequestById) => {
     const requestDetails = []
@@ -44,9 +39,9 @@ function SharedModal({ opened, setOpened, request, buttons, responderID, setResp
       <Stack justify="flex-start">
         <SimpleGrid cols={2}>{buildRequestDetails(request)}</SimpleGrid>
         <Divider mt="md" mb="md" />
-        <DispatcherRadioGroup view={view} responderID={responderID} setResponderID={setResponderID} />
-        {buttons.map((button) => {
-          if (button.key === "complete-button") return cloneElement(button, { request, setCurrentRequest })
+        <DispatcherRadioGroup />
+        {modalButtons.map((button) => {
+          if (button.key === "complete-button") return cloneElement(button, { request, setRequest })
           if (button.key === "assign-button") return cloneElement(button, { request })
           return button
         })}

@@ -1,15 +1,17 @@
 import { ActionIcon } from "@mantine/core"
 import { IconListDetails } from "@tabler/icons"
-import { TRequestById } from "../View"
+import { TRequestById } from "../schema.js"
+import store from "../store.js"
 
-interface MedevacRowProps {
+interface TableRowProps {
   request: TRequestById
-  setRequest: React.Dispatch<React.SetStateAction<TRequestById>>
-  setOpened: React.Dispatch<React.SetStateAction<boolean>>
-  setCurrentMedevac: React.Dispatch<React.SetStateAction<number>>
 }
 
-export const MedevacRow = ({ request, setRequest, setOpened, setCurrentMedevac }: MedevacRowProps) => {
+const TableRow = ({ request }: TableRowProps) => {
+  const setOpened = store((state) => state.setOpened)
+  const setRequest = store((state) => state.setRequest)
+  if (!request) return <></>
+
   const precedence = "fix me"
   return (
     <>
@@ -27,7 +29,6 @@ export const MedevacRow = ({ request, setRequest, setOpened, setCurrentMedevac }
             onClick={() => {
               setRequest(request)
               setOpened(true)
-              setCurrentMedevac(request.id)
             }}
           >
             <IconListDetails size={18} />
@@ -37,3 +38,5 @@ export const MedevacRow = ({ request, setRequest, setOpened, setCurrentMedevac }
     </>
   )
 }
+
+export default TableRow

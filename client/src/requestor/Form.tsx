@@ -16,8 +16,8 @@ import {
 import { useForm } from "@mantine/form"
 import ky from "ky"
 import { Fragment } from "react"
-import { TRequestData } from "../View"
-import { RequestBody, TRequestBody } from "./Requestor"
+import { RequestById, TRequestById, TRequestData } from "../schema.js"
+import store from "../store.js"
 
 const locationValidatorTwo = (value: string) => (!/^[A-Za-z]{2}$/.test(value) ? "Example: GK" : null) // Two character string, any case
 const locationValidatorFive = (value: string) => (!/^\d{2,5}$/.test(value) ? "Example: 12345" : null) // any 5-digit number
@@ -26,16 +26,7 @@ const CallFrequencyValidator = (value: number) =>
   !/^\d{1,3}\.\d{1,6}$/.test(Number.parseFloat(value.toString()).toString()) ? "Must Include Decimal" : null // any 1-3 digit number + decimal + any 1-6 digit number
 const mustBeMoreThan0 = "Must be more than 0"
 
-interface FormProps {
-  setSubmitted: React.Dispatch<React.SetStateAction<boolean>>
-  submitted: boolean
-  opened: boolean
-  request: TRequestBody | undefined
-  setOpened: React.Dispatch<React.SetStateAction<boolean>>
-  setRequest: React.Dispatch<React.SetStateAction<TRequestBody | undefined>>
-}
-
-const Form = (props: FormProps) => {
+const Form = () => {
   const SecurityAtPickupSite = [
     { value: "NoEnemyTroops", label: "No Enemy Troops" },
     { value: "PossibleEnemy", label: "Possible Enemy" },
@@ -92,8 +83,13 @@ const Form = (props: FormProps) => {
     },
   })
 
+  const [opened, setOpened] = store((state) => [state.opened, state.setOpened])
+  const [request, setRequest] = store((state) => [state.request, state.setRequest])
+  const setRequestSubmitted = store((state) => state.setRequestSubmitted)
+
   async function handleSubmit(): Promise<void> {
     const requestBody = {
+      id: null,
       status: "pending",
       location:
         form.values.location1.toUpperCase() +
@@ -120,17 +116,21 @@ const Form = (props: FormProps) => {
       nbc: form.values.NBCContamination[0],
     }
 
-    const validatedRequest = RequestBody.parse(requestBody)
+    const validatedRequest = RequestById.parse(requestBody)
 
     const response: TRequestData = await ky.post("http://localhost:8080/items", { json: validatedRequest }).json()
 
-    console.log(response)
-    props.setSubmitted(true)
-    props.setRequest(validatedRequest)
+    const validatedResponse = RequestById.parse(response)
+    const newRequestBody = {
+      // id: validatedResponse.id,
+      ...requestBody,
+    }
+    setRequestSubmitted(true)
+    setRequest(RequestById.parse(newRequestBody))
     form.reset()
   }
 
-  const buildRequestDetails = (details: TRequestBody) => {
+  const buildRequestDetails = (details: TRequestById) => {
     const requestDetails = []
     for (const [key, value] of Object.entries(details)) {
       requestDetails.push(
@@ -152,12 +152,12 @@ const Form = (props: FormProps) => {
         overlayOpacity={0.55}
         overlayBlur={3}
         shadow="md"
-        opened={props.opened}
-        onClose={() => props.setOpened(false)}
+        opened={opened}
+        onClose={() => setOpened(false)}
         title={"Details"}
       >
         <Stack justify="flex-start">
-          <SimpleGrid cols={2}>{!props.request ? <></> : buildRequestDetails(props.request)}</SimpleGrid>
+          <SimpleGrid cols={2}>{!request ? <></> : buildRequestDetails(request)}</SimpleGrid>
           <Divider mt="md" mb="md" />
         </Stack>
       </Modal>

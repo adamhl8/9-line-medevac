@@ -1,39 +1,21 @@
 import { Pagination, Stack, Table } from "@mantine/core"
-import React, { useState } from "react"
-import { RequestById, RequestData, TRequestById, TRequestData } from "../View"
-import { MedevacRow } from "./MedevacRow"
+import { useState } from "react"
+import { RequestData, TRequestData } from "../schema.js"
+import store from "../store.js"
 import SharedModal from "./SharedModal"
+import TableRow from "./TableRow"
 
-interface SharedTableProps {
-  view: string
-  pages: TRequestData[]
-  headers: string[]
-  buttons: JSX.Element[]
-  responderID: string
-  opened: boolean
-  setOpened: React.Dispatch<React.SetStateAction<boolean>>
-  setResponderID: React.Dispatch<React.SetStateAction<string>>
-  setCurrentMedevac: React.Dispatch<React.SetStateAction<number>>
-}
-
-function SharedTable({
-  pages,
-  headers,
-  buttons,
-  responderID,
-  setCurrentMedevac,
-  setResponderID,
-  view,
-  opened,
-  setOpened,
-}: SharedTableProps) {
-  const page1 = RequestData.parse(pages[0])
+function SharedTable() {
+  const pages = store((state) => state.pages)
+  const tableHeaders = store((state) => state.tableHeaders)
+  const page1 = RequestData.parse(pages && pages[0])
   const [pageNumber, setPageNumber] = useState(1)
   const [page, setPage] = useState<TRequestData>(page1)
-  const [request, setRequest] = useState<TRequestById>(RequestById.parse(page1[0]))
+
+  if (!pages) return <></>
 
   const rows = page.map((request, i) => {
-    return <MedevacRow key={i} request={request} setRequest={setRequest} setOpened={setOpened} setCurrentMedevac={setCurrentMedevac} />
+    return <TableRow key={i} request={request} />
   })
 
   const handleSetPage = (pageNumber: number) => {
@@ -43,21 +25,12 @@ function SharedTable({
 
   return (
     <>
-      <SharedModal
-        request={request}
-        opened={opened}
-        setOpened={setOpened}
-        buttons={buttons}
-        responderID={responderID}
-        view={view}
-        setResponderID={setResponderID}
-      />
-
+      <SharedModal />
       <Stack>
         <Table maw="75vw" striped highlightOnHover captionSide="bottom" fontSize="md">
           <thead>
             <tr>
-              {headers.map((header) => (
+              {tableHeaders.map((header) => (
                 <th key={header}>{header}</th>
               ))}
             </tr>

@@ -1,25 +1,15 @@
 import { Button } from "@mantine/core"
 import ky from "ky"
-import React from "react"
-import { TRequestById } from "../View"
+import store from "../store.js"
 
-interface AssignButtonProps {
-  responderID: string
-  currentMedevac: number
-  setOpened: React.Dispatch<React.SetStateAction<boolean>>
-  setResponderArray: React.Dispatch<React.SetStateAction<number>>
-  responderArray: number
-  request?: TRequestById
-}
+function AssignButton() {
+  const request = store((state) => state.request)
+  const responderId = store((state) => state.responderId)
 
-function AssignButton(props: AssignButtonProps) {
   const handleClick = async () => {
-    if (!props.request) return
-
-    await ky.patch(`http://localhost:8080/items/${props.currentMedevac}`, { json: { responderID: props.responderID } })
-    props.setResponderArray((prev) => prev + 1)
-    props.request.responderID = Number(props.responderID)
-    // props.setOpened(false)
+    if (!request || !request.id) return
+    await ky.patch(`http://localhost:8080/items/${request.id}`, { json: { responderId } })
+    request.responderID = Number(responderId)
   }
 
   return <Button onClick={() => void handleClick()}>Assign</Button>
