@@ -10,6 +10,7 @@ interface TableRowProps {
 const TableRow = ({ request }: TableRowProps) => {
   const setOpened = store((state) => state.setOpened)
   const setRequest = store((state) => state.setRequest)
+
   if (!request) return <></>
 
   const precedence = "fix me"

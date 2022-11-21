@@ -1,6 +1,6 @@
 import { TRequestData } from "./schema.js"
 
-const getPages = (data: TRequestData, chunkSize = 10) => {
+const chunkPages = (data: TRequestData, chunkSize = 10) => {
   const chunkedData = []
 
   for (let i = 0; i < data.length; i += chunkSize) {
@@ -11,4 +11,4 @@ const getPages = (data: TRequestData, chunkSize = 10) => {
   return chunkedData
 }
 
-export { getPages }
+export { chunkPages }
