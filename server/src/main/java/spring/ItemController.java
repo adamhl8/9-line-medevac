@@ -39,6 +39,7 @@ public class ItemController {
   @PostMapping("")
   @ResponseStatus(code = HttpStatus.CREATED)
   public Item createItem(@RequestBody Item item) {
+    if(item.getId() != null) item.setId(null);
     return itemRepo.save(item);
   }
 
