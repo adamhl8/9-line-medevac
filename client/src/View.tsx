@@ -12,6 +12,7 @@ import { getPages } from "./util.js"
 function View() {
   const [pages, setPages] = store((state) => [state.pages, state.setPages])
   const view = store((state) => state.view)
+  const request = store((state) => state.request)
 
   async function getData() {
     const responseData = await ky.get("http://localhost:8080/items").json()
@@ -21,7 +22,9 @@ function View() {
 
   useEffect(() => {
     void getData()
-  }, [])
+  }, [request])
+
+  
 
   if (!pages) return <Loader size="xl" />
 

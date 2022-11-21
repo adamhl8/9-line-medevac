@@ -28,10 +28,10 @@ const mustBeMoreThan0 = "Must be more than 0"
 
 const Form = () => {
   const SecurityAtPickupSite = [
-    { value: "NoEnemyTroops", label: "No Enemy Troops" },
-    { value: "PossibleEnemy", label: "Possible Enemy" },
-    { value: "EnemyInAreaCaution", label: "Enemy In Area: Proceed with Caution" },
-    { value: "EnemyInAreaEscort", label: "Enemy In Area: Armed Escort Required" },
+    { value: "No Enemy Troops", label: "No Enemy Troops" },
+    { value: "Possible Enemy", label: "Possible Enemy" },
+    { value: "Enemy In Area Caution", label: "Enemy In Area: Proceed with Caution" },
+    { value: "Enemy In Area Escort", label: "Enemy In Area: Armed Escort Required" },
   ]
   const NBCContamination = [
     // Something possibly wrong here
@@ -63,7 +63,7 @@ const Form = () => {
       NonUSCivilian: 0,
       NBCContamination: "",
     },
-
+    
     validateInputOnChange: true,
     validateInputOnBlur: true,
 
@@ -87,6 +87,16 @@ const Form = () => {
   const [request, setRequest] = store((state) => [state.request, state.setRequest])
   const setRequestSubmitted = store((state) => state.setRequestSubmitted)
 
+  const createStringFromArray = (arrayToCreate: Array<string>) => {
+      let stringToReturn = ""
+
+      arrayToCreate.forEach((element, i) => {if (element !== "" && i===arrayToCreate.length-1){
+          stringToReturn +=`${element}`
+      } else {
+        stringToReturn+= `${element}, ` }})
+        return stringToReturn
+  }
+
   async function handleSubmit(): Promise<void> {
     const requestBody = {
       id: 1,
@@ -103,7 +113,7 @@ const Form = () => {
       frequency: Number(form.values.CallFrequency),
       byAmbulatory: form.values.AmbulatoryPatientNumber,
       byLitter: form.values.LitterPatientNumber,
-      specialEquipment: form.values.SpecialEquipment[0],
+      specialEquipment: createStringFromArray(form.values.SpecialEquipment),
       byUrgent: form.values.UrgentNumber,
       byPriority: form.values.PriorityNumber,
       byRoutine: form.values.RoutineNumber,
@@ -115,7 +125,7 @@ const Form = () => {
       nonUSCiv: form.values.NonUSCivilian,
       nbc: form.values.NBCContamination[0],
     }
-
+    console.log(form.values.SpecialEquipment)
     const validatedRequest = RequestById.parse(requestBody)
 
     const response: TRequestData = await ky.post("http://localhost:8080/items", { json: validatedRequest }).json()
@@ -216,8 +226,8 @@ const Form = () => {
             <Checkbox.Group orientation="vertical" spacing="xs" {...form.getInputProps("MethodOfMarkingPickupSite")}>
               <Checkbox value="None" label="None" />
               <Checkbox value="Panels" label="Panels" />
-              <Checkbox value="PyrotechnicSignal" label="Pyrotechnic Signal" />
-              <Checkbox value="SmokeSignal" label="Smoke Signal" />
+              <Checkbox value="Pyrotechnic Signal" label="Pyrotechnic Signal" />
+              <Checkbox value="Smoke Signal" label="Smoke Signal" />
               <Checkbox value="Other" label="Other" />
             </Checkbox.Group>
           </Input.Wrapper>
