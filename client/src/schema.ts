@@ -1,7 +1,7 @@
 import { z } from "zod"
 
-const defaultString = (value: unknown) => value ?? ""
-const defaultNumber = (value: unknown) => value ?? 0
+const defaultString = (value: string) => value ?? ""
+const defaultNumber = (value: number) => value ?? 0
 
 export const RequestById = z.object({
   id: z.number().transform(defaultNumber),
@@ -21,7 +21,7 @@ export const RequestById = z.object({
   usCiv: z.number().transform(defaultNumber),
   nonUSMil: z.number().transform(defaultNumber),
   nonUSCiv: z.number().transform(defaultNumber),
-  nbc: z.string().transform(defaultString).nullish(),
+  nbc: z.string().transform(defaultString),
   responderID: z.number().transform(defaultNumber),
   dispatcherID: z.number().transform(defaultNumber),
 })
