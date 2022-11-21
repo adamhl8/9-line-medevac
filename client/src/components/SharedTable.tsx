@@ -8,7 +8,7 @@ import TableRow from "./TableRow"
 function SharedTable() {
   const pages = store((state) => state.pages)
   const tableHeaders = store((state) => state.tableHeaders)
-  const page1 = RequestData.parse(pages && pages[0])
+  const page1 = RequestData.parse((pages && pages[0]) || pages) // if pages exists, pass in first page array, otherwise pages must be empty array
   const [pageNumber, setPageNumber] = useState(1)
   const [page, setPage] = useState<TRequestData>(page1)
 
