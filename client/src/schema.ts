@@ -22,8 +22,8 @@ export const RequestById = z.object({
   nonUSMil: z.number().transform(defaultNumber),
   nonUSCiv: z.number().transform(defaultNumber),
   nbc: z.string().transform(defaultString),
-  responderID: z.number().transform(defaultNumber),
-  dispatcherID: z.number().transform(defaultNumber),
+  responderID: z.number().default(0),
+  dispatcherID: z.number().default(0),
 })
 export type TRequestById = z.infer<typeof RequestById>
 

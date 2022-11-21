@@ -23,7 +23,7 @@ const locationValidatorTwo = (value: string) => (!/^[A-Za-z]{2}$/.test(value) ? 
 const locationValidatorFive = (value: string) => (!/^\d{2,5}$/.test(value) ? "Example: 12345" : null) // any 5-digit number
 const locationValidatorThree = (value: string) => (!/^\d{2}[A-Za-z]$/.test(value) ? "Example: 11D" : null) // any 2-digit number + once character, any case
 const CallFrequencyValidator = (value: number) =>
-  /^\d{0,3}\.\d{0,6}$/.test(Number.parseFloat(value.toString()).toString()) ? "Must Include Decimal" : null // any 1-3 digit number + decimal + any 1-6 digit number
+  /^\d{0,3}\.\d{0,6}$/.test(Number.parseFloat(value.toString()).toString()) ? null : "Must Include Decimal" // any 1-3 digit number + decimal + any 1-6 digit number
 const mustBeMoreThan0 = "Must be more than 0"
 
 const Form = () => {
@@ -47,7 +47,7 @@ const Form = () => {
       location2: "",
       location3: "",
       location4: "",
-      CallFrequency: 0,
+      CallFrequency: "",
       CallSign: "",
       UrgentNumber: 0,
       PriorityNumber: 0,

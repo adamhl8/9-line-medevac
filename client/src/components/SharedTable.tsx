@@ -31,7 +31,7 @@ function SharedTable() {
           <thead>
             <tr>
               {tableHeaders.map((header) => (
-                <th key={header}>{header}</th>
+                <th key={header}>{header.replace(/([a-z](?=[A-Z]))/g, "$1 ").toUpperCase()}</th>
               ))}
             </tr>
           </thead>
