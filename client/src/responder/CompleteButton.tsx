@@ -10,7 +10,7 @@ function CompleteButton() {
   const [isComplete, setIsComplete] = useState(false)
 
   const handleClick = async () => {
-    if (!request) return
+    if (!request || !request.id) return
 
     await ky.patch(`${URL}/items/${request.id}`, { json: { status: "complete" } })
     setIsComplete(!isComplete)

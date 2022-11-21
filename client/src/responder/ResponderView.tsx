@@ -28,8 +28,8 @@ function ResponderView() {
           <Title order={5}>SE Texas</Title>
           <SharedTable />
         </Stack>
-      </Stack>
-    </Center>
+      </Center>
+    </>
   )
 }
 
