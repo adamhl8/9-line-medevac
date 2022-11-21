@@ -1,7 +1,7 @@
 import { ActionIcon } from "@mantine/core"
 import { IconListDetails } from "@tabler/icons"
+import { TRequestById } from "../schema.js"
 import store from "../store.js"
-import { TRequestById } from "../View.js"
 
 interface TableRowProps {
   request: TRequestById
@@ -9,8 +9,8 @@ interface TableRowProps {
 
 const TableRow = ({ request }: TableRowProps) => {
   const setOpened = store((state) => state.setOpened)
-  if (!request) return <></>
   const setRequest = store((state) => state.setRequest)
+  if (!request) return <></>
 
   const precedence = "fix me"
   return (

@@ -1,18 +1,18 @@
 import { Pagination, Stack, Table } from "@mantine/core"
 import { useState } from "react"
+import { RequestData, TRequestData } from "../schema.js"
 import store from "../store.js"
-import { RequestData, TRequestData } from "../View"
 import SharedModal from "./SharedModal"
 import TableRow from "./TableRow"
 
 function SharedTable() {
   const pages = store((state) => state.pages)
-  if (!pages) return <></>
   const tableHeaders = store((state) => state.tableHeaders)
-
-  const page1 = RequestData.parse(pages[0])
+  const page1 = RequestData.parse(pages && pages[0])
   const [pageNumber, setPageNumber] = useState(1)
   const [page, setPage] = useState<TRequestData>(page1)
+
+  if (!pages) return <></>
 
   const rows = page.map((request, i) => {
     return <TableRow key={i} request={request} />
@@ -26,7 +26,6 @@ function SharedTable() {
   return (
     <>
       <SharedModal />
-
       <Stack>
         <Table maw="75vw" striped highlightOnHover captionSide="bottom" fontSize="md">
           <thead>

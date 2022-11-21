@@ -1,8 +1,8 @@
 import { Divider, Modal, SimpleGrid, Stack, Text } from "@mantine/core"
 import { cloneElement, Fragment } from "react"
 import { DispatcherRadioGroup } from "../dispatcher/DispatcherRadioGroup.js"
+import { TRequestById } from "../schema.js"
 import store from "../store.js"
-import { TRequestById } from "../View"
 
 function SharedModal() {
   const [request, setRequest] = store((state) => [state.request, state.setRequest])

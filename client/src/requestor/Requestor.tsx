@@ -6,7 +6,7 @@ import Form from "./Form"
 const Requestor = () => {
   const setView = store((state) => state.setView)
   const [requestSubmitted, setRequestSubmitted] = store((state) => [state.requestSubmitted, state.setRequestSubmitted])
-  const [opened, setOpened] = store((state) => [state.opened, state.setOpened])
+  const setOpened = store((state) => state.setOpened)
 
   return (
     <>

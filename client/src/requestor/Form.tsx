@@ -16,8 +16,8 @@ import {
 import { useForm } from "@mantine/form"
 import ky from "ky"
 import { Fragment } from "react"
+import { RequestById, TRequestById, TRequestData } from "../schema.js"
 import store from "../store.js"
-import { RequestById, TRequestById, TRequestData } from "../View"
 
 const locationValidatorTwo = (value: string) => (!/^[A-Za-z]{2}$/.test(value) ? "Example: GK" : null) // Two character string, any case
 const locationValidatorFive = (value: string) => (!/^\d{2,5}$/.test(value) ? "Example: 12345" : null) // any 5-digit number
@@ -85,7 +85,7 @@ const Form = () => {
 
   const [opened, setOpened] = store((state) => [state.opened, state.setOpened])
   const [request, setRequest] = store((state) => [state.request, state.setRequest])
-  const [requestSubmitted, setRequestSubmitted] = store((state) => [state.requestSubmitted, state.setRequestSubmitted])
+  const setRequestSubmitted = store((state) => state.setRequestSubmitted)
 
   async function handleSubmit(): Promise<void> {
     const requestBody = {
@@ -122,7 +122,7 @@ const Form = () => {
 
     const validatedResponse = RequestById.parse(response)
     const newRequestBody = {
-      id: validatedResponse.id,
+      // id: validatedResponse.id,
       ...requestBody,
     }
     setRequestSubmitted(true)

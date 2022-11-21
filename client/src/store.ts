@@ -1,5 +1,5 @@
 import create from "zustand"
-import { TRequestById, TRequestData } from "./View.js"
+import { TRequestById, TRequestData } from "./schema.js"
 
 interface Store {
   pages: TRequestData[] | null
