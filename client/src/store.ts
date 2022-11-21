@@ -1,11 +1,11 @@
+import ky from "ky"
 import create from "zustand"
-import {RequestData, TRequestById, TRequestData} from "./schema.js"
-import ky from "ky";
-import {chunkPages} from "./util";
+import { RequestData, TRequestById, TRequestData } from "./schema.js"
+import { chunkPages } from "./util"
 
 interface Store {
   pages: TRequestData[] | null
-  getAndSetPages: ()=> Promise<void>
+  getAndSetPages: () => Promise<void>
 
   view: string
   setView: (view: string) => void
@@ -31,11 +31,11 @@ interface Store {
 
 const store = create<Store>((set) => ({
   pages: null,
-  getAndSetPages: async ()=> {
+  getAndSetPages: async () => {
     const responseData = await ky.get("http://localhost:8080/items").json()
     const data = RequestData.parse(responseData)
     const pages = chunkPages(data)
-    set(() => ({pages}))
+    set(() => ({ pages }))
   },
   view: "default",
   setView: (view: string) => set(() => ({ view })),

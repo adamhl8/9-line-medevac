@@ -1,6 +1,5 @@
 import { Button } from "@mantine/core"
 import store from "../store.js"
-import {useEffect} from "react";
 
 interface MainButtonProps {
   text: string

@@ -3,12 +3,9 @@ import { IconListDetails } from "@tabler/icons"
 import { TRequestById } from "../schema.js"
 import store from "../store.js"
 
-
-
 interface TableRowProps {
   request: TRequestById
 }
-
 
 const TableRow = ({ request }: TableRowProps) => {
   const setOpened = store((state) => state.setOpened)
