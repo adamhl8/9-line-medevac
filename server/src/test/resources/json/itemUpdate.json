@@ -1,0 +1,21 @@
+{
+  "status": "complete",
+  "location": "Austin, TX",
+  "callSign": "CRAAAM5",
+  "frequency": 10755.0,
+  "byAmbulatory": 1,
+  "byLitter": 2,
+  "specialEquipment": "Hoist",
+  "byUrgent": 1,
+  "byPriority": 2,
+  "byRoutine": 2,
+  "security": "testtest",
+  "marking": "test",
+  "usMil": 2,
+  "usCiv": 1,
+  "nonUSMil": 5,
+  "nonUSCiv": 5,
+  "nbc": "testtest",
+  "responderID": 1,
+  "dispatcherID": 1
+}

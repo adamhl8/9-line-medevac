@@ -1,1 +1,22 @@
-{}
+
+{
+  "status": "complete",
+  "location": "Dallas, TX",
+  "callSign": "CRAAAM5",
+  "frequency": 10745.0f,
+  "byAmbulatory": 1,
+  "byLitter": 2,
+  "specialEquipment": "Hoist",
+  "byUrgent": 2,
+  "byPriority": 2,
+  "byRoutine": 2,
+  "security": "testtest",
+  "marking": "test",
+  "usMil": 2,
+  "usCiv": 1,
+  "nonUSMil": 2,
+  "nonUSCiv": 2,
+  "nbc": "testtest",
+  "responderID": 2,
+  "dispatcherID": 1
+}
