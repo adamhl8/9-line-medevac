@@ -7,7 +7,8 @@ import store from "../store.js"
 
 function RoleTwoButton() {
   const [request, setRequest] = store((state) => [state.request, state.setRequest])
-  const role2Assign = (request.status === "Role 2")
+  if (!request) return <></>
+  const role2Assign = request.status === "Role 2"
 
 
   const handleClick = async () => {
@@ -20,7 +21,11 @@ function RoleTwoButton() {
   }
 
   return (
-      <Button leftIcon={role2Assign ? <IconCheck size={14} /> : null} color={role2Assign ? "green" : ""} onClick={() => void handleClick()}>
+      <Button
+          leftIcon={role2Assign ? <IconCheck size={14} /> : null}
+          color={role2Assign ? "green" : ""}
+          onClick={() => void handleClick()
+      }>
         Role 2
       </Button>
 
