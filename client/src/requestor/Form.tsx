@@ -16,7 +16,7 @@ import {
 import { useForm } from "@mantine/form"
 import ky from "ky"
 import { Fragment } from "react"
-import { RequestById, TRequestById, TRequestData } from "../schema.js"
+import { RequestById, TRequestById } from "../schema.js"
 import store from "../store.js"
 
 const locationValidatorTwo = (value: string) => (!/^[A-Za-z]{2}$/.test(value) ? "Example: GK" : null) // Two character string, any case
@@ -41,7 +41,7 @@ const Form = () => {
     { value: "Nuclear", label: "Nuclear" },
     { value: "Biological", label: "Biological" },
     { value: "Chemical", label: "Chemical" },
-  ] 
+  ]
 
   const form = useForm({
     initialValues: {
@@ -134,17 +134,12 @@ const Form = () => {
 
     const validatedRequest = RequestById.parse(requestBody)
 
-    const response: TRequestData = await ky.post("http://localhost:8080/requests", { json: validatedRequest }).json()
+    await ky.post("http://localhost:8080/requests", { json: validatedRequest }).json()
 
-    const validatedResponse = RequestById.parse(response)
-    const newRequestBody = {
-      // id: validatedResponse.id,
-      ...requestBody,
-    }
     setRequestSubmitted(true)
-    setRequest(RequestById.parse(newRequestBody))
+    setRequest(validatedRequest)
     form.reset()
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
   }
 
   const buildRequestDetails = (details: TRequestById) => {

@@ -7,17 +7,17 @@ const Requestor = () => {
   const setView = store((state) => state.setView)
   const [requestSubmitted, setRequestSubmitted] = store((state) => [state.requestSubmitted, state.setRequestSubmitted])
   const setOpened = store((state) => state.setOpened)
-    const getAndSetPages = store ((state) => state.getAndSetPages)
+  const getAndSetPages = store((state) => state.getAndSetPages)
 
-    const handleClickResponder = async () => {
-        await getAndSetPages()
-        setView("responder")
-    }
+  const handleClickResponder = async () => {
+    await getAndSetPages()
+    setView("responder")
+  }
 
-    const handleClickDispatcher = async () => {
-        await getAndSetPages()
-        setView("dispatcher")
-    }
+  const handleClickDispatcher = async () => {
+    await getAndSetPages()
+    setView("dispatcher")
+  }
 
   return (
     <>
@@ -43,24 +43,12 @@ const Requestor = () => {
                   setRequestSubmitted(false)
                 }}
               >
-                  <b>NEW REQUEST</b>
+                <b>NEW REQUEST</b>
               </Button>
-              <Button
-                variant="light"
-                color="gray"
-                onClick={
-                  () => void handleClickResponder()
-              }
-              >
+              <Button variant="light" color="gray" onClick={() => void handleClickResponder()}>
                 RESPONDER
               </Button>
-              <Button
-                variant="light"
-                color="gray"
-                onClick={
-                  () => void handleClickDispatcher()
-              }
-              >
+              <Button variant="light" color="gray" onClick={() => void handleClickDispatcher()}>
                 DISPATCER
               </Button>
             </Button.Group>

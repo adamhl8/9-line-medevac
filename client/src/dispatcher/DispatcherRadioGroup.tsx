@@ -4,7 +4,7 @@ import store from "../store.js"
 
 export const DispatcherRadioGroup = () => {
   const view = store((state) => state.view)
-  const [responderId, setResponderId] = store((state) => [state.responderId, state.setResponderId])
+  const setResponderId = store((state) => state.setResponderId)
   const responders = store.getState().responders
 
   if (!responders) return <></>
