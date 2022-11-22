@@ -34,7 +34,7 @@ interface Store {
 const store = create<Store>((set) => ({
   pages: null,
   getAndSetPages: async () => {
-    const responseData = await ky.get("http://localhost:8080/items").json()
+    const responseData = await ky.get("http://localhost:8080/requests").json()
     const data = RequestData.parse(responseData)
     const pages = chunkPages(data)
     set(() => ({ pages }))

@@ -118,7 +118,7 @@ const Form = () => {
 
     const validatedRequest = RequestById.parse(requestBody)
 
-    const response: TRequestData = await ky.post("http://localhost:8080/items", { json: validatedRequest }).json()
+    const response: TRequestData = await ky.post("http://localhost:8080/requests", { json: validatedRequest }).json()
 
     const validatedResponse = RequestById.parse(response)
     const newRequestBody = {
