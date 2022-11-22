@@ -2,6 +2,7 @@ import { z } from "zod"
 
 const defaultString = (value: string) => value ?? ""
 const defaultNumber = (value: number) => value ?? 0
+const notSubmitted = "Not Submitted"
 
 export const RequestById = z.object({
   id: z.number().default(0).transform(defaultNumber),
@@ -15,13 +16,13 @@ export const RequestById = z.object({
   byUrgent: z.number().default(0).transform(defaultNumber),
   byPriority: z.number().default(0).transform(defaultNumber),
   byRoutine: z.number().default(0).transform(defaultNumber),
-  security: z.string().default("").transform(defaultString),
-  marking: z.string().default("").transform(defaultString),
+  security: z.string().default(notSubmitted).transform(defaultString),
+  marking: z.string().default(notSubmitted).transform(defaultString),
   usMil: z.number().default(0).transform(defaultNumber),
   usCiv: z.number().default(0).transform(defaultNumber),
   nonUSMil: z.number().default(0).transform(defaultNumber),
   nonUSCiv: z.number().default(0).transform(defaultNumber),
-  nbc: z.string().default("").transform(defaultString),
+  nbc: z.string().default(notSubmitted).transform(defaultString),
   responderID: z.number().default(0).transform(defaultNumber),
   dispatcherID: z.number().default(0).transform(defaultNumber),
 })
