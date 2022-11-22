@@ -14,7 +14,7 @@ function RoleTwoButton() {
   const handleClick = async () => {
     if (!request || !request.id) return
 
-    await ky.patch(`${URL}/items/${request.id}`, { json: { status: "Role 2" } })
+    await ky.patch(`${URL}/requests/${request.id}`, { json: { status: "Role 2" } })
     request.status = "Role 2"
     setRequest(request)
 

@@ -10,11 +10,19 @@ function CompleteButton() {
   const completeAssign = request.status === "Complete"
 
   const handleClick = async () => {
-    if (!request || !request.id) return
+    if (!request || !request.id)
+      return
+      await ky.patch(`${URL}/requests/${request.id}`, {json: {status: "Complete"}})
+      request.status = "Complete"
+      setRequest(request)
+    //
+    // if (completeAssign)
+    //   return
+    //       await ky.patch(`${URL}/requests/${request.id}`, { json: { status: "Pending" } })
+    //   request.status = "Pending"
+    //   setRequest(request)
 
-    await ky.patch(`${URL}/requests/${request.id}`, { json: { status: "complete" } })
-    request.status = "Complete"
-    setRequest(request)
+
   }
 
   return (
