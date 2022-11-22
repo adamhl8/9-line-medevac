@@ -21,10 +21,13 @@ const TableRow = ({ request }: TableRowProps) => {
     } else return "Routine"
   }
 
+  const pending = request.status.toLowerCase() === "pending" && request.responderID !== 0 ? "orange" : "red"
+  const statusColor = request.status.toLowerCase() === "complete" ? "green" : pending
+
   return (
     <>
       <tr>
-        <td>{request.status}</td>
+        <td style={{color: statusColor}}>{request.status.toUpperCase()}</td>
         <td>{request.location}</td>
         <td>{request.callSign}</td>
         <td>{precedence()}</td>
