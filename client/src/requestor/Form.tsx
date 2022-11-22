@@ -41,7 +41,7 @@ const Form = () => {
     { value: "Nuclear", label: "Nuclear" },
     { value: "Biological", label: "Biological" },
     { value: "Chemical", label: "Chemical" },
-  ]
+  ] 
 
   const form = useForm({
     initialValues: {
