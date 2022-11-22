@@ -5,11 +5,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -19,88 +22,83 @@ import java.nio.file.Paths;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ItemControllerTest {
+public class RequestControllerTest {
 
     @Autowired
     private MockMvc mvc;
 
-<<<<<<< HEAD
-    @Autowired
-    private ItemRepo itemRepo;
-=======
   @Autowired
-  private RequestRepo itemRepo;
->>>>>>> e6ffaf6 (changes Item to Request)
+  private RequestRepo requestRepo;
 
-    Item Item1;
+    Request request1;
 
-    Item Item2;
+    Request request2;
 
     private ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
     void init() throws Exception {
-        Item1 = new Item();
-        Item2 = new Item();
-        Item1.setStatus("pending");
-        Item1.setLocation("Austin,Tx");
-        Item1.setCallSign("CRAAAM6");
-        Item1.setFrequency(31813.0f);
-        Item1.setByAmbulatory(2);
-        Item1.setByLitter(1);
-        Item1.setSpecialEquipment("Jungle Penetrator");
-        Item1.setByUrgent(1);
-        Item1.setByPriority(1);
-        Item1.setByRoutine(1);
-        Item1.setSecurity("test");
-        Item1.setMarking("testtest");
-        Item1.setUsMil(1);
-        Item1.setUsCiv(2);
-        Item1.setNonUSMil(1);
-        Item1.setNonUSCiv(1);
-        Item1.setNbc("test");
-        Item1.setResponderID(1);
-        Item1.setDispatcherID(2);
+        request1 = new Request();
+        request2 = new Request();
+        request1.setStatus("pending");
+        request1.setLocation("Austin,Tx");
+        request1.setCallSign("CRAAAM6");
+        request1.setFrequency(31813.0f);
+        request1.setByAmbulatory(2);
+        request1.setByLitter(1);
+        request1.setSpecialEquipment("Jungle Penetrator");
+        request1.setByUrgent(1);
+        request1.setByPriority(1);
+        request1.setByRoutine(1);
+        request1.setSecurity("test");
+        request1.setMarking("testtest");
+        request1.setUsMil(1);
+        request1.setUsCiv(2);
+        request1.setNonUSMil(1);
+        request1.setNonUSCiv(1);
+        request1.setNbc("test");
+        request1.setResponderID(1);
+        request1.setDispatcherID(2);
 
-        Item2.setStatus("pending");
-        Item2.setLocation("Austin,Tx");
-        Item2.setCallSign("CRAAAM6");
-        Item2.setFrequency(31813.0f);
-        Item2.setByAmbulatory(2);
-        Item2.setByLitter(1);
-        Item2.setSpecialEquipment("Jungle Penetrator");
-        Item2.setByUrgent(1);
-        Item2.setByPriority(1);
-        Item2.setByRoutine(1);
-        Item2.setSecurity("test");
-        Item2.setMarking("testtest");
-        Item2.setUsMil(1);
-        Item2.setUsCiv(2);
-        Item2.setNonUSMil(1);
-        Item2.setNonUSCiv(1);
-        Item2.setNbc("test");
-        Item2.setResponderID(1);
-        Item2.setDispatcherID(2);
+        request2.setStatus("pending");
+        request2.setLocation("Austin,Tx");
+        request2.setCallSign("CRAAAM6");
+        request2.setFrequency(31813.0f);
+        request2.setByAmbulatory(2);
+        request2.setByLitter(1);
+        request2.setSpecialEquipment("Jungle Penetrator");
+        request2.setByUrgent(1);
+        request2.setByPriority(1);
+        request2.setByRoutine(1);
+        request2.setSecurity("test");
+        request2.setMarking("testtest");
+        request2.setUsMil(1);
+        request2.setUsCiv(2);
+        request2.setNonUSMil(1);
+        request2.setNonUSCiv(1);
+        request2.setNbc("test");
+        request2.setResponderID(1);
+        request2.setDispatcherID(2);
 
     }
 
     @Test
     @Transactional
     @Rollback
-    public void getAllItems() throws Exception {
-        MockHttpServletRequestBuilder request = get("/items");
+    public void getAllRequests() throws Exception {
+        MockHttpServletRequestBuilder request = get("/requests");
 
         mvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$").isEmpty());
 
-        itemRepo.save(Item1);
-        itemRepo.save(Item2);
+        requestRepo.save(request1);
+        requestRepo.save(request2);
 
         mvc.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(Item1.getId()))
+                .andExpect(jsonPath("$[0].id").value(request1.getId()))
                 .andExpect(jsonPath("$[0].status").value("pending"))
                 .andExpect(jsonPath("$[0].location").value("Austin,Tx"))
                 .andExpect(jsonPath("$[0].callSign").value("CRAAAM6"))
@@ -121,7 +119,7 @@ public class ItemControllerTest {
                 .andExpect(jsonPath("$[0].responderID").value(1))
                 .andExpect(jsonPath("$[0].dispatcherID").value(2))
 
-                .andExpect(jsonPath("$[1].id").value(Item2.getId()))
+                .andExpect(jsonPath("$[1].id").value(request2.getId()))
                 .andExpect(jsonPath("$[1].status").value("pending"))
                 .andExpect(jsonPath("$[1].location").value("Austin,Tx"))
                 .andExpect(jsonPath("$[1].callSign").value("CRAAAM6"))
@@ -146,14 +144,14 @@ public class ItemControllerTest {
     @Test
     @Transactional
     @Rollback
-    public void getAnItems() throws Exception {
-        this.itemRepo.save(Item1);
-        MockHttpServletRequestBuilder request = get(String.format("/items/%d", Item1.getId()));
+    public void getRequest() throws Exception {
+        this.requestRepo.save(request1);
+        MockHttpServletRequestBuilder request = get(String.format("/requests/%d", request1.getId()));
         this.mvc.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(Item1.getId()));
+                .andExpect(jsonPath("$.id").value(request1.getId()));
 
-        MockHttpServletRequestBuilder request1 = get(String.format("/item/%d", -1));
+        MockHttpServletRequestBuilder request1 = get(String.format("/requests/%d", -1));
         this.mvc.perform(request1)
                 .andExpect(status().isNotFound());
 
@@ -162,11 +160,11 @@ public class ItemControllerTest {
     @Test
     @Transactional
     @Rollback
-    public void postAnItems() throws Exception {
-        MockHttpServletRequestBuilder request = post("/items")
+    public void addRequest() throws Exception {
+        MockHttpServletRequestBuilder request = post("/requests")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(getJSON("/json/item.json"));
+                .content(getJSON("/json/request.json"));
 
         String response = mvc.perform(request)
                 .andExpect(status().isCreated())
@@ -192,11 +190,11 @@ public class ItemControllerTest {
                 .andExpect(jsonPath("$.dispatcherID").value(1))
                 .andReturn().getResponse().getContentAsString();
 
-        int itemId = mapper.readTree(response).findValue("id").asInt();
+        int requestId = mapper.readTree(response).findValue("id").asInt();
 
-        mvc.perform(get(String.format("/items/%d", itemId)))
+        mvc.perform(get(String.format("/requests/%d", requestId)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(itemId))
+                .andExpect(jsonPath("$.id").value(requestId))
                 .andExpect(jsonPath("$.status").value("complete"))
                 .andExpect(jsonPath("$.location").value("Dallas,Tx"))
                 .andExpect(jsonPath("$.callSign").value("CRAAAM5"))
@@ -222,25 +220,25 @@ public class ItemControllerTest {
     @Test
     @Transactional
     @Rollback
-    public void updateAnItems() throws Exception {
-        MockHttpServletRequestBuilder requestWithInvalidId = patch("/items/-1")
+    public void updateRequest() throws Exception {
+        MockHttpServletRequestBuilder requestWithInvalidId = patch("/requests/-1")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(getJSON("/json/item.json"));
+                .content(getJSON("/json/request.json"));
         mvc.perform(requestWithInvalidId)
                 .andExpect(status().isNotFound())
-                .andExpect(content().string("Item at given id does not exist."));
+                .andExpect(content().string("Request at given id does not exist."));
 
-        this.itemRepo.save(Item1);
-        String requestPath = String.format("/items/%d", Item1.getId());
+        this.requestRepo.save(request1);
+        String requestPath = String.format("/requests/%d", request1.getId());
 
         MockHttpServletRequestBuilder request = patch(requestPath)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(getJSON("/json/itemUpdate.json"));
+                .content(getJSON("/json/requestUpdate.json"));
 
         mvc.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(Item1.getId()))
+                .andExpect(jsonPath("$.id").value(request1.getId()))
                 .andExpect(jsonPath("$.status").value("complete"))
                 .andExpect(jsonPath("$.location").value("Austin,Tx"))
                 .andExpect(jsonPath("$.callSign").value("CRAAAM5"))
@@ -263,8 +261,8 @@ public class ItemControllerTest {
 
         mvc.perform(get(requestPath))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(Item1.getId()))
-                .andExpect(jsonPath("$.id").value(Item1.getId()))
+                .andExpect(jsonPath("$.id").value(request1.getId()))
+                .andExpect(jsonPath("$.id").value(request1.getId()))
                 .andExpect(jsonPath("$.status").value("complete"))
                 .andExpect(jsonPath("$.location").value("Austin,Tx"))
                 .andExpect(jsonPath("$.callSign").value("CRAAAM5"))
@@ -290,15 +288,15 @@ public class ItemControllerTest {
     @Test
     @Transactional
     @Rollback
-    public void deleteAnItems() throws Exception {
-        itemRepo.save(Item1);
-        String requestPath = String.format("/items/%d", Item1.getId());
+    public void deleteRequest() throws Exception {
+        requestRepo.save(request1);
+        String requestPath = String.format("/requests/%d", request1.getId());
 
         mvc.perform(delete(requestPath)).andExpect(status().isOk());
 
         mvc.perform(get(requestPath))
                 .andExpect(status().isNotFound())
-                .andExpect(content().string("Item at given id does not exist."));
+                .andExpect(content().string("Request at given id does not exist."));
     }
 
 
