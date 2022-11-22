@@ -1,6 +1,5 @@
-import { Group, Loader } from "@mantine/core"
+import { Loader } from "@mantine/core"
 import { useEffect } from "react"
-import MainButton from "./components/MainButton.js"
 import DispatcherView from "./dispatcher/DispatcherView.js"
 import Requestor from "./requestor/Requestor.js"
 import ResponderView from "./responder/ResponderView.js"
@@ -22,9 +21,7 @@ function View() {
   else if (view === "responder") return <ResponderView />
   else if (view === "dispatcher") return <DispatcherView />
   else {
-    return (
-     <Requestor />
-    )
+    return <Requestor />
   }
 }
 

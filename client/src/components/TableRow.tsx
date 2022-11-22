@@ -3,7 +3,6 @@ import { IconListDetails } from "@tabler/icons"
 import { TRequestById } from "../schema.js"
 import store from "../store.js"
 
-
 interface TableRowProps {
   request: TRequestById
 }
@@ -15,12 +14,11 @@ const TableRow = ({ request }: TableRowProps) => {
   if (!request) return <></>
 
   const precedence = () => {
-    if (request.byPriority > request.byUrgent || request.byPriority > request.byRoutine){
+    if (request.byPriority > request.byUrgent || request.byPriority > request.byRoutine) {
       return "Priority"
-    } else if (request.byUrgent > request.byPriority || request.byPriority > request.byRoutine){
+    } else if (request.byUrgent > request.byPriority || request.byPriority > request.byRoutine) {
       return "Urgent"
-    } else
-      return "Routine"
+    } else return "Routine"
   }
 
   return (

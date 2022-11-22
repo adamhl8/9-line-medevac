@@ -2,7 +2,6 @@ import ky from "ky"
 import create from "zustand"
 import { RequestData, ResponderData, TRequestById, TRequestData, TResponderData } from "./schema.js"
 import { chunkPages } from "./util"
-import dispatcherView from "./dispatcher/DispatcherView";
 
 interface Store {
   pages: TRequestData[] | null
@@ -31,7 +30,6 @@ interface Store {
 
   modalButtons: JSX.Element[]
   setModalButtons: (modalButtons: JSX.Element[]) => void
-
 }
 
 const store = create<Store>((set) => ({
@@ -50,7 +48,7 @@ const store = create<Store>((set) => ({
     set(() => ({ responders }))
   },
   responderId: 0,
-  setResponderId: (responderId: number) => set(() => ({responderId})),
+  setResponderId: (responderId: number) => set(() => ({ responderId })),
   view: "default",
   setView: (view: string) => set(() => ({ view })),
   requestSubmitted: false,
