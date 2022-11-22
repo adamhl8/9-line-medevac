@@ -12,12 +12,10 @@ import AssignButton from "./AssignButton.js"
 function DispatcherView() {
   const setModalButtons = store((state) => state.setModalButtons)
   const setTableHeaders = store((state) => state.setTableHeaders)
-  const getAndSetPages = store((state)=> state.getAndSetPages)
 
   useEffect(() => {
     setModalButtons([<AssignButton key="assign-button" />])
     setTableHeaders(["status", "location", "callSign", "precedence", "specialEquipment", "security", "marking", "details"])
-    void getAndSetPages()
   }, [])
 
   return (

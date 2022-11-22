@@ -4,6 +4,22 @@ import store from "../store.js"
 function Navbar() {
     const setView = store((state) => state.setView)
     const view = store((state) => state.view)
+    const getAndSetPages = store ((state) => state.getAndSetPages)
+
+    const handleClickHome = async () => {
+        await getAndSetPages()
+        setView("default")
+    }
+
+    const handleClickResponder = async () => {
+        await getAndSetPages()
+        setView("responder")
+    }
+
+    const handleClickDispatcher = async () => {
+        await getAndSetPages()
+        setView("dispatcher")
+    }
 
     return view === "dispatcher" ? (
         <Box
@@ -24,18 +40,18 @@ function Navbar() {
                         <Button
                             variant="light"
                             color="gray"
-                            onClick={() => {
-                                setView("default")
-                            }}
+                            onClick={
+                                () => void handleClickHome()
+                            }
                         >
                             <b>HOME</b>
                         </Button>
                         <Button
                             variant="light"
                             color="gray"
-                            onClick={() => {
-                                setView("responder")
-                            }}
+                            onClick={
+                                () => void handleClickResponder()
+                            }
                         >
                             RESPONDER
                         </Button>
@@ -66,18 +82,18 @@ function Navbar() {
                         <Button
                             variant="light"
                             color="gray"
-                            onClick={() => {
-                                setView("default")
-                            }}
+                            onClick={
+                                () => void handleClickHome()
+                            }
                         >
                             <b>HOME</b>
                         </Button>
                         <Button
                             variant="light"
                             color="gray"
-                            onClick={() => {
-                                setView("dispatcher")
-                            }}
+                            onClick={
+                                () => void handleClickDispatcher()
+                            }
                         >
                             DISPATCHER
                         </Button>

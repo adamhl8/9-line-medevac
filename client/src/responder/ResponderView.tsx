@@ -13,12 +13,10 @@ import RoleTwoButton from "./RoleTwoButton.js"
 function ResponderView() {
   const setModalButtons = store((state) => state.setModalButtons)
   const setTableHeaders = store((state) => state.setTableHeaders)
-  const getAndSetPages = store((state)=> state.getAndSetPages)
 
   useEffect(() => {
     setModalButtons([<CompleteButton key="complete-button" />, <RoleTwoButton key="roleTwo-button" />])
     setTableHeaders(["status", "location", "callSign", "precedence", "specialEquipment", "security", "marking", "details"])
-    void getAndSetPages()
   }, [])
 
   return (
