@@ -1,9 +1,9 @@
 
 {
   "status": "complete",
-  "location": "Dallas, TX",
+  "location": "Dallas,Tx",
   "callSign": "CRAAAM5",
-  "frequency": 10745.0f,
+  "frequency": 10745.0,
   "byAmbulatory": 1,
   "byLitter": 2,
   "specialEquipment": "Hoist",

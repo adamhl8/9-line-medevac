@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,6 +37,11 @@ public class ItemController {
     return itemRepo.findAll();
   }
 
+  @GetMapping("/{id}")
+  public Item getItem(@PathVariable Integer id) {
+    return itemRepo.findById(id).orElseThrow();
+  }
+
   @PostMapping("")
   @ResponseStatus(code = HttpStatus.CREATED)
   public Item createItem(@RequestBody Item item) {
@@ -48,6 +54,7 @@ public class ItemController {
 
     BeanWrapper accessor = PropertyAccessorFactory.forBeanPropertyAccess(item);
     Field[] itemFields = item.getClass().getDeclaredFields();
+
     for (Field field : itemFields) {
       String fieldName = field.getName();
       if (body.containsKey(fieldName)) accessor.setPropertyValue(fieldName, body.get(fieldName));
@@ -64,7 +71,7 @@ public class ItemController {
   @ExceptionHandler(NoSuchElementException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
   public String itemNotFound() {
-    return "Item does not exist.";
+    return "Item at given id does not exist.";
   }
 
   @ExceptionHandler(InvalidRequestException.class)
