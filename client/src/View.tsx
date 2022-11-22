@@ -21,11 +21,7 @@ function View() {
   else if (view === "dispatcher") return <DispatcherView />
   else {
     return (
-      <Group position="center" spacing="lg">
-        <MainButton text="Requester" color="red" />
-        <MainButton text="Responder" color="green" />
-        <MainButton text="Dispatcher" color="blue" />
-      </Group>
+     <Requestor />
     )
   }
 }
