@@ -24,6 +24,9 @@ const locationValidatorFive = (value: string) => (!/^\d{2,5}$/.test(value) ? "Ex
 const locationValidatorThree = (value: string) => (!/^\d{2}[A-Za-z]$/.test(value) ? "Example: 11D" : null) // any 2-digit number + once character, any case
 const CallFrequencyValidator = (value: number) =>
   /^\d{0,3}\.\d{0,6}$/.test(Number.parseFloat(value.toString()).toString()) ? null : "Must Include Decimal" // any 1-3 digit number + decimal + any 1-6 digit number
+const totalPatientisEqual = (byUrgent: number, byPriority: number, byRoutine: number, byAmbulatory: number, byLitter: number) => {
+  return byUrgent + byPriority + byRoutine === byAmbulatory + byLitter
+}
 const mustBeMoreThan0 = "Must be more than 0"
 
 const Form = () => {
@@ -38,7 +41,7 @@ const Form = () => {
     { value: "Nuclear", label: "Nuclear" },
     { value: "Biological", label: "Biological" },
     { value: "Chemical", label: "Chemical" },
-  ]
+  ] 
 
   const form = useForm({
     initialValues: {
@@ -88,6 +91,19 @@ const Form = () => {
   const setRequestSubmitted = store((state) => state.setRequestSubmitted)
 
   async function handleSubmit(): Promise<void> {
+    if (
+      !totalPatientisEqual(
+        form.values.UrgentNumber,
+        form.values.PriorityNumber,
+        form.values.RoutineNumber,
+        form.values.AmbulatoryPatientNumber,
+        form.values.LitterPatientNumber,
+      )
+    ) {
+      alert("Total Number of patients by priority does not match number of patients by type")
+      return
+    }
+
     const requestBody = {
       id: 1,
       status: "Pending",
