@@ -8,7 +8,6 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,56 +22,55 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/items")
-public class ItemController {
+@RequestMapping("/requests")
+public class RequestController {
 
-  private final ItemRepo itemRepo;
+  private final RequestRepo requestsRepo;
 
-  public ItemController(ItemRepo itemRepo) {
-    this.itemRepo = itemRepo;
+  public RequestController(RequestRepo requestsRepo) {
+    this.requestsRepo = requestsRepo;
   }
 
   @GetMapping("")
-  public List<Item> getAllItems() {
-    return itemRepo.findAll();
+  public List<Request> getAllItems() {
+    return requestsRepo.findAll();
   }
 
   @GetMapping("/{id}")
-  public Item getItem(@PathVariable Integer id) {
-    return itemRepo.findById(id).orElseThrow();
+  public Request getItem(@PathVariable Integer id) {
+    return requestsRepo.findById(id).orElseThrow();
   }
 
   @PostMapping("")
   @ResponseStatus(code = HttpStatus.CREATED)
-  public Item createItem(@RequestBody Item item) {
-    if(item.getId() != null) item.setId(null);
-    return itemRepo.save(item);
+  public Request createItem(@RequestBody Request request) {
+    if(request.getId() != null) request.setId(null);
+    return requestsRepo.save(request);
   }
 
   @PatchMapping("/{id}")
-  public Item updateItem(@PathVariable Integer id, @RequestBody Map<String, String> body) throws Exception {
-    Item item = itemRepo.findById(id).orElseThrow();
+  public Request updateItem(@PathVariable Integer id, @RequestBody Map<String, String> body) throws Exception {
+    Request request = requestsRepo.findById(id).orElseThrow();
 
-    BeanWrapper accessor = PropertyAccessorFactory.forBeanPropertyAccess(item);
-    Field[] itemFields = item.getClass().getDeclaredFields();
-
-    for (Field field : itemFields) {
+    BeanWrapper accessor = PropertyAccessorFactory.forBeanPropertyAccess(request);
+    Field[] requestsFields = request.getClass().getDeclaredFields();
+    for (Field field : requestsFields) {
       String fieldName = field.getName();
       if (body.containsKey(fieldName)) accessor.setPropertyValue(fieldName, body.get(fieldName));
     }
 
-    return itemRepo.save(item);
+    return requestsRepo.save(request);
   }
   
   @DeleteMapping("/{id}")
-  public void deleteItem(@PathVariable Integer id) {
-    itemRepo.deleteById(id);
+  public void deleteRequest(@PathVariable Integer id) {
+    requestsRepo.deleteById(id);
   }
 
   @ExceptionHandler(NoSuchElementException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  public String itemNotFound() {
-    return "Item at given id does not exist.";
+  public String requestNotFound() {
+    return "Request at given id does not exist.";
   }
 
   @ExceptionHandler(InvalidRequestException.class)
