@@ -23,7 +23,7 @@ function DispatcherView() {
       <Navbar />
       <Center>
         <Stack>
-          <Title order={1}>MEDEVAC Dispatch</Title>
+          <Title order={1}>Dispatch</Title>
           <SharedTable />
         </Stack>
       </Center>

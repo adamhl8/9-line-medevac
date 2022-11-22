@@ -24,7 +24,7 @@ function ResponderView() {
       <Navbar></Navbar>
       <Center>
         <Stack>
-          <Title order={1}>MEDEVAC Assignment</Title>
+          <Title order={1}>Respond</Title>
           <SharedTable />
         </Stack>
       </Center>

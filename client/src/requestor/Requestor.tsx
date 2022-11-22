@@ -38,15 +38,6 @@ const Requestor = () => {
                 variant="light"
                 color="gray"
                 onClick={() => {
-                  setView("default")
-                }}
-              >
-                HOME
-              </Button>
-              <Button
-                variant="light"
-                color="gray"
-                onClick={() => {
                   setView("responder")
                 }}
               >
