@@ -7,14 +7,20 @@ import store from "../store.js"
 function CompleteButton() {
   const [request, setRequest] = store((state) => [state.request, state.setRequest])
   if (!request) return <></>
-  const completeAssign = request.status === "Complete" // status should never be null, assigned as "Pending" in Form on every new Form
+  const completeAssign = request.status === "Complete"
 
   const handleClick = async () => {
-    if (!request || !request.id) return
+    if (request.status === "Pending" || request.status === "Role 2") {
+      await ky.patch(`${URL}/requests/${request.id}`, {json: {status: "Complete"}})
+      request.status = "Complete"
+      setRequest(request)
 
-    await ky.patch(`${URL}/requests/${request.id}`, { json: { status: "complete" } })
-    request.status = "Complete"
-    setRequest(request)
+    } else if (completeAssign) {
+      await ky.patch(`${URL}/requests/${request.id}`, {json: {status: "Pending"}})
+      request.status = "Pending"
+      setRequest(request)
+    }
+
   }
 
   return (
