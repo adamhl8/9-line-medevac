@@ -26,15 +26,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/requests")
 public class RequestController {
 
-  private final RequestRepo itemRepo;
+  private final RequestRepo requestsRepo;
 
-  public RequestController(RequestRepo itemRepo) {
-    this.itemRepo = itemRepo;
+  public RequestController(RequestRepo requestsRepo) {
+    this.requestsRepo = requestsRepo;
   }
 
   @GetMapping("")
   public List<Request> getAllItems() {
-    return itemRepo.findAll();
+    return requestsRepo.findAll();
   }
 
   @GetMapping("/{id}")
@@ -44,29 +44,28 @@ public class RequestController {
 
   @PostMapping("")
   @ResponseStatus(code = HttpStatus.CREATED)
-  public Request createItem(@RequestBody Request item) {
-    if(item.getId() != null) item.setId(null);
-    return itemRepo.save(item);
+  public Request createItem(@RequestBody Request request) {
+    if(request.getId() != null) request.setId(null);
+    return requestsRepo.save(request);
   }
 
   @PatchMapping("/{id}")
   public Request updateItem(@PathVariable Integer id, @RequestBody Map<String, String> body) throws Exception {
-    Request item = itemRepo.findById(id).orElseThrow();
+    Request request = requestsRepo.findById(id).orElseThrow();
 
-    BeanWrapper accessor = PropertyAccessorFactory.forBeanPropertyAccess(item);
-    Field[] itemFields = item.getClass().getDeclaredFields();
-
-    for (Field field : itemFields) {
+    BeanWrapper accessor = PropertyAccessorFactory.forBeanPropertyAccess(request);
+    Field[] requestsFields = request.getClass().getDeclaredFields();
+    for (Field field : requestsFields) {
       String fieldName = field.getName();
       if (body.containsKey(fieldName)) accessor.setPropertyValue(fieldName, body.get(fieldName));
     }
 
-    return itemRepo.save(item);
+    return requestsRepo.save(request);
   }
   
   @DeleteMapping("/{id}")
-  public void deleteItem(@PathVariable Integer id) {
-    itemRepo.deleteById(id);
+  public void deleteRequest(@PathVariable Integer id) {
+    requestsRepo.deleteById(id);
   }
 
   @ExceptionHandler(NoSuchElementException.class)
