@@ -23,17 +23,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/items")
-public class ItemController {
+@RequestMapping("/requests")
+public class RequestController {
 
-  private final ItemRepo itemRepo;
+  private final RequestRepo itemRepo;
 
-  public ItemController(ItemRepo itemRepo) {
+  public RequestController(RequestRepo itemRepo) {
     this.itemRepo = itemRepo;
   }
 
   @GetMapping("")
-  public List<Item> getAllItems() {
+  public List<Request> getAllItems() {
     return itemRepo.findAll();
   }
 
@@ -44,14 +44,14 @@ public class ItemController {
 
   @PostMapping("")
   @ResponseStatus(code = HttpStatus.CREATED)
-  public Item createItem(@RequestBody Item item) {
+  public Request createItem(@RequestBody Request item) {
     if(item.getId() != null) item.setId(null);
     return itemRepo.save(item);
   }
 
   @PatchMapping("/{id}")
-  public Item updateItem(@PathVariable Integer id, @RequestBody Map<String, String> body) throws Exception {
-    Item item = itemRepo.findById(id).orElseThrow();
+  public Request updateItem(@PathVariable Integer id, @RequestBody Map<String, String> body) throws Exception {
+    Request item = itemRepo.findById(id).orElseThrow();
 
     BeanWrapper accessor = PropertyAccessorFactory.forBeanPropertyAccess(item);
     Field[] itemFields = item.getClass().getDeclaredFields();
