@@ -2,28 +2,29 @@ import { z } from "zod"
 
 const defaultString = (value: string) => value ?? ""
 const defaultNumber = (value: number) => value ?? 0
+const notSubmitted = "Not Submitted"
 
 export const RequestById = z.object({
-  id: z.number().transform(defaultNumber),
-  status: z.string().transform(defaultString),
-  location: z.string().transform(defaultString),
-  callSign: z.string().transform(defaultString),
-  frequency: z.number().transform(defaultNumber),
-  byAmbulatory: z.number().transform(defaultNumber),
-  byLitter: z.number().transform(defaultNumber),
-  specialEquipment: z.string().transform(defaultString),
-  byUrgent: z.number().transform(defaultNumber),
-  byPriority: z.number().transform(defaultNumber),
-  byRoutine: z.number().transform(defaultNumber),
-  security: z.string().transform(defaultString),
-  marking: z.string().transform(defaultString),
-  usMil: z.number().transform(defaultNumber),
-  usCiv: z.number().transform(defaultNumber),
-  nonUSMil: z.number().transform(defaultNumber),
-  nonUSCiv: z.number().transform(defaultNumber),
-  nbc: z.string().transform(defaultString),
-  responderID: z.number().transform(defaultNumber),
-  dispatcherID: z.number().transform(defaultNumber),
+  id: z.number().default(0).transform(defaultNumber),
+  status: z.string().default("").transform(defaultString),
+  location: z.string().default("").transform(defaultString),
+  callSign: z.string().default("").transform(defaultString),
+  frequency: z.number().default(0).transform(defaultNumber),
+  byAmbulatory: z.number().default(0).transform(defaultNumber),
+  byLitter: z.number().default(0).transform(defaultNumber),
+  specialEquipment: z.string().default("").transform(defaultString),
+  byUrgent: z.number().default(0).transform(defaultNumber),
+  byPriority: z.number().default(0).transform(defaultNumber),
+  byRoutine: z.number().default(0).transform(defaultNumber),
+  security: z.string().default(notSubmitted).transform(defaultString),
+  marking: z.string().default(notSubmitted).transform(defaultString),
+  usMil: z.number().default(0).transform(defaultNumber),
+  usCiv: z.number().default(0).transform(defaultNumber),
+  nonUSMil: z.number().default(0).transform(defaultNumber),
+  nonUSCiv: z.number().default(0).transform(defaultNumber),
+  nbc: z.string().default(notSubmitted).transform(defaultString),
+  responderID: z.number().default(0).transform(defaultNumber),
+  dispatcherID: z.number().default(0).transform(defaultNumber),
 })
 export type TRequestById = z.infer<typeof RequestById>
 

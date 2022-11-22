@@ -24,7 +24,6 @@ function DispatcherView() {
       <Center>
         <Stack>
           <Title order={1}>MEDEVAC Dispatch</Title>
-          <Title order={5}>SE Texas</Title>
           <SharedTable />
         </Stack>
       </Center>
