@@ -12,11 +12,16 @@ function RoleTwoButton() {
 
 
   const handleClick = async () => {
-    if (!request || !request.id) return
+    if (request.status === "Pending" || request.status === "Complete") {
+      await ky.patch(`${URL}/requests/${request.id}`, {json: {status: "Role 2"}})
+      request.status = "Role 2"
+      setRequest(request)
 
-    await ky.patch(`${URL}/requests/${request.id}`, { json: { status: "Role 2" } })
-    request.status = "Role 2"
-    setRequest(request)
+    } else if (role2Assign) {
+      await ky.patch(`${URL}/requests/${request.id}`, {json: {status: "Pending"}})
+      request.status = "Pending"
+      setRequest(request)
+    }
 
   }
 
