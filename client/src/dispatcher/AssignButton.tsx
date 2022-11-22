@@ -14,10 +14,8 @@ function AssignButton() {
       headers: {
       'content-type': 'application/json'
       }, 
-      json: { "responderID": responderId.toString() }}  ).then(
-        (res)=> {console.log(res)}
-      )
-    console.log(request)
+      json: { "responderID": responderId.toString() }})
+    
     request.responderID = Number(responderId)
   }
 
