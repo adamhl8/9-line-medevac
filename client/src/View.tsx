@@ -8,10 +8,12 @@ import store from "./store.js"
 
 function View() {
   const [pages, getAndSetPages] = store((state) => [state.pages, state.getAndSetPages])
+  const [responders, getAndSetResponders] = store((state) => [state.responders, state.getAndSetResponders])
   const view = store((state) => state.view)
 
   useEffect(() => {
     void getAndSetPages()
+    void getAndSetResponders()
   }, [])
 
   if (!pages) return <Loader size="xl" />

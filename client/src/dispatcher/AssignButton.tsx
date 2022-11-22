@@ -7,8 +7,17 @@ function AssignButton() {
   const responderId = store((state) => state.responderId)
 
   const handleClick = async () => {
+    
     if (!request || !request.id) return
-    await ky.patch(`http://localhost:8080/requests/${request.id}`, { json: { responderId } })
+    
+    await ky.patch(`http://localhost:8080/requests/${request.id}`, {
+      headers: {
+      'content-type': 'application/json'
+      }, 
+      json: { "responderID": responderId.toString() }}  ).then(
+        (res)=> {console.log(res)}
+      )
+    console.log(request)
     request.responderID = Number(responderId)
   }
 

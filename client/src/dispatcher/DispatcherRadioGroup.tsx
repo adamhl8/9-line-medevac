@@ -1,16 +1,19 @@
 import { Radio } from "@mantine/core"
+import { TResponder } from "../schema.js"
 import store from "../store.js"
 
 export const DispatcherRadioGroup = () => {
   const view = store((state) => state.view)
   const [responderId, setResponderId] = store((state) => [state.responderId, state.setResponderId])
-  const responders = [1234, 4321, 6643, 5555, 4223, 9770]
+  const responders = store.getState().responders
+  
+  if (!responders) return <></>
 
   return view === "dispatcher" ? (
     <div>
-      <Radio.Group name="ResponderMap" label="Responder ID" withAsterisk value={responderId} onChange={setResponderId}>
-        {responders.map((responder, i) => {
-          return <Radio key={i} value={`${responder}`} label={`${responder}`} />
+      <Radio.Group name="ResponderMap" label="Responder ID" withAsterisk onChange={(event) => setResponderId(Number.parseInt(event))}>
+        {responders.map((responder: TResponder, i) => {
+          return <Radio key={i} value={`${responder.responderId}`} label={`${responder.responderId}`} />
         })}
       </Radio.Group>
     </div>
