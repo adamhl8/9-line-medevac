@@ -1,25 +1,28 @@
 import { Button } from "@mantine/core"
 import { IconCheck } from "@tabler/icons"
 import ky from "ky"
-import { useState } from "react"
 import { URL } from "../App.js"
 import store from "../store.js"
 
 function CompleteButton() {
   const [request, setRequest] = store((state) => [state.request, state.setRequest])
-  const [isComplete, setIsComplete] = useState(false)
+  if (!request) return <></>
+  const completeAssign = request.status === "Complete" // status should never be null, assigned as "Pending" in Form on every new Form
 
   const handleClick = async () => {
     if (!request || !request.id) return
 
     await ky.patch(`${URL}/requests/${request.id}`, { json: { status: "complete" } })
-    setIsComplete(!isComplete)
-    request.status = "complete"
+    request.status = "Complete"
     setRequest(request)
   }
 
   return (
-    <Button leftIcon={isComplete ? <IconCheck size={14} /> : null} color={isComplete ? "green" : ""} onClick={() => void handleClick()}>
+    <Button
+      leftIcon={completeAssign ? <IconCheck size={14} /> : null}
+      color={completeAssign ? "green" : ""}
+      onClick={() => void handleClick()}
+    >
       Complete
     </Button>
   )

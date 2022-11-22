@@ -90,7 +90,7 @@ const Form = () => {
   async function handleSubmit(): Promise<void> {
     const requestBody = {
       id: 1,
-      status: "pending",
+      status: "Pending",
       location:
         form.values.location1.toUpperCase() +
         " " +
@@ -128,6 +128,7 @@ const Form = () => {
     setRequestSubmitted(true)
     setRequest(RequestById.parse(newRequestBody))
     form.reset()
+    window.scrollTo(0,0)
   }
 
   const buildRequestDetails = (details: TRequestById) => {

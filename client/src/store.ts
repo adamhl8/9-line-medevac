@@ -63,6 +63,7 @@ const store = create<Store>((set) => ({
   setTableHeaders: (tableHeaders: string[]) => set(() => ({ tableHeaders })),
   modalButtons: [],
   setModalButtons: (modalButtons: JSX.Element[]) => set(() => ({ modalButtons })),
+
 }))
 
 export default store

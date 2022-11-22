@@ -32,7 +32,7 @@ const TableRow = ({ request }: TableRowProps) => {
         <td>{precedence()}</td>
         <td>{request.specialEquipment}</td>
         <td>{request.security.replace(/([a-z](?=[A-Z]))/g, "$1 ")}</td>
-        <td>{request.marking}</td>
+        <td>{request.marking.replace(/([a-z](?=[A-Z]))/g, "$1 ")}</td>
         <td>
           <ActionIcon
             variant="outline"
