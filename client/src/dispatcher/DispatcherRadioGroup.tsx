@@ -8,7 +8,7 @@ export const DispatcherRadioGroup = () => {
 
   return view === "dispatcher" ? (
     <div>
-      <Radio.Group name="testingMapForResoponder" label="test" withAsterisk value={responderId} onChange={setResponderId}>
+      <Radio.Group name="ResponderMap" label="Responder ID" withAsterisk value={responderId} onChange={setResponderId}>
         {responders.map((responder, i) => {
           return <Radio key={i} value={`${responder}`} label={`${responder}`} />
         })}

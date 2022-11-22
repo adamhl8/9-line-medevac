@@ -29,7 +29,7 @@ const TableRow = ({ request }: TableRowProps) => {
         <td>{request.status}</td>
         <td>{request.location}</td>
         <td>{request.callSign}</td>
-        <td>{precedence}</td>
+        <td>{precedence()}</td>
         <td>{request.specialEquipment}</td>
         <td>{request.security.replace(/([a-z](?=[A-Z]))/g, "$1 ")}</td>
         <td>{request.marking}</td>

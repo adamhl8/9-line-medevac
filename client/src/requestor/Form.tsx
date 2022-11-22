@@ -47,7 +47,7 @@ const Form = () => {
       location2: "",
       location3: "",
       location4: "",
-      CallFrequency: "",
+      CallFrequency: 0,
       CallSign: "",
       UrgentNumber: 0,
       PriorityNumber: 0,
