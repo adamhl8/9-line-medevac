@@ -128,6 +128,7 @@ const Form = () => {
     setRequestSubmitted(true)
     setRequest(RequestById.parse(newRequestBody))
     form.reset()
+    window.scrollTo(0,0)
   }
 
   const buildRequestDetails = (details: TRequestById) => {
