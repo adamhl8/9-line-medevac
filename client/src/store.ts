@@ -31,8 +31,7 @@ interface Store {
 
   modalButtons: JSX.Element[]
   setModalButtons: (modalButtons: JSX.Element[]) => void
-  isRole2Checked: boolean
-  setIsRole2Checked: (isRole2Checked:boolean) => void
+
 }
 
 const store = create<Store>((set) => ({
@@ -64,8 +63,7 @@ const store = create<Store>((set) => ({
   setTableHeaders: (tableHeaders: string[]) => set(() => ({ tableHeaders })),
   modalButtons: [],
   setModalButtons: (modalButtons: JSX.Element[]) => set(() => ({ modalButtons })),
-  isRole2Checked: false,
-  setIsRole2Checked: (isRole2Checked: boolean) => set(()=> ({isRole2Checked}))
+
 }))
 
 export default store

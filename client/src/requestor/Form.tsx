@@ -90,7 +90,7 @@ const Form = () => {
   async function handleSubmit(): Promise<void> {
     const requestBody = {
       id: 1,
-      status: "pending",
+      status: "Pending",
       location:
         form.values.location1.toUpperCase() +
         " " +
