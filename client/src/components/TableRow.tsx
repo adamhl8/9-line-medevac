@@ -21,13 +21,19 @@ const TableRow = ({ request }: TableRowProps) => {
     } else return "Routine"
   }
 
-  const pending = request.status.toLowerCase() === "pending" && request.responderID !== 0 ? "orange" : "red"
-  const statusColor = request.status.toLowerCase() === "complete" ? "green" : pending
+  const colorizeStatus = () => {
+    const lowerStatus = request.status.toLowerCase()
+    const pending = lowerStatus === "pending" && request.responderID !== 0 ? "orange" : "red"
+    const statusColor = lowerStatus === "complete" ? "green" : pending
+    
+    if (lowerStatus === "role 2" || lowerStatus === "role rwo") return "cyan"
+    return statusColor
+  }
 
   return (
     <>
       <tr>
-        <td style={{color: statusColor}}>{request.status.toUpperCase()}</td>
+        <td style={{color: colorizeStatus()}}>{request.status.toUpperCase()}</td>
         <td>{request.location}</td>
         <td>{request.callSign}</td>
         <td>{precedence()}</td>
