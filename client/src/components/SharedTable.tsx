@@ -34,7 +34,9 @@ function SharedTable() {
                return filterData
            } else if (filterData.specialEquipment.toLowerCase().toString().includes(searchData)){
                return filterData
-           }   else if (filterData.byUrgent.toString().startsWith("Urgent",0)) {
+
+               // need to figure out how to get a number to be searchable as "Urgent", "Priority", "Routine"
+           }   else if (filterData.byUrgent.toString().includes(searchData || "Urgent")) {
                return filterData
            }
         })
@@ -57,7 +59,7 @@ function SharedTable() {
             <SharedModal/>
             <TextInput
                 onChange={handleChange}
-                value={searchData}
+                value={searchData.toLowerCase()}
 
             >
             </TextInput>
