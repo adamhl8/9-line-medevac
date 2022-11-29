@@ -155,6 +155,10 @@ const Form = () => {
     return requestDetails
   }
 
+  const onErrorFix = {
+    height: 36
+  }
+
   return (
     <Box w={1000}>
       <Modal
@@ -178,28 +182,28 @@ const Form = () => {
           <Group>
             <Input.Wrapper id="Location" label="Location" size="xl">
               <Group>
-                <TextInput id="Location1" placeholder="Grid Zone" {...form.getInputProps("location1")} />
-                <TextInput id="Location2" placeholder="Square ID" {...form.getInputProps("location2")} />
-                <TextInput id="Location3" placeholder="E/W: 00000" {...form.getInputProps("location3")} />
-                <TextInput id="Location4" placeholder="N/S: 00000" {...form.getInputProps("location4")} />
+                <TextInput sx={onErrorFix} id="Location1" placeholder="Grid Zone" {...form.getInputProps("location1")} />
+                <TextInput sx={onErrorFix} id="Location2" placeholder="Square ID" {...form.getInputProps("location2")} />
+                <TextInput sx={onErrorFix} id="Location3" placeholder="E/W: 00000" {...form.getInputProps("location3")} />
+                <TextInput sx={onErrorFix} id="Location4" placeholder="N/S: 00000" {...form.getInputProps("location4")} />
               </Group>
             </Input.Wrapper>
           </Group>
           <Input.Wrapper id="Call Frequency" label="Call Frequency / Call Sign" size="xl">
             <Group>
-              <TextInput id="Call Frequency" placeholder="Call Frequency" {...form.getInputProps("CallFrequency")} />
-              <TextInput id="Call Sign" placeholder="Call Sign" {...form.getInputProps("CallSign")} />
+              <TextInput sx={onErrorFix} id="Call Frequency" placeholder="Call Frequency" {...form.getInputProps("CallFrequency")} />
+              <TextInput sx={onErrorFix} id="Call Sign" placeholder="Call Sign" {...form.getInputProps("CallSign")} />
             </Group>
           </Input.Wrapper>
           <Group>
             <Input.Wrapper id="Urgent Patients" label="Urgent Patients" size="lg">
-              <NumberInput mt="sm" min={0} max={10} {...form.getInputProps("UrgentNumber")} />
+              <NumberInput sx={onErrorFix} mt="sm" min={0} max={10} {...form.getInputProps("UrgentNumber")} />
             </Input.Wrapper>
             <Input.Wrapper id="Priority Patients" label="Priority Patients" size="lg">
-              <NumberInput mt="sm" min={0} max={10} {...form.getInputProps("PriorityNumber")} />
+              <NumberInput sx={onErrorFix} mt="sm" min={0} max={10} {...form.getInputProps("PriorityNumber")} />
             </Input.Wrapper>
             <Input.Wrapper id="Routine Patients" label="Routine Patients" size="lg">
-              <NumberInput mt="sm" min={0} max={10} {...form.getInputProps("RoutineNumber")} />
+              <NumberInput sx={onErrorFix} mt="sm" min={0} max={10} {...form.getInputProps("RoutineNumber")} />
             </Input.Wrapper>
           </Group>
           <Input.Wrapper id="Special Equipment" label="Special Equipment" size="xl">
@@ -212,10 +216,10 @@ const Form = () => {
           </Input.Wrapper>
           <Group>
             <Input.Wrapper id="Litter" label="Litter Patient Number" size="xl">
-              <NumberInput mt="sm" placeholder="Litter Patient Number" min={0} max={10} {...form.getInputProps("LitterPatientNumber")} />
+              <NumberInput sx={onErrorFix} mt="sm" placeholder="Litter Patient Number" min={0} max={10} {...form.getInputProps("LitterPatientNumber")} />
             </Input.Wrapper>
             <Input.Wrapper id="Ambulatory" label="Ambulatory Patient Number" size="xl">
-              <NumberInput
+              <NumberInput sx={onErrorFix}
                 mt="sm"
                 placeholder="Ambulatory Patient Number"
                 min={0}
