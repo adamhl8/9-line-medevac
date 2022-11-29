@@ -17,32 +17,13 @@ function SharedTable() {
     if (!pages) return <></>
 
     const rows = page
-        .filter((filterData)=>{
-           if (filterData.status.toLowerCase().toString().includes(searchData)){
-               return filterData
-           } else if (filterData.location.toLowerCase().toString().includes(searchData)){
-               return filterData
-           } else if (filterData.callSign.toLowerCase().toString().includes(searchData)){
-               return filterData
-           } else if (filterData.frequency.toString().includes(searchData)){
-               return filterData
-           } else if (filterData.security.toLowerCase().toString().includes(searchData)){
-               return filterData
-           } else if (filterData.marking.toLowerCase().toString().includes(searchData)){
-               return filterData
-           } else if (filterData.responderID.toString().includes(searchData)){
-               return filterData
-           } else if (filterData.specialEquipment.toLowerCase().toString().includes(searchData)){
-               return filterData
-
-               // need to figure out how to get a number to be searchable as "Urgent", "Priority", "Routine"
-           }   else if (filterData.byUrgent.toString().includes(searchData || "Urgent")) {
-               return filterData
-           }
-        })
         .map((request, i) => {
-        return <TableRow key={i} request={request}/>
-    })
+        
+            if (JSON.stringify(request).toLowerCase().includes(searchData)) {
+                return <TableRow key={i} request={request}/>
+            }
+        })
+        
 
     const handleSetPage = (pageNumber: number) => {
         setPageNumber(pageNumber)
