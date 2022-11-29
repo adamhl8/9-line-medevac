@@ -2,6 +2,7 @@ import ky from "ky"
 import create from "zustand"
 import { RequestData, ResponderData, TRequestById, TRequestData, TResponderData } from "./schema.js"
 import { chunkPages } from "./util"
+import {searchForWorkspaceRoot} from "vite";
 
 interface Store {
   pages: TRequestData[] | null
@@ -30,6 +31,9 @@ interface Store {
 
   modalButtons: JSX.Element[]
   setModalButtons: (modalButtons: JSX.Element[]) => void
+
+  searchData: string
+  setSearchData: (searchData: string) => void
 }
 
 const store = create<Store>((set) => ({
@@ -61,6 +65,9 @@ const store = create<Store>((set) => ({
   setTableHeaders: (tableHeaders: string[]) => set(() => ({ tableHeaders })),
   modalButtons: [],
   setModalButtons: (modalButtons: JSX.Element[]) => set(() => ({ modalButtons })),
+
+  searchData: "",
+  setSearchData: (searchData: string) => set(()=> ({searchData}))
 }))
 
 export default store

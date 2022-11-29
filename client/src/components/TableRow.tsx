@@ -14,11 +14,13 @@ const TableRow = ({ request }: TableRowProps) => {
   if (!request) return <></>
 
   const precedence = () => {
-    if (request.byPriority > request.byUrgent || request.byPriority > request.byRoutine) {
+    if (request.byPriority > request.byUrgent && request.byPriority > request.byRoutine) {
       return "Priority"
-    } else if (request.byUrgent > request.byPriority || request.byPriority > request.byRoutine) {
+    } else if (request.byUrgent > request.byPriority && request.byUrgent > request.byRoutine) {
       return "Urgent"
-    } else return "Routine"
+    } else if (request.byRoutine > request.byUrgent && request.byRoutine > request.byPriority) {
+      return "Routine"
+    }
   }
 
   const colorizeStatus = () => {
