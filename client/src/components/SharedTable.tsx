@@ -12,13 +12,14 @@ function SharedTable() {
     const [pageNumber, setPageNumber] = useState(1)
     const [page, setPage] = useState<TRequestData>(page1)
     const [searchData, setSearchData] = store((state) => [state.searchData, state.setSearchData])
-
-
+    const [responderId, setResponderId] = store((state) => [state.responderId, state.setResponderId])
+    const [view] = store((state)=> state.view)
+    
     if (!pages) return <></>
 
     const rows = page
         .map((request, i) => {
-        
+
             if (JSON.stringify(request).toLowerCase().includes(searchData)) {
                 return <TableRow key={i} request={request}/>
             }

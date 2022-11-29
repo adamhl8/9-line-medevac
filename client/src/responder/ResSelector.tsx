@@ -4,6 +4,7 @@ import store from "../store.js"
 
 export const ResSelector = () => {
   const [responderId, setResponderId] = store((state) => [state.responderId, state.setResponderId])
+  const [searchData, setSearchData] = store((state) => [state.searchData, state.setSearchData] )
 
   let inputId: number
 
@@ -28,6 +29,7 @@ export const ResSelector = () => {
     await ky.post("http://localhost:8080/responders", { json: { responderId: inputId } })
     setResponderId(inputId)
     await store.getState().getAndSetResponders()
+    setSearchData(inputId.toString())
   }
 
   return (
