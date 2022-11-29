@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar.js"
 import SharedTable from "../components/SharedTable"
 import store from "../store.js"
 import CompleteButton from "./CompleteButton"
+import { ResSelector } from "./ResSelector.js"
 import RoleTwoButton from "./RoleTwoButton.js"
 
 // Color text based on content: Possible Enemy is red, No enemy is green, Precendence is colored based on content,
@@ -25,6 +26,7 @@ function ResponderView() {
       <Center>
         <Stack>
           <Title order={1}>Respond</Title>
+          <ResSelector />
           <SharedTable />
         </Stack>
       </Center>

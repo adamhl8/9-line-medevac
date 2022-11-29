@@ -22,7 +22,11 @@ public class ResponderControlller {
     @PostMapping("")
     @ResponseStatus(code = HttpStatus.CREATED)
     public Responder createResponder(@RequestBody Responder newResponder) {
-        return responderRepo.save(newResponder);
+        Responder responderDTO = responderRepo.findByResponderId(newResponder.getResponderId());
+        return responderDTO == null ? responderRepo.save(newResponder) : responderDTO;
+        
+        // Return existing record if it already exists to prevent creating a new record with the same responderId
+        
     }
 
     @GetMapping("/{id}")

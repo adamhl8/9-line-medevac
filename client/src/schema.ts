@@ -29,7 +29,7 @@ export const RequestById = z.object({
 
 export const Responder = z.object({
   id: z.number(),
-  responderId: z.number(),
+  responderId: z.number().default(0),
 })
 
 export type TResponder = z.infer<typeof Responder>

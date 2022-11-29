@@ -37,7 +37,6 @@ const Form = () => {
     { value: "EnemyInAreaEscort", label: "Enemy In Area: Armed Escort Required" },
   ]
   const NBCContamination = [
-    // Something possibly wrong here
     { value: "Nuclear", label: "Nuclear" },
     { value: "Biological", label: "Biological" },
     { value: "Chemical", label: "Chemical" },
@@ -65,6 +64,7 @@ const Form = () => {
       NonUSMilitary: 0,
       NonUSCivilian: 0,
       NBCContamination: "",
+      responderId: 0,
     },
 
     validateInputOnChange: true,
