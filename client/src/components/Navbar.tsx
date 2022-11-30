@@ -1,9 +1,18 @@
 import { Box, Button, Grid, Group } from "@mantine/core"
 import store from "../store.js"
+import {useEffect} from "react";
 
 function Navbar() {
   const setView = store((state) => state.setView)
   const view = store((state) => state.view)
+    const getAndSetPages = store((state) => state.getAndSetPages)
+    const getAndSetResponders = store((state) => state.getAndSetResponders)
+
+    useEffect(() => {
+        void getAndSetPages()
+        void getAndSetResponders()
+    }, [])
+
 
   return view === "dispatcher" ? (
     <Box
