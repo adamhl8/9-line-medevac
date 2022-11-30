@@ -12,8 +12,7 @@ function SharedTable() {
   const [pageNumber, setPageNumber] = useState(1)
   const [page, setPage] = useState<TRequestData>(page1)
   const [searchData, setSearchData] = store((state) => [state.searchData, state.setSearchData])
-  const [responderId, setResponderId] = store((state) => [state.responderId, state.setResponderId])
-  const [view] = store((state) => state.view)
+
 
   if (!pages) return <></>
 
@@ -36,7 +35,7 @@ function SharedTable() {
   return (
     <>
       <SharedModal />
-      <TextInput onChange={handleChange} value={searchData.toLowerCase()}></TextInput>
+      <TextInput onChange={handleChange} value={searchData.toLowerCase()} placeholder={"Search"}></TextInput>
       <Stack>
         <Table maw="75vw" striped highlightOnHover captionSide="bottom" fontSize="md">
           <thead>
