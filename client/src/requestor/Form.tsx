@@ -156,7 +156,7 @@ const Form = () => {
   }
 
   const onErrorFix = {
-    height: 36
+    height: 36,
   }
 
   return (
@@ -216,10 +216,18 @@ const Form = () => {
           </Input.Wrapper>
           <Group>
             <Input.Wrapper id="Litter" label="Litter Patient Number" size="xl">
-              <NumberInput sx={onErrorFix} mt="sm" placeholder="Litter Patient Number" min={0} max={10} {...form.getInputProps("LitterPatientNumber")} />
+              <NumberInput
+                sx={onErrorFix}
+                mt="sm"
+                placeholder="Litter Patient Number"
+                min={0}
+                max={10}
+                {...form.getInputProps("LitterPatientNumber")}
+              />
             </Input.Wrapper>
             <Input.Wrapper id="Ambulatory" label="Ambulatory Patient Number" size="xl">
-              <NumberInput sx={onErrorFix}
+              <NumberInput
+                sx={onErrorFix}
                 mt="sm"
                 placeholder="Ambulatory Patient Number"
                 min={0}

@@ -4,7 +4,7 @@ import store from "../store.js"
 
 export const ResSelector = () => {
   const [responderId, setResponderId] = store((state) => [state.responderId, state.setResponderId])
-  const [searchData, setSearchData] = store((state) => [state.searchData, state.setSearchData] )
+  const [searchData, setSearchData] = store((state) => [state.searchData, state.setSearchData])
 
   let inputId: number
 

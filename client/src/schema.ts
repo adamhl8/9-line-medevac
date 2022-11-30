@@ -27,7 +27,6 @@ export const RequestById = z.object({
   dispatcherID: z.number().default(0).transform(defaultNumber),
 })
 
-
 export const Responder = z.object({
   id: z.number(),
   responderId: z.number().default(0),
@@ -41,7 +40,3 @@ export type TRequestById = z.infer<typeof RequestById>
 
 export const RequestData = RequestById.array()
 export type TRequestData = z.infer<typeof RequestData>
-
-
-
-
