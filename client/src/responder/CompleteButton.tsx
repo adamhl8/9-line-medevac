@@ -13,10 +13,13 @@ function CompleteButton() {
     if (request.status === "Pending" || request.status === "Role 2") {
       await ky.patch(`${URL}/requests/${request.id}`, { json: { status: "Complete" } })
       request.status = "Complete"
+      await store.getState().getAndSetPages()
       setRequest(request)
+
     } else if (completeAssign) {
       await ky.patch(`${URL}/requests/${request.id}`, { json: { status: "Pending" } })
       request.status = "Pending"
+      await store.getState().getAndSetPages()
       setRequest(request)
     }
   }
