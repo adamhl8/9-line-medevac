@@ -17,6 +17,7 @@ function AssignButton() {
     })
     request.responderID = responderId
     setResponderId(Number(responderId))
+    await store.getState().getAndSetPages()
   }
 
   return <Button onClick={() => void handleClick()}>Assign</Button>
