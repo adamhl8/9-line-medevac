@@ -4,7 +4,7 @@ import store from "../store.js"
 
 function AssignButton() {
   const request = store((state) => state.request)
-  const responderId = store((state) => state.responderId)
+  const [responderId, setResponderId] = store((state) => [state.responderId, state.setResponderId])
 
   const handleClick = async () => {
     if (!request || !request.id) return
@@ -15,8 +15,8 @@ function AssignButton() {
       },
       json: { responderID: responderId.toString() },
     })
-
-    request.responderID = Number(responderId)
+    request.responderID = responderId
+    setResponderId(Number(responderId))
   }
 
   return <Button onClick={() => void handleClick()}>Assign</Button>
