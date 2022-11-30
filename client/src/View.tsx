@@ -13,7 +13,7 @@ function View() {
   useEffect(() => {
     void getAndSetPages()
     void getAndSetResponders()
-  }, [store.getState().view])
+  }, [])
 
   if (!pages) return <Loader size="xl" />
 

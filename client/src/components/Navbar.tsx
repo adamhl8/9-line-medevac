@@ -6,11 +6,7 @@ function Navbar() {
   const [view, setView] = store((state) => [state.view, state.setView])
   const [pages, getAndSetPages] = store((state) => [state.pages, state.getAndSetPages])
   const getAndSetResponders = store((state) => state.getAndSetResponders)
-    
-  useEffect(() => {
-    void getAndSetPages()
-    void getAndSetResponders()
-  }, [view])
+
 
     useEffect(() => {
         void getAndSetPages()
