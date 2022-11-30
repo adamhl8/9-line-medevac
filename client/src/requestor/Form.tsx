@@ -23,7 +23,7 @@ const locationValidatorTwo = (value: string) => (!/^[A-Za-z]{2}$/.test(value) ? 
 const locationValidatorFive = (value: string) => (!/^\d{2,5}$/.test(value) ? "Example: 12345" : null) // any 5-digit number
 const locationValidatorThree = (value: string) => (!/^\d{2}[A-Za-z]$/.test(value) ? "Example: 11D" : null) // any 2-digit number + once character, any case
 const CallFrequencyValidator = (value: number) =>
-  /^\d{0,3}\.\d{0,6}$/.test(Number.parseFloat(value.toString()).toString()) ? null : "Must Include Decimal" // any 1-3 digit number + decimal + any 1-6 digit number
+    (/^\d*\.\d*$/.test(String(value)) ?  null : "Must Include Decimal")  // any 1-3 digit number + decimal + any 1-6 digit number
 const totalPatientisEqual = (byUrgent: number, byPriority: number, byRoutine: number, byAmbulatory: number, byLitter: number) => {
   return byUrgent + byPriority + byRoutine === byAmbulatory + byLitter
 }
@@ -147,7 +147,7 @@ const Form = () => {
     for (const [key, value] of Object.entries(details)) {
       requestDetails.push(
         <Fragment key={key}>
-          <Text ta="right">{key.replace(/([a-z](?=[A-Z]))/g, "$1 ").toUpperCase()}</Text>
+          <Text ta="right">{key.replace(/([a-z](?=[A-Z]))/g, "$1").toUpperCase()}</Text>
           <Text ta="left">{value}</Text>
         </Fragment>,
       )
