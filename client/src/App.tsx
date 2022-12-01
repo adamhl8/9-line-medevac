@@ -1,7 +1,7 @@
 import { Box, MantineProvider, Stack } from "@mantine/core"
 import View from "./View"
 
-export const URL = "https://9-line.adamhl.dev"
+export const URL = "http://localhost:8080"
 
 const App = () => {
   return (
