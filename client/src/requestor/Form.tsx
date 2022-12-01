@@ -183,10 +183,10 @@ const Form = () => {
               </Group>
             </Input.Wrapper>
           </Group>
-          <Input.Wrapper id="Call Frequency" label="Call Frequency / Call Sign" size="xl">
+          <Input.Wrapper id="Call-Frequency-Sign" label="Call Frequency / Call Sign" size="xl">
             <Group>
-              <TextInput id="Call Frequency" placeholder="Call Frequency" {...form.getInputProps("CallFrequency")} />
-              <TextInput id="Call Sign" placeholder="Call Sign" {...form.getInputProps("CallSign")} />
+              <TextInput id="Call-Frequency" placeholder="Call Frequency" {...form.getInputProps("CallFrequency")} />
+              <TextInput id="Call-Sign" placeholder="Call Sign" {...form.getInputProps("CallSign")} />
             </Group>
           </Input.Wrapper>
           <Group>
