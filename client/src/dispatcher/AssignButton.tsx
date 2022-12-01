@@ -1,5 +1,6 @@
 import { Button } from "@mantine/core"
 import ky from "ky"
+import { URL } from "../App.js"
 import store from "../store.js"
 
 function AssignButton() {
@@ -9,7 +10,7 @@ function AssignButton() {
   const handleClick = async () => {
     if (!request || !request.id) return
 
-    await ky.patch(`http://localhost:8080/requests/${request.id}`, {
+    await ky.patch(`${URL}/requests/${request.id}`, {
       headers: {
         "content-type": "application/json",
       },

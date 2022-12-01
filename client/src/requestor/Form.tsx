@@ -16,6 +16,7 @@ import {
 import { useForm } from "@mantine/form"
 import ky from "ky"
 import { Fragment } from "react"
+import { URL } from "../App.js"
 import { RequestById, TRequestById } from "../schema.js"
 import store from "../store.js"
 
@@ -133,7 +134,7 @@ const Form = () => {
 
     const validatedRequest = RequestById.parse(requestBody)
 
-    await ky.post("http://localhost:8080/requests", { json: validatedRequest }).json()
+    await ky.post(`${URL}/requests`, { json: validatedRequest }).json()
 
     setRequestSubmitted(true)
     setRequest(validatedRequest)

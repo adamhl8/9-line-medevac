@@ -1,5 +1,6 @@
 import { Button, Group, Input, TextInput } from "@mantine/core"
 import ky from "ky"
+import { URL } from "../App.js"
 import store from "../store.js"
 
 export const ResSelector = () => {
@@ -22,7 +23,7 @@ export const ResSelector = () => {
       return
     }
 
-    await ky.post("http://localhost:8080/responders", { json: { responderId: inputId } })
+    await ky.post(`${URL}/responders`, { json: { responderId: inputId } })
     setResponderId(inputId)
     await store.getState().getAndSetResponders()
     setSearchData(inputId.toString())

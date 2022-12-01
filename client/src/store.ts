@@ -1,5 +1,6 @@
 import ky from "ky"
 import create from "zustand"
+import { URL } from "./App.js"
 import { RequestData, ResponderData, TRequestById, TRequestData, TResponderData } from "./schema.js"
 import { chunkPages } from "./util"
 
@@ -38,14 +39,14 @@ interface Store {
 const store = create<Store>((set) => ({
   pages: null,
   getAndSetPages: async () => {
-    const responseData = await ky.get("http://localhost:8080/requests").json()
+    const responseData = await ky.get(`${URL}/requests`).json()
     const data = RequestData.parse(responseData)
     const pages = chunkPages(data)
     set(() => ({ pages }))
   },
   responders: null,
   getAndSetResponders: async () => {
-    const responseData = await ky.get("http://localhost:8080/responders").json()
+    const responseData = await ky.get(`${URL}/responders`).json()
     const data = ResponderData.parse(responseData)
     const responders = data
     set(() => ({ responders }))
