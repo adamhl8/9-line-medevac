@@ -17,7 +17,9 @@ export const ResSelector = () => {
     inputId = id
   }
 
-  async function handleSubmit() {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
     if (inputId < 1 || inputId === undefined) {
       alert("Responder ID must be greater than 0")
       return
@@ -30,7 +32,7 @@ export const ResSelector = () => {
   }
 
   return (
-    <form onSubmit={() => void handleSubmit()}>
+    <form onSubmit={(event) => void handleSubmit(event)}>
       <Input.Wrapper sx={{ justify: "flex-right" }}>
         <Group>
           <TextInput
