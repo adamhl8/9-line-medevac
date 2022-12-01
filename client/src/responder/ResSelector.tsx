@@ -4,7 +4,7 @@ import store from "../store.js"
 
 export const ResSelector = () => {
   const [responderId, setResponderId] = store((state) => [state.responderId, state.setResponderId])
-  const [searchData, setSearchData] = store((state) => [state.searchData, state.setSearchData])
+  const setSearchData = store((state) => state.setSearchData)
 
   let inputId: number
 
@@ -17,14 +17,10 @@ export const ResSelector = () => {
   }
 
   async function handleSubmit() {
-    event.preventDefault()
-
     if (inputId < 1 || inputId === undefined) {
       alert("Responder ID must be greater than 0")
       return
     }
-
-    alert(`ID is set to ${inputId}`)
 
     await ky.post("http://localhost:8080/responders", { json: { responderId: inputId } })
     setResponderId(inputId)

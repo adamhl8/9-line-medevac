@@ -15,7 +15,6 @@ function CompleteButton() {
       request.status = "Complete"
       await store.getState().getAndSetPages()
       setRequest(request)
-
     } else if (completeAssign) {
       await ky.patch(`${URL}/requests/${request.id}`, { json: { status: "Pending" } })
       request.status = "Pending"

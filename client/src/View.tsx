@@ -9,7 +9,7 @@ function View() {
   const [pages, getAndSetPages] = store((state) => [state.pages, state.getAndSetPages])
   const getAndSetResponders = store((state) => state.getAndSetResponders)
   const view = store((state) => state.view)
-  
+
   useEffect(() => {
     void getAndSetPages()
     void getAndSetResponders()

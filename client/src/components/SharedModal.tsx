@@ -1,4 +1,4 @@
-import { Divider, Modal, SimpleGrid, Stack, Text } from "@mantine/core"
+import { Divider, Image, Modal, SimpleGrid, Stack, Text } from "@mantine/core"
 import { cloneElement, Fragment } from "react"
 import { DispatcherRadioGroup } from "../dispatcher/DispatcherRadioGroup.js"
 import { TRequestById } from "../schema.js"
@@ -37,6 +37,10 @@ function SharedModal() {
       title={"Details"}
     >
       <Stack justify="flex-start">
+        <Image
+          radius="md"
+          src="https://maps.googleapis.com/maps/api/staticmap?maptype=roadmap&center=Austin,TX&zoom=10&markers=|Austin,TX&size=400x400&key=AIzaSyAHinwnGxag-FTyQXI-VPHd7KaVlG46cwQ"
+        ></Image>
         <SimpleGrid cols={2}>{buildRequestDetails(request)}</SimpleGrid>
         <Divider mt="md" mb="md" />
         <DispatcherRadioGroup />

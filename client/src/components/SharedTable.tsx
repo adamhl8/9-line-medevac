@@ -13,7 +13,6 @@ function SharedTable() {
   const [page, setPage] = useState<TRequestData>(page1)
   const [searchData, setSearchData] = store((state) => [state.searchData, state.setSearchData])
 
-
   if (!pages) return <></>
 
   const rows = page.map((request, i) => {

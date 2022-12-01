@@ -22,8 +22,7 @@ import store from "../store.js"
 const locationValidatorTwo = (value: string) => (!/^[A-Za-z]{2}$/.test(value) ? "Example: GK" : null) // Two character string, any case
 const locationValidatorFive = (value: string) => (!/^\d{2,5}$/.test(value) ? "Example: 12345" : null) // any 5-digit number
 const locationValidatorThree = (value: string) => (!/^\d{2}[A-Za-z]$/.test(value) ? "Example: 11D" : null) // any 2-digit number + once character, any case
-const CallFrequencyValidator = (value: number) =>
-    (/^\d*\.\d*$/.test(String(value)) ?  null : "Must Include Decimal")  // any 1-3 digit number + decimal + any 1-6 digit number
+const CallFrequencyValidator = (value: number) => (/^\d*\.\d*$/.test(String(value)) ? null : "Must Include Decimal") // any 1-3 digit number + decimal + any 1-6 digit number
 const totalPatientisEqual = (byUrgent: number, byPriority: number, byRoutine: number, byAmbulatory: number, byLitter: number) => {
   return byUrgent + byPriority + byRoutine === byAmbulatory + byLitter
 }
