@@ -39,7 +39,7 @@ function SharedModal() {
       <Stack justify="flex-start">
         <Image
           radius="md"
-          src="https://maps.googleapis.com/maps/api/staticmap?maptype=roadmap&center=Austin,TX&zoom=10&markers=|Austin,TX&size=400x400&key=AIzaSyAHinwnGxag-FTyQXI-VPHd7KaVlG46cwQ"
+          src="https://maps.googleapis.com/maps/api/staticmap?maptype=roadmap&center=Austin,TX&zoom=10&markers=|Austin,TX&size=400x400&key="
         ></Image>
         <SimpleGrid cols={2}>{buildRequestDetails(request)}</SimpleGrid>
         <Divider mt="md" mb="md" />
